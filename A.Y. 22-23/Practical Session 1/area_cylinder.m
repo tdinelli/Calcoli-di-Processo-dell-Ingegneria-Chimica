@@ -7,7 +7,8 @@
 %                                                                         %
 %-------------------------------------------------------------------------%
 %                                                                         %
-%   Author: Timoteo Dinelli <timoteo.dinelli@polimi.it>                   %
+%   Author: Marco Mehl <marco.mehl@polimi.it>                             %
+%           Timoteo Dinelli <timoteo.dinelli@polimi.it>                   %
 %   CRECK Modeling Group <http://creckmodeling.chem.polimi.it>            %
 %   Department of Chemistry, Materials and Chemical Engineering           %
 %   Politecnico di Milano                                                 %
