@@ -1,6 +1,6 @@
 # Calcoli di Processo dell' Ingegneria Chimica
 
-<img src="Figures/LogoPolimi.png" alt="drawing" width="300">
+<img src="Figures/LogoPolimi.png" alt="drawing" width="350">
 
 ---
 
