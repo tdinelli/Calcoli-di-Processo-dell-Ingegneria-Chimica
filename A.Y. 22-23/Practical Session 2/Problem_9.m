@@ -16,47 +16,35 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-clear, clc
+%
+% Cp(T) = A + B(C/T/sinh(C/T))^2 + D(E/T/cosh(E/T))^2
+%
+clear, clc, close all
+%% DATA
 
-%% SUM forward single precision
+A = 3.3375E+04;
+B = 2.5864E+04;
+C = 9.3280E+02;
+D = 1.0880E+04;
+E = 4.2370E+02;
 
-sum = single(0);
+T = 0:1:1000; % K
+computedCp= zeros(1,length(T));
 
-for i = 1:1:1e6
-    sum = sum + 1/i;
+for i = 1:length(T)
+    computedCp(i) = ComputeCp(T(i), A, B, C, D, E);
 end
 
-disp(['This the single precision sum of the first 1 mln inverse ' ...
-    'numbers (forward): ', num2str(sum)])
+%% Plot stuff
 
-%% SUM backword single precision
+plot(T, computedCp, 'LineWidth', 4, 'LineStyle',':', 'Color','green')
+xlabel('Temperature [K]')
+ylabel('Cp [J/kmol/K]')
+title('Cp of SO_{2}')
+legend('dotted line Cp SO_{2}', 'Location','southeast')
 
-sum = single(0);
+%% Functions definition
 
-for i = 1e6:-1:1
-    sum = sum + 1/i;
+function Cp = ComputeCp(T, A, B, C, D, E)
+    Cp = A + B * (C/T/sinh(C/T))^2 + D * (E/T/cosh(E/T))^2;
 end
-
-disp(['This the single precision sum of the first 1 mln inverse ' ...
-    'numbers (backward): ', num2str(sum)])
-%% SUM forward double precision
-
-sum = 0;
-
-for i = 1:1:1e6
-    sum = sum + 1/i;
-end
-
-disp(['This the double precision sum of the first 1 mln inverse ' ...
-    'numbers (forward): ', num2str(sum)])
-
-%% SUM backword double precision
-
-sum = 0;
-
-for i = 1e6:-1:1
-    sum = sum + 1/i;
-end
-
-disp(['This the double precision sum of the first 1 mln inverse ' ...
-    'numbers (backward): ', num2str(sum)])

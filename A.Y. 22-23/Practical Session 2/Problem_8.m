@@ -16,35 +16,43 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-%
-% Cp(T) = A + B(C/T/sinh(C/T))^2 + D(E/T/cosh(E/T))^2
-%
-clear, clc, close all
-%% DATA
+clc, clear
 
-A = 3.3375E+04;
-B = 2.5864E+04;
-C = 9.3280E+02;
-D = 1.0880E+04;
-E = 4.2370E+02;
+number = 95735585; % 95735588972543452378543353653635
 
-T = 0:1:1000; % K
-computedCp= zeros(1,length(T));
+babilonianSquareRoot = ComputeSquareRoot(number);
+matlabSquareRoot = sqrt(number);
 
-for i = 1:length(T)
-    computedCp(i) = ComputeCp(T(i), A, B, C, D, E);
+disp(['Babilonian: ', num2str(babilonianSquareRoot)])
+disp(['Matlab: ', num2str(matlabSquareRoot)])
+
+function SquareRoot = ComputeSquareRoot(S)
+
+% Function that compute the square root of a number with the babylonian
+% method
+% y it is the variable that ends into SquareRoot the output of the function
+% S is the value for which I'd like to compute the square root
+
+iter = 0;
+x0 = S; % x0 first guess
+
+y = 0.5*(x0+S/x0); % First estimate of the square root
+
+% As far as the difference between the first guess x0 and the estimate of
+% the root obtained using the formula is higher than the tolerance (1e-5).
+% The value x0 (first guess) is constantly updated with the estimate of the
+% root obtained.
+
+while abs(x0-y)>1e-5 && iter<50 
+
+    % "iter" variable is needed to avoid infinite number of loops so double
+    % conditions on the while statements
+    
+    x0 = y; 
+    y = 0.5*(x0+S/x0);
+    iter = iter+1;
 end
 
-%% Plot stuff
-
-plot(T, computedCp, 'LineWidth', 4, 'LineStyle',':', 'Color','green')
-xlabel('Temperature [K]')
-ylabel('Cp [J/kmol/K]')
-title('Cp of SO_{2}')
-legend('dotted line Cp SO_{2}', 'Location','southeast')
-
-%% Functions definition
-
-function Cp = ComputeCp(T, A, B, C, D, E)
-    Cp = A + B * (C/T/sinh(C/T))^2 + D * (E/T/cosh(E/T))^2;
+disp(['Number of iteration to reach convergence: ', num2str(iter)])
+SquareRoot = y;
 end

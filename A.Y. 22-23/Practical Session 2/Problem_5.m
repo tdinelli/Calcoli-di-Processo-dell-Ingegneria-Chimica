@@ -16,21 +16,51 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-% inizializzo le variabili totale (capitale_iniziale e anno 0)
-totale=10000;
-year=0;
+clear, close, clc;
 
-% fino a che totale è minore di 30000
-while totale<30000
-    % aggiungo 1 anno
-    year=year+1;
-    % aggiorno il valore del totale aggiungendo l'interesse
-    totale=totale*1.0351;
-    % e salvo in due vettori alla posizione i-esima con i pari all'anno
-    x(year)=year; % il numero dell'anno
-    y(year)=totale; % e il corrispondente capitale maturato
+M = magic(10);
+
+sumRows = SumTheRowsOfMagic(M);
+sumCols = SumTheColumnsOfMagic(M);
+
+disp(['This is the computed sum of the rows: ', num2str(sumRows)])
+disp(['This is the MATLAB sum of the rows:   ', num2str(sum(M))])
+
+disp(['This is the computed sum of the columns: ', num2str(sumRows)])
+disp(['This is the MATLAB sum of the columns:   ', num2str(sum(M,1))])
+
+%% Function definition
+
+function sum_row = SumTheRowsOfMagic(matrix)
+
+    dimension = size(matrix);
+    numberOfRows = dimension(1);
+    numberOfColumns = dimension(2);
+
+    for i=1:numberOfRows
+        tmp = 0;
+        for j=1:numberOfColumns
+            tmp = tmp + matrix(i,j);
+        end
+        sum_row(i) = tmp; 
+    end
+
 end
 
-%% Plots
+function sum_col = SumTheColumnsOfMagic(matrix)
 
-plot(x,y)
+    dimension = size(matrix);
+    numberOfRows = dimension(1);
+    numberOfColumns = dimension(2);
+
+    for i=1:numberOfColumns
+        tmp = 0;
+        for j=1:numberOfRows
+            tmp = tmp + matrix(i,j);
+        end
+        sum_col(i) = tmp; 
+    end
+
+end
+
+

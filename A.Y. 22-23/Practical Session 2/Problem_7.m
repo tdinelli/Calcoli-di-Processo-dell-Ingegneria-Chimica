@@ -16,38 +16,23 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-clear, close, clc;
+% inizializzo le variabili totale (capitale_iniziale e anno 0)
+totale=10000;
+year=0;
 
-M = magic(234);
-
-[maxValue, linearIndexesOfMaxes] = max(M(:));
-[rowsOfMaxes, colsOfMaxes] = find(M == maxValue);
-
-disp(['The maximum value inside the matrix is: ', ...
-    num2str(M(rowsOfMaxes, colsOfMaxes))])
-
-[maximum, row, col] = findMaximum(M);
-
-disp(['The maximum value found inside the matrix is: ', ...
-    num2str(M(row, col))])
-
-%% Function definition
-
-function [maximum, row, col] = findMaximum(matrix)
-    
-    dimensions = size(matrix);
-    numberOfRows = dimensions(1);
-    numberOfColumns = dimensions(2);
-    
-    maximum = matrix(1, 1);
-
-    for i=1:numberOfRows
-        for j = 1:numberOfColumns
-            if maximum <= matrix(i, j)
-                maximum = matrix(i, j);
-            end
-        end
-    end
-
-    [row, col] = find(matrix == maximum);
+% fino a che totale è minore di 30000
+while totale<30000
+    % aggiungo 1 anno
+    year=year+1;
+    % aggiorno il valore del totale aggiungendo l'interesse
+    totale=totale*1.0351;
+    % e salvo in due vettori alla posizione i-esima con i pari all'anno
+    x(year)=year; % il numero dell'anno
+    y(year)=totale; % e il corrispondente capitale maturato
 end
+
+%% Plots
+
+plot(x,y, 'LineWidth', 3, 'Color', 'green')
+xlabel('time [years]')
+ylabel('Money [$]')

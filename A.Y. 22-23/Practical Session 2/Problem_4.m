@@ -27,7 +27,7 @@ disp(v_sum)
 
 function vector_sum = SumVector(vector1, vector2)
 
-% vector_sum = ones(1, length(vector1));  % preallocation warning
+% vector_sum = ones(1, length(vector1));  % preallocation warning fix
 
 if length(vector1)==length(vector2)
     for i=1:length(vector1)
