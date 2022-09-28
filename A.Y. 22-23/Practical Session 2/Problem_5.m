@@ -19,15 +19,14 @@
 clear, close, clc;
 
 M = magic(10);
-
 sumRows = SumTheRowsOfMagic(M);
 sumCols = SumTheColumnsOfMagic(M);
 
 disp(['This is the computed sum of the rows: ', num2str(sumRows)])
-disp(['This is the MATLAB sum of the rows:   ', num2str(sum(M))])
+disp(['This is the MATLAB sum of the rows:   ', num2str(sum(M, 2)')])
 
-disp(['This is the computed sum of the columns: ', num2str(sumRows)])
-disp(['This is the MATLAB sum of the columns:   ', num2str(sum(M,1))])
+disp(['This is the computed sum of the columns: ', num2str(sumCols)])
+disp(['This is the MATLAB sum of the columns:   ', num2str(sum(M))])
 
 %% Function definition
 
@@ -56,11 +55,10 @@ function sum_col = SumTheColumnsOfMagic(matrix)
     for i=1:numberOfColumns
         tmp = 0;
         for j=1:numberOfRows
-            tmp = tmp + matrix(i,j);
+            tmp = tmp + matrix(j,i);
         end
         sum_col(i) = tmp; 
     end
-
 end
 
 
