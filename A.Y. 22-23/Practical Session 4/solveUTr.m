@@ -15,48 +15,20 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
+%                                                                         %
+%       Function to perform the solve the system                          %
+%       composed by the triangularized matrix                             %
+%                                                                         %
+% ----------------------------------------------------------------------- %
 
-clear, close, clc;
+function b=solveUTr(A,b)
 
-Matrix1 = [1 2 3 78; 2 3 4 7; 5 7 6 5];
-Matrix2 = [55 89 57 1; 3 5 6 2; 76 847 1283 56; 76 847 1283 56];
+[nA,mA]=size(A); % Detect the size of A
 
-myResult = ProductMatrix(Matrix1, Matrix2);
-matlabResult = Matrix1 * Matrix2;
-
-disp('My Product Function')
-disp(myResult)
-disp('Matlab Product Function')
-disp(matlabResult)
-%% Function Definition
-
-
-function PM = ProductMatrix(A, B)
-
-    [nr1, nc1] = size(A);
-    [nr2, nc2] = size(B);
-
-    PM = ones(nr1, nc2);
-
-    if nc1 == nr2
-        for i=1:nr1 % Index scanning the rows of the first matrix
-            for j=1:nc2 % Index scanning the columns of the second matrix
-                sum = 0; % Temporary variable to save results 
-                for h=1:nc1 % Index scanning the columns of the first 
-                            % matrix that have to be equal to the rows of
-                            % the second matrix
-                    sum = sum + A(i,h) * B(h, j); % Make multiplication and sum 
-                end
-                PM(i, j) = sum; % Store values inside an additional matrix 
-
-            end
-        end
-    else % Error if inner dimensions do not agree
-        error(['Inner dimensions must agree: available operation' ...
-            '(a, b) X (c, d) if b == c'])
-    end
+for i = nA : -1: 1  % Starting from the last line and moving up 
+   for k = i+1 : nA   
+      b(i) = b(i) - A(i,k) * b(k); % The value of b(i) is updated using all the value of x already calculated and already stored in the b(i+1:nA)portion of b  
+   end
+   b(i) = b(i) / A(i,i); % The value of the i-th unknown is calculated and stored in b(i)
 end
-
-
-
-
+end
