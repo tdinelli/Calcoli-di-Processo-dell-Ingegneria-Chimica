@@ -24,7 +24,7 @@
 function x = MyLinearSolver(A,b)
 
 
-[At bt]=triangularizeU(A,b); % Take The matrix A and the vector b 
+[At, bt]=triangularizeU(A,b); % Take The matrix A and the vector b 
                              % and transform them in a upper triangular 
                              % matrix with its correspondent b
 x = solveUTr(At,bt); % Solve the upper triangular system and 

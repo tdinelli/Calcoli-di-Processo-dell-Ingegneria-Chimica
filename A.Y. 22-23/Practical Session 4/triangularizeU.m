@@ -20,7 +20,7 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-function [A,b]=triangularizeU(A,b)
+function [At, bt]=triangularizeU(A,b)
 
 [nA, mA]=size(A); % Get the size of A
 
@@ -63,7 +63,7 @@ end
 % the triangulation process using the : construct that indicates all the
 % elements or, a range (e.g. 1:nA)
 
-A = W(:, 1:nA);
-b = W(:, nA+1);
+At = W(:, 1:nA);
+bt = W(:, nA+1);
 
 end

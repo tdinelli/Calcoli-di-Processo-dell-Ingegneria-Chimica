@@ -21,7 +21,7 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-function b=solveUTr(A,b)
+function x = solveUTr(A,b)
 
 [nA,mA]=size(A); % Detect the size of A
 
@@ -31,4 +31,6 @@ for i = nA : -1: 1  % Starting from the last line and moving up
    end
    b(i) = b(i) / A(i,i); % The value of the i-th unknown is calculated and stored in b(i)
 end
+
+x = b;
 end
