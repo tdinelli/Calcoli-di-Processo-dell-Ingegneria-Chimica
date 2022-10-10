@@ -21,13 +21,13 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-function b=linslv(A,b)
+function x = MyLinearSolver(A,b)
 
 
 [At bt]=triangularizeU(A,b); % Take The matrix A and the vector b 
                              % and transform them in a upper triangular 
                              % matrix with its correspondent b
-b=solveUTr(At,bt); % Solve the upper triangular system and 
+x = solveUTr(At,bt); % Solve the upper triangular system and 
                   % return the solution in the vector b
 
 % It should be noted how we could save memory by writing the Upper

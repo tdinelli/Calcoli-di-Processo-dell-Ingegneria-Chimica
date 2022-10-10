@@ -24,11 +24,17 @@
 %  2x + y - 2t = -1
 %  -z + t = 2
 
+% x + 45y - t = 6
+% x - 3t = 12
+% x + y + z + 6 = 0
+% x - y + z + t = 12
+
+
 clear, close, clc;
 
-A = [1 2 -1 2; 1 0 2 1; 2 1 0 -2; 0 0 -1 1];
+A = [1 45 0 -1; 1 0 0 -3; 1 1 1 0; 1 -1 1 1];
 
-b = [3; 1; -1; 2];
+b = [6; 12; 0; 12];
 
 MySolution = MyLinearSolver(A, b);
 MatlabSolution = linsolve(A, b);
