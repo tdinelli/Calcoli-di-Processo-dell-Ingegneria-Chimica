@@ -15,13 +15,17 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
-
+%                                                                         %
+%                Comparion of the linear solver                           %
+%                and the mldivide                                         %
+%                                                                         %
+% ----------------------------------------------------------------------- %
 %% Compare the Linear Solver and the mldivide
 
 clear, close, clc;
 
-A = tril(magic(1e4));
-opts.LT = true;
+A = triu(rand(1e4));
+opts.UT = true;
 b = ones(size(A,2),1);
 
 tic
