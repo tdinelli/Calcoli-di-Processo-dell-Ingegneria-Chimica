@@ -16,20 +16,20 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-%% Linsolve
+%% Compare the Linear Solver and the mldivide
+
 clear, close, clc;
-A=rand(10000);
-b=rand(10000, 1);
 
-tic
-y=linsolve(A,b);
-toc
-
-%% Backslash
-clear, close;
-A=rand(10000);
-b=rand(10000, 1);
+A = tril(magic(1e4));
+opts.LT = true;
+b = ones(size(A,2),1);
 
 tic
 y2=A\b;
-toc
+t1 = toc;
+
+tic
+y=linsolve(A,b,opts);
+t2 = toc;
+
+disp(['Speed-up coefficient: ', num2str(t1/t2)])
