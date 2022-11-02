@@ -15,11 +15,6 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
-%                                                                         %
-%       Assemble the two function to get a single call                    %
-%       to solve the system                                               %
-%                                                                         %
-% ----------------------------------------------------------------------- %
 
 clear, close, clc;
 
@@ -27,13 +22,13 @@ options = optimset('Display','iter'); % show iterations
 
 %% Newton method
 fprintf("\nSolution with newton method of function 1\n")
-[sol_newton_1, err_newton_1] = Newton(1.7, @function_1, 1e-8, 50);
+[sol_newton_1, err_newton_1] = Newton_symbolic(1.7, @function_1, 1e-8, 50);
 
 fprintf("\nSolution with newton method of function 2\n")
-[sol_newton_2, err_newton_2] = Newton(1.7, @function_2, 1e-8, 50);
+[sol_newton_2, err_newton_2] = Newton_symbolic(1.7, @function_2, 1e-8, 50);
 
 fprintf("\nSolution with newton method of function 3\n")
-[sol_newton_3, err_newton_3] = Newton(1.7, @function_3, 1e-8, 50);
+[sol_newton_3, err_newton_3] = Newton_symbolic(1.7, @function_3, 1e-8, 50);
 
 %% Fzero method
 fprintf("\nSolution with fzero method of function 1\n")

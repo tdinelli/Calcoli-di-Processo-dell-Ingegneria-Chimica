@@ -15,8 +15,13 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
+%                                                                         %
+%                   Symbolic version the derivatives                      %
+%                   here are computed a symbolic                          %
+%                                                                         %
+% ----------------------------------------------------------------------- %
 
-function [solution, error] = Newton(x0, f, tol, maxiter)
+function [solution, error] = Newton_symbolic(x0, f, tol, maxiter)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % y0: first guess solution
@@ -33,7 +38,9 @@ x0v(1) = x0;
 
 fprintf("%-s\t\t %-s\t\t %-s\t\t %-s\t\t %-s\t\t \n","Iter","x0", ...
     "f(x0)", "x0+1", "error")
-for i = 1:maxiter
+for i = 1:maxiter % here it is implemented the version with for cycle 
+                  % however is completely equivalent the version with the
+                  % while
     numerator = subs(y, x, x0v(i));
     denominator = subs(diffy, x, x0v(i));
     
