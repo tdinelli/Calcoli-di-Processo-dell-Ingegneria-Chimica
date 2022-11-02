@@ -16,38 +16,31 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-clear, close, clc;
+function [c, iter] = RegulaFalsi(funz,a,b,eps)
 
-options = optimset('Display','iter','PlotFcns', ...
-    {@optimplotx,@optimplotfval},'TolFun',1e-10); % show iterations
+maxIter = 120;
+fa = funz(a);
+fb = funz(b);
+iter = 0;
 
-%% Fsolve
+if sign(fa)*sign(fb)<0
+    while abs(b-a)>eps && iter<=maxIter
 
-[sol_fsolve_1, fval_solve_1, exitFlag_solve_1] = fsolve(@function_1,...
-    1, options);
-
-[sol_fsolve_2, fval_solve_2, exitFlag_solve_2] = fsolve(@function_2,...
-    1, options);
-%% Fzero
-[sol_fzero_1, fval_zero_1, exitFlag_zero_1] = fzero(@function_1,...
-    1, options);
-
-[sol_fzero_2, fval_zero_2, exitFlag_zero_2] = fzero(@function_2,...
-    1, options);
-%% Plots
-
-x = -1:0.01:1;
-hold on
-plot([-1 1], [0 0], 'k--'); % plot the horizontal line
-plot(x, function_1(x),'LineWidth',2.5,'Color', 'red')
-plot(x, function_2(x), 'LineWidth',2.5, 'Color', 'blue')
-legend('', 'x^{2}', 'x^{3}', 'FontSize', 18)
-%% Functions
-
-function f1 = function_1(x)
-    f1 = x.^2;
+    c = b - fb / (fb-fa) * (b-a);
+    fc=funz(c);
+    if sign(fc) * sign(fb) <= 0
+        a = c;
+        fa = fc;
+    else
+        b = c;
+        fb = fc; 
+    end
+        iter = iter+1;
+    end
+    
+else
+    error('There is no solution in the selected interval!')
+end
 end
 
-function f2 = function_2(x)
-    f2 = x.^3;
-end
+

@@ -18,36 +18,15 @@
 
 clear, close, clc;
 
-options = optimset('Display','iter','PlotFcns', ...
-    {@optimplotx,@optimplotfval},'TolFun',1e-10); % show iterations
+%% Data
 
-%% Fsolve
+P = 1; % atm
+names = ['NC6'; 'NC7'];
+mole_fractions = [0.7 0.3];
 
-[sol_fsolve_1, fval_solve_1, exitFlag_solve_1] = fsolve(@function_1,...
-    1, options);
+%% Solution
 
-[sol_fsolve_2, fval_solve_2, exitFlag_solve_2] = fsolve(@function_2,...
-    1, options);
-%% Fzero
-[sol_fzero_1, fval_zero_1, exitFlag_zero_1] = fzero(@function_1,...
-    1, options);
-
-[sol_fzero_2, fval_zero_2, exitFlag_zero_2] = fzero(@function_2,...
-    1, options);
-%% Plots
-
-x = -1:0.01:1;
-hold on
-plot([-1 1], [0 0], 'k--'); % plot the horizontal line
-plot(x, function_1(x),'LineWidth',2.5,'Color', 'red')
-plot(x, function_2(x), 'LineWidth',2.5, 'Color', 'blue')
-legend('', 'x^{2}', 'x^{3}', 'FontSize', 18)
-%% Functions
-
-function f1 = function_1(x)
-    f1 = x.^2;
-end
-
-function f2 = function_2(x)
-    f2 = x.^3;
-end
+[Bubble_temperature_solve, val_solve, exit_solve] = Tbubble(P,...
+    names, mole_fractions, 300, 'solve');
+[Bubble_temperature_zero, val_zero, exit_zero] = Tbubble(P, ...
+    names, mole_fractions, 300, 'fzero');

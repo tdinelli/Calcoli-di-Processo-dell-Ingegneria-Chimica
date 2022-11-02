@@ -26,6 +26,7 @@ function [solution, error] = Newton_numerical(x0, f, dfdx, tol, maxiter)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % y0: first guess solution
 % f: function to be zeroed
+% dfdx: function to perform differentiation (forward in this case)
 % tol: accepted relative tolerance for the solution
 % maxiter: maximum number of iterations allowed
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +37,7 @@ diffy = dfdx(f, x0);
 x0v = zeros(1, maxiter);
 error = zeros(1,maxiter);
 x0v(1) = x0;
-error(1) = x0;
+error(1) = x0; % just to alloc the error value
 
 iteration_number = 1;
 
