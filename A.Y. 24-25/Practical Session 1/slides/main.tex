@@ -12,7 +12,8 @@
 \setbeamertemplate{footline}{
    \textcolor{bluepoli}{\rule{\paperwidth}{1pt}}
    \vskip4pt
-   \hskip5pt \tiny Introduction to Matlab $|$ Calcoli di Processo dell' Ingegneria Chimica \hskip310pt \insertframenumber
+   \hskip5pt \tiny Introduction to Matlab $|$ Calcoli di Processo dell' Ingegneria
+   Chimica \hskip250pt \insertframenumber
    \vskip4pt
 }
 
@@ -192,7 +193,7 @@ sorting=ynt
             GitHub repository of the practical sessions.}
          \item[$\blacktriangleright$]
             \href{https://it.mathworks.com/help/matlab/getting-started-with-matlab.html}{\footnotesize
-            Matlab online tutorial and documentation}
+            Matlab online tutorial and documentation.}
     \end{itemize}
 \end{frame}
 
@@ -277,17 +278,17 @@ background. It’s all code everywhere.}
 \subsection{Variables}
 \begin{frame}{Area of a cylinder}
 \large \textcolor{mylilas}{Let's compute the area of a cylinder given the diameter D = 20 cm
-and height h = 50 cm.}.
+and height h = 50 cm}.
 
 \begin{tcolorbox}[colback=white,colframe=bluepoli,sidebyside]
    \vskip -2.cm
-   \color{mygreen} Command window \color{black}\\
-      $>>$ D = 0.2 \color{codegreen} \% m \color{black} \\
-      $>>$ h = 0.5 \color{codegreen} \% m \color{black}\\
+   \textcolor{mygreen}{Command window}\\
+      $>>$ D = 0.2 \textcolor{codegreen}{ \% m} \\
+      $>>$ h = 0.5 \textcolor{codegreen}{ \% m} \\
       $>>$ perimeter = pi * D\\
       $>>$ Area = perimeter * h
    \tcblower
-   \color{mygreen} Workspace \color{black} \\
+   \textcolor{mygreen}{Workspace} \\
       \small $\rightarrow$ Generate variable D and assign value of 0.2\\
       $\rightarrow$ Generate variable h and assign value of 0.5\\
       $\rightarrow$ Generate variable perimeter and assign the result of the operation.\\
@@ -399,7 +400,7 @@ variables that are ``hard-coded'' into their m-file.
 
 \begin{frame}{}
 \begin{itemize}
-   \item[$\blacktriangleright$] Create a vector of n-elements equally spaced:
+   \item[$\blacktriangleright$] Create a vector of n equally spaced elements:
       \begin{tcolorbox}[colback=white,colframe=bluepoli]
          $>>$ v1 = [1:2:11] \color{codegreen}\% Parenthesis can be omitted\\
          \color{black}
