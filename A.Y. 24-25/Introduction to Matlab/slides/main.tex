@@ -102,7 +102,9 @@ sorting=ynt
    email: timoteo.dinelli@polimi.it \\
    email: marco.mehl@polimi.it \\
 }
-\date{20\textsuperscript{\underline{th}} of September 2024}
+\date{20\textsuperscript{\underline{th}} of September 2024,\\
+27\textsuperscript{\underline{th}} of September 2024,\\
+3\textsuperscript{\underline{rd}} of October 2024.}
 
 
 \begin{document}
@@ -197,9 +199,20 @@ sorting=ynt
     \end{itemize}
 \end{frame}
 
+% \begin{frame}
+%    \frametitle{Table of Contents}
+%    \hypersetup{linkcolor=black}{\tableofcontents}
+% \end{frame}
 \begin{frame}
-   \frametitle{Table of Contents}
-   \hypersetup{linkcolor=black}{\tableofcontents}
+\frametitle{Table of Contents}
+   \begin{columns}[t] % 't' allinea le colonne in alto
+      \begin{column}{0.5\textwidth}
+         \hypersetup{linkcolor=black}{\tableofcontents[sections={1-3}]}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         \hypersetup{linkcolor=black}{\tableofcontents[sections={4-5}]}
+      \end{column}
+   \end{columns}
 \end{frame}
 
 \section{Introduction}
@@ -510,6 +523,155 @@ variables that are ``hard-coded'' into their m-file.
 \end{columns}
 \end{frame}
 
+%%%%%%%%%%%%%%% PART 2
+{%
+   \setbeamertemplate{footline}{}
+   \begin{frame}[standout]
+      Loops and conditional statements
+   \end{frame}
+}
+
+\section{Loops}
+\subsection{For}
+\begin{frame}{\textcolor{blue}{for} loop}
+\begin{itemize}
+   \item[$\blacktriangleright$] The \textbf{for} loop repeats a series of instructions a
+      \alert{fixed number of times}.
+   \begin{tcolorbox}[colback=white,colframe=bluepoli]
+      $>>$ \textcolor{blue}{for} i = \textcolor{red}{1:10}\\
+      $>>$ \hspace{1em}paperino(i) = i \\
+      $>>$ \textcolor{blue}{end}
+      \tcblower
+      paperino = 1 \\
+      paperino = 1 2\\
+      paperino = 1 2 3\\
+      ... \\
+      paperino = 1 2 3 4 5 6 7 8 9\\
+      paperino = 1 2 3 4 5 6 7 8 9 10
+   \end{tcolorbox}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\begin{itemize}
+   \item[$\blacktriangleright$] The index of the \textbf{for} loop can be changed by an
+      \alert{arbitrary increment}:
+   \begin{tcolorbox}[colback=white,colframe=bluepoli]
+      $>>$ \textcolor{blue}{for} i = \textcolor{red}{10:-1:1}\\
+      $>>$ \hspace{1em}pluto(i) = i\\
+      $>>$ \textcolor{blue}{end}
+      \tcblower
+      pluto = 0 0 0 0 0 0 0 0 0 10 \\
+      pluto = 0 0 0 0 0 0 0 0 9 10 \\
+      pluto = 0 0 0 0 0 0 0 8 9 10 \\
+      ... \\
+      pluto = 0 2 3 4 5 6 7 8 9 10 \\
+      pluto = 1 2 3 4 5 6 7 8 9 10 \\
+   \end{tcolorbox}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Examples}
+\begin{itemize}
+   \item[$\blacktriangleright$] Sum the first hundred natural numbers.
+      \begin{equation*}
+         \sum_{i = 1}^{100} i = ?
+      \end{equation*}
+   \item[$\blacktriangleright$] Sum hundred times one.
+      \begin{equation*}
+         \sum_{i=1}^{100} 1 = ?
+      \end{equation*}
+   \begin{tcolorbox}[colback=white,colframe=bluepoli,sidebyside]
+      $>>$ sum = 0; \\
+      $>>$ \textcolor{blue}{for} i = \textcolor{red}{1:100}\\
+      $>>$ \hspace{1em}sum = sum + i;\\
+      $>>$ \textcolor{blue}{end}\\
+      $>>$ disp(sum);
+      \tcblower
+      $>>$ sum = 0; \\
+      $>>$ \textcolor{blue}{for} i = \textcolor{red}{1:100}\\
+      $>>$ \hspace{1em}sum += 1;\\
+      $>>$ \textcolor{blue}{end}\\
+      $>>$ disp(sum);
+    \end{tcolorbox}
+\end{itemize}
+\end{frame}
+
+\subsection{While}
+\begin{frame}{\textcolor{blue}{while}}
+\vspace{-10pt}
+\begin{itemize}
+    \item[$\blacktriangleright$] The \textbf{while} loop repeats a series of instructions
+       \alert{until a condition is TRUE}.
+    \item[$\blacktriangleright$] N.B. pay attention with the while loop it can run till
+       infinite, \alert{handle with care}.
+\end{itemize}
+\begin{tcolorbox}[colback=white,colframe=bluepoli]
+   $>>$ sum = 0; \\
+   $>>$ \textcolor{blue}{while} (sum $<$ 325)\\
+   $>>$ \hspace{1em}token = token + 1\\
+   $>>$ \hspace{1em}sum = sum + token; \\
+   $>>$ \textcolor{blue}{end}\\
+   disp([''Iteration number: '', num2str(token)]); \\
+   disp([''Sum is equal to:  '', num2str(sum)]); 
+   \tcblower
+   Iteration number: 25 \\
+   Sum is equal to: 325
+\end{tcolorbox}
+\end{frame}
+
+\section{Conditional statements}
+\subsection{If, else if, else}
+\begin{frame}{IF Statement}
+\begin{itemize}
+   \item[$\blacktriangleright$] The \textcolor{blue}{\textbf{IF}} statement executes a
+      series of instructions only \textcolor{blue}{\textbf{IF}} a condition is TRUE:
+\end{itemize}
+
+\begin{columns}
+\column{0.5\textwidth}
+   \begin{tcolorbox}[colback=white,colframe=bluepoli]
+      \textcolor{blue}{if} (condition)\\
+      ... instructions\\
+      \textcolor{blue}{elseif} (condition)\\
+      ... instructions \\
+      \textcolor{blue}{elseif} (condition)\\
+      ... instructions \\
+      \textcolor{blue}{else}\\
+      ... instructions \\
+      \textcolor{blue}{end}
+   \end{tcolorbox}
+\column{0.5\textwidth}
+   \begin{tcolorbox}[colback=white,colframe=bluepoli]
+      \textcolor{mylilas}{Example: Write a simple script to compute the absolute value of
+      a number.}\\
+      $>>$ x = 35\\
+      $>>$ \textcolor{blue}{if} (x$\ge$0)\\
+      $>>$ \hspace{1em}abs = x;\\
+      $>>$ \textcolor{blue}{else}\\
+      $>>$ \hspace{1em}abs = -x\\
+      $>>$ \textcolor{blue}{end}
+   \end{tcolorbox}
+\end{columns}
+\end{frame}
+
+\section{Useful functions}
+\begin{frame}{Useful Functions}
+\begin{itemize}
+   \item[$\blacktriangleright$] \textbf{clc}: clear the screen of the command window.
+   \item[$\blacktriangleright$] \textbf{clear / clear all}: erase all the variables
+      contained inside the workspace.
+   \item[$\blacktriangleright$] \textbf{close / close all}: close all the pop-up windows
+      opened after plotting something.
+   \item[$\blacktriangleright$] \textbf{disp(variable name)}: print inside the command
+      window the value of a certain variable.
+   \item[$\blacktriangleright$] \textbf{fprintf(...)}: same function of ``disp'' with a
+      slight different behaviour.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%% PART 3
+%%%%%%%%%%%%%%% CLOSING
 {%
    \setbeamertemplate{footline}{}
    \begin{frame}[standout]
@@ -518,10 +680,8 @@ variables that are ``hard-coded'' into their m-file.
 }
 
 % \appendix % This to turnoff numbering and stuff
-
 % \begin{frame}{References}
 %    % \bibliographystyle{alpha}
 %    \printbibliography
 % \end{frame}
-
 \end{document}

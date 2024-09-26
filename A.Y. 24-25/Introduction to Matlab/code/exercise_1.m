@@ -15,3 +15,13 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
+
+clear
+clc
+
+D = 0.2; % m
+h = 0.5; % m
+perimeter = pi * D;
+area = perimeter * h;
+
+disp(['The value is: ', num2str(area)])
