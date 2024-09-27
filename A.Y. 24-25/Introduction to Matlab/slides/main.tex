@@ -523,6 +523,7 @@ variables that are ``hard-coded'' into their m-file.
 \end{columns}
 \end{frame}
 
+
 %%%%%%%%%%%%%%% PART 2
 {%
    \setbeamertemplate{footline}{}
@@ -598,7 +599,7 @@ variables that are ``hard-coded'' into their m-file.
 \end{frame}
 
 \subsection{While}
-\begin{frame}{\textcolor{blue}{while}}
+\begin{frame}{\textcolor{blue}{while} loop}
 \vspace{-10pt}
 \begin{itemize}
     \item[$\blacktriangleright$] The \textbf{while} loop repeats a series of instructions
@@ -622,7 +623,7 @@ variables that are ``hard-coded'' into their m-file.
 
 \section{Conditional statements}
 \subsection{If, else if, else}
-\begin{frame}{IF Statement}
+\begin{frame}{\textcolor{blue}{IF} Statement}
 \begin{itemize}
    \item[$\blacktriangleright$] The \textcolor{blue}{\textbf{IF}} statement executes a
       series of instructions only \textcolor{blue}{\textbf{IF}} a condition is TRUE:
@@ -655,6 +656,40 @@ variables that are ``hard-coded'' into their m-file.
 \end{columns}
 \end{frame}
 
+\begin{frame}{Example}
+Let's define a square matrix populated with random numbers, using the function
+\textbf{magic()} and loop over its rows and columns to match specific conditions.
+
+\begin{tcolorbox}[colback=white,colframe=bluepoli]
+   $>>$ clear, clc \\
+   $>>$ M = magic(300);\\
+   $>>$ \textcolor{blue}{for} (i = 1:300)\\
+   $>>$ \hspace{1em}\color{blue} for \color{black} (j = 1:300)\\
+   $>>$ \hspace{1em}\hspace{1em}\textcolor{blue}{if}(M(i,j) == 569)\\
+   $>>$ \hspace{1em}\hspace{1em}\hspace{1em}disp('Found!')\\
+   $>>$ \hspace{1em}\hspace{1em}\textcolor{blue}{end}\\
+   $>>$ \hspace{1em}\textcolor{blue}{end}\\
+   $>>$ \textcolor{blue}{end}
+\end{tcolorbox}
+\end{frame}
+
+% \begin{frame}{}
+% \textcolor{mylilas}{Implement the Babilonian method to compute the square root of a
+% number with a precision of four decimal figures}.
+% \begin{enumerate}
+%    \item \textbf{Make an Initial guess}.
+%       Guess any positive number $x_{0}$.
+%    \item \textbf{Improve the first guess}.
+%       Apply the formula $x_{1} = \frac{x_{0} + \frac{S}{x_{0}}}{2}$. The number $x_{1}$
+%       is a better approximation to $\sqrt{S}$.
+%    \item \textbf{Iterate until convergence}.
+%       Apply the formula $x_{n+1} = \frac{x_{n} + \frac{S}{x_{n}}}{2}$ until the
+%       convergence is reached.
+% \end{enumerate}
+% \textbf{Convergence} is reached when the digits of $x_{n+1}$ and $x_{n}$ agree to as many
+%    decimal places as you desire.
+% \end{frame}
+
 \section{Useful functions}
 \begin{frame}{Useful Functions}
 \begin{itemize}
@@ -667,6 +702,11 @@ variables that are ``hard-coded'' into their m-file.
       window the value of a certain variable.
    \item[$\blacktriangleright$] \textbf{fprintf(...)}: same function of ``disp'' with a
       slight different behaviour.
+   \item[$\blacktriangleright$] \textbf{magic(\textcolor{blue}{n})}: is an n-by-n matrix
+      constructed from the integers 1 through $n^2$ with equal row, column, and diagonal
+      sums. Produces valid magic squares for all $n > 0$ except $n = 2$.
+   \item[$\blacktriangleright$] \textbf{rand(\textcolor{blue}{n})}: returns an n-by-n
+      matrix of uniformly distributed random numbers.
 \end{itemize}
 \end{frame}
 
