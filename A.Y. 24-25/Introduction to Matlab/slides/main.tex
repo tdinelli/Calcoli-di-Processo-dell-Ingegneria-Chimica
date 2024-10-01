@@ -210,7 +210,7 @@ sorting=ynt
          \hypersetup{linkcolor=black}{\tableofcontents[sections={1-3}]}
       \end{column}
       \begin{column}{0.5\textwidth}
-         \hypersetup{linkcolor=black}{\tableofcontents[sections={4-5}]}
+         \hypersetup{linkcolor=black}{\tableofcontents[sections={4-8}]}
       \end{column}
    \end{columns}
 \end{frame}
@@ -656,6 +656,99 @@ variables that are ``hard-coded'' into their m-file.
 \end{columns}
 \end{frame}
 
+
+%%%%%%%%%%%%%%% PART 3
+{%
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+   Functions and Plot
+\end{frame}
+}
+
+\section{Functions}
+\begin{frame}{Functions}
+   In MATLAB, a \alert{function} is a block of code that takes inputs, performs a set of
+   operations, and returns outputs. Functions allow you to organize code in a clearer and
+   more reusable way, especially when you need to perform the same operation in different
+   parts of your program.
+
+   \textbf{Why using functions?}
+   \begin{itemize}
+      \item[$\blacktriangleright$] \textbf{Modularity}: Separating code into functions
+         makes the program more readable and easier to maintain.
+      \item[$\blacktriangleright$] \textbf{Reusability}: A function can be reused in different
+         parts of the program without rewriting the code.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Syntax}
+\begin{tcolorbox}[colback=white,colframe=bluepoli]
+   \textcolor{blue}{function} $
+   \tikzmarknode{out}{\highlight{colork}{\left[ y_1, ..., y_N \right]}} =
+   \tikzmarknode{name}{\highlight{colorT}{function\_name}}\:\tikzmarknode{inp}{\highlight{colorM}{(x_{1},
+   ..., x_{M})}}$\\
+    \hspace{2em} \textcolor{codegreen}{\% code}\\
+    \hspace{2em} \textcolor{codegreen}{\% code}\\
+    \hspace{2em} \textcolor{codegreen}{\% code}\\
+   \textcolor{blue}{end}\\
+\end{tcolorbox}
+
+\begin{tikzpicture}[overlay, remember picture, >=stealth, nodes={align=left,inner ysep=1pt},<-]
+   \node[anchor=west, color=colorM!85, yshift=-1em, xshift=5.2em] (inputtext) at (inp.south)
+   {\textsf{\footnotesize Input variables.}};
+   \draw [color=colorM](inp.south) |- ([yshift=-0.2ex]inputtext.south east);
+
+   \node[anchor=west, color=colorT!85, yshift=-3em, xshift=4em] (fnametext) at (name.south)
+   {\textsf{\footnotesize Name of the function (user defined).}};
+   \draw [color=colorT](name.south) |- ([yshift=-0.2ex]fnametext.south east);
+
+   \node[anchor=west, color=colork!85, yshift=-5em, xshift=7.5em] (outtext) at (out.south)
+   {\textsf{\footnotesize Output variables (parenthesis can be omitted).}};
+   \draw [color=colork](out.south) |- ([yshift=-0.2ex]outtext.south east);
+\end{tikzpicture}
+\end{frame}
+
+\section{Plot}
+\begin{frame}{Plot}
+Let's plot on a Cartesian plane the following function:
+\begin{equation*}
+    y(x) = 3x + 2
+\end{equation*}
+\begin{tcolorbox}[colback=white,colframe=bluepoli]
+   x = 0:1:20\\
+   \textcolor{blue}{for} i = 1:length(x)\\
+   \hspace{1em} y(i) = 3 * x(i) + 2; \\
+   \textcolor{blue}{end}\\
+   plot(x, y)
+\end{tcolorbox}
+\end{frame}
+
+\begin{frame}{}
+Now let's add to the previous plot the following function:
+\begin{equation*}
+   y(x) = -3x + 4
+\end{equation*}
+
+\begin{tcolorbox}[colback=white,colframe=bluepoli]
+   x = 0:1:20\\
+   \textcolor{blue}{for} i = 1:length(x)\\
+      $y1(i) = 3 * x(i) + 2$; \\
+      $y2(i) = -3 * x(i) + 4$; \\
+   \textcolor{blue}{end}\\
+   hold \textcolor{purple}{on}\\
+   plot(x, y) \\
+   plot(x, y2)
+\end{tcolorbox}
+\end{frame}
+
+%%%%%%%%%%%%%%% PART 4
+{%
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+   Exercises
+\end{frame}
+}
+\section{Exercises}
 \begin{frame}{Example}
 Let's define a square matrix populated with random numbers, using the function
 \textbf{magic()} and loop over its rows and columns to match specific conditions.
@@ -673,24 +766,49 @@ Let's define a square matrix populated with random numbers, using the function
 \end{tcolorbox}
 \end{frame}
 
-% \begin{frame}{}
-% \textcolor{mylilas}{Implement the Babilonian method to compute the square root of a
-% number with a precision of four decimal figures}.
-% \begin{enumerate}
-%    \item \textbf{Make an Initial guess}.
-%       Guess any positive number $x_{0}$.
-%    \item \textbf{Improve the first guess}.
-%       Apply the formula $x_{1} = \frac{x_{0} + \frac{S}{x_{0}}}{2}$. The number $x_{1}$
-%       is a better approximation to $\sqrt{S}$.
-%    \item \textbf{Iterate until convergence}.
-%       Apply the formula $x_{n+1} = \frac{x_{n} + \frac{S}{x_{n}}}{2}$ until the
-%       convergence is reached.
-% \end{enumerate}
-% \textbf{Convergence} is reached when the digits of $x_{n+1}$ and $x_{n}$ agree to as many
-%    decimal places as you desire.
-% \end{frame}
+\begin{frame}{The babilonian method}
+\textcolor{mylilas}{Write a function that implements the Babilonian method to compute the
+   square root of a number with a precision of four decimal figures}.
+\begin{enumerate}
+   \item \textbf{Make an Initial guess}.
+      Guess any positive number $x_{0}$.
+   \item \textbf{Improve the first guess}.
+      Apply the formula $x_{1} = \frac{x_{0} + \frac{S}{x_{0}}}{2}$. The number $x_{1}$
+      is a better approximation to $\sqrt{S}$.
+   \item \textbf{Iterate until convergence}.
+      Apply the formula $x_{n+1} = \frac{x_{n} + \frac{S}{x_{n}}}{2}$ until the
+      convergence is reached.
+\end{enumerate}
+\textbf{Convergence} is reached when the digits of $x_{n+1}$ and $x_{n}$ agree to as many
+   decimal places as you desire.
+\end{frame}
 
-\section{Useful functions}
+\begin{frame}{}
+\begin{tcolorbox}[colback=white,colframe=bluepoli]
+   $>>$ \textcolor{blue}{function} SquareRoot = ComputeSquareRoot(S)\\
+   $>>$ \hspace{1em}iter = 0;\\
+   $>>$ \hspace{1em}x0 = S;\\
+   $>>$ \hspace{1em}y = 0.5*(x0+S/x0);\\
+   $>>$ \hspace{1em}\textcolor{blue}{while} abs(x0-y)>1e-5 \&\& iter<50\\
+   $>>$ \hspace{1em}\hspace{1em}x0 = y;\\
+   $>>$ \hspace{1em}\hspace{1em}y = 0.5*(x0+S/x0);\\
+   $>>$ \hspace{1em}\hspace{1em}iter = iter+1;\\
+   $>>$ \hspace{1em}\textcolor{blue}{end}\\
+   $>>$ \hspace{1em}disp(['Number of iteration to reach convergence: ', num2str(iter)])\\
+   $>>$ \hspace{1em}SquareRoot = y;\\
+   $>>$ \textcolor{blue}{end}\\
+\end{tcolorbox}
+\end{frame}
+
+%%%%%%%%%%%%%%% PART 5
+{%
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+   Useful material
+\end{frame}
+}
+
+\section{Useful material}
 \begin{frame}{Useful Functions}
 \begin{itemize}
    \item[$\blacktriangleright$] \textbf{clc}: clear the screen of the command window.
@@ -710,7 +828,69 @@ Let's define a square matrix populated with random numbers, using the function
 \end{itemize}
 \end{frame}
 
-%%%%%%%%%%%%%%% PART 3
+\begin{frame}{}
+   \begin{columns}[t]
+      \begin{column}{0.5\textwidth}
+         \begin{table}
+         \centering
+         \begin{tabular}{l|l} 
+         \hline\hline
+         \rowcolor[rgb]{0.004,0.475,0.435} \multicolumn{1}{l}{Line Style} & \\
+         \hline\hline
+         '-'    & Solid Line \\
+         \hline
+         '--'   & Dashed Line \\
+         \hline
+         ':'    & Dotted Line \\
+         \hline
+         '-.'   & Dashed Dotted Line \\
+         \rowcolor[rgb]{0.004,0.475,0.435} \multicolumn{1}{l}{Marker} & \\
+         \hline\hline
+         'o'     & Circle \\
+         \hline
+         '+'     & Plus \\
+         \hline
+         '*'     & Asterisc \\
+         \hline
+         '.'     & Point \\
+         \hline
+         'x'     & Cross \\
+         \hline
+         '-'     & Horizontal line \\
+         \hline\hline
+         \end{tabular}
+         \end{table}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         \begin{table}
+         \centering
+         \begin{tabular}{l|l} 
+         \hline
+         '\textbar{}' & Vertical line \\
+         \hline
+         's'  & Square \\
+         \hline
+         'd' & Diamond \\
+         \hline
+         '\^{}'    & Upward-pointing triangle \\
+         \hline
+         'v'       & Downward-pointing triangle \\
+         \hline
+         '$>$' & Right-pointing triangle \\
+         \hline
+         '$<$' & Left-pointing triangle \\
+         \hline
+         'p' & Pentagram \\
+         \hline
+         'h'  & Hexagram \\
+         \hline\hline
+         \end{tabular}
+         \end{table}
+      \end{column}
+   \end{columns}
+\end{frame}
+
+
 %%%%%%%%%%%%%%% CLOSING
 {%
    \setbeamertemplate{footline}{}
