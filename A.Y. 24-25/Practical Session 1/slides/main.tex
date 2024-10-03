@@ -130,8 +130,165 @@ sorting=ynt
    \href{https://en.wikipedia.org/wiki/Floating-point_arithmetic}{Wikipedia}.
 
    \begin{equation*}
-      12.345 = 12345 \: \times \: 10^{-3}
+      12.345 = \tikzmarknode{mantissa}{\highlight{colork}{12345}} \: \times \:
+      \tikzmarknode{exponent}{\highlight{colorp}{10^{-3}}}
    \end{equation*}
+
+   \begin{tikzpicture}[overlay, remember picture, >=stealth, nodes={align=left,inner ysep=1pt},<-]
+      \node[anchor=west, color=colork!85, yshift=-1em, xshift=-5.2em] (mantissa_text) at
+      (mantissa.south)
+      {\textsf{\footnotesize Mantissa}};
+      \draw [color=colork](mantissa.south) |- ([yshift=-0.2ex]mantissa_text.south west);
+
+      \node[anchor=west, color=colorp!85, yshift=-1em, xshift=3.2em] (exp_text) at (exponent.south)
+      {\textsf{\footnotesize Exponent}};
+      \draw [color=colorp](exponent.south) |- ([yshift=-0.2ex]exp_text.south east);
+   \end{tikzpicture}
+
+   \href{https://en.wikibooks.org/wiki/A-level_Computing/AQA/Paper_2/Fundamentals_of_data_representation/Floating_point_numbers}{Additional
+   RECOMMENDED read}.
+\end{frame}
+
+
+\begin{frame}{Single or Double precision?}
+    In any computer, the difference between single and double precision reflects on the
+    number of bits used to represent a real number.
+    \begin{itemize}
+        \item[$\blacktriangleright$] Single precision floating point number 32 bits (4
+           bytes). Safe use with $\sim 7/8$ decimal digits.
+        \item[$\blacktriangleright$] Double precision floating point number 64 bits (8
+           bytes). Safe use with $\sim 15/16$ decimal digits.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Elementary operations}
+\vspace{-.5cm}
+   \small{Initialize a single precision variable in MATLAB (e.g. x = $1e^{+25}$) using
+   the function:\\
+   x = \alert{single}(1.e+25).
+
+   Working in single precision predict and calculate from x = 1.e+25  and y = 1.e+18 the
+   following values of z:}
+
+   \begin{table}
+   \centering
+   \begin{tabular}{l|l|l} 
+   \hline
+   \multicolumn{1}{l}{} & \multicolumn{1}{l}{\textbf{Single Precision}} & \textbf{Double Precision}  \\ 
+   \hline
+      $z = x * y$ & inf & 1.0000e+43 \\
+      \hline
+      $z = x / y$ & 10000000 & 10000000 \\
+      \hline
+      $z = y / x$ & 1.0000e-07 & 1.0000e-07 \\
+      \hline
+      $z = x^2$ & inf & 1.0000e+50 \\
+      \hline
+      $z = y^2$ & 1.0000e+36 & 1.0000e+36 \\
+      \hline
+      $z = 1./(x*y)$ & 0 & 1.0000e-43 \\
+      \hline
+      $z = 1./x/y$ & 9.9492e-44 & 1.0000e-43 \\
+      \hline
+      $z = y + 1e10$ & 1.0000e+18 & 1.0000e+18 \\
+      \hline
+      $z = x * y / (x * y + 1)$ & NaN & 1 \\
+   \hline
+   \end{tabular}
+   \end{table}
+\end{frame}
+
+{%
+   \setbeamertemplate{footline}{}
+   \begin{frame}[standout]
+      Exercises
+   \end{frame}
+}
+
+\begin{frame}{Compute the MACHEPS}
+   Epsilon, or machine epsilon, is an important number in computing. Machine epsilon
+   gives the distance between a number and the next largest floating point number on your
+   computer. This is important to calculate, as the size of the floating point number may
+   lead to round-off errors for certain calculations. Calculating machine epsilon can be
+   done a number of ways, and many programming languages have built-in functions that can
+   determine this value. However, it also can be determined algorithmically with a fairly
+   simple routine. Write a function to determine the macheps of a generic number. Plot
+   the results for numbers from ranging from 0 to 10.
+
+   \begin{itemize}
+      \item[$\blacktriangleright$] The strategy here is to iterate as long as the
+         difference between $n$ and $n + epsilon / 2 > 0$ by halving at each iteration
+         the value of the machine epsilon until convergence.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Sum of the inverse of numbers}
+   Write a script which calculates:
+   \begin{equation*} \sum_{n = 1}^{1000000}\frac{1}{n} \end{equation*}
+
+   in \alert{single} and \alert{double} precision. Then compare with the results obtained
+   inverting the order of the sum, so by computing:
+
+   \begin{equation*} \sum_{n=1000000}^{1}\frac{1}{n} \end{equation*}
+\end{frame}
+
+\begin{frame}{The babilonian method}
+\textcolor{mylilas}{Write a function that implements the Babilonian method to compute the
+   square root of a number with a precision of four decimal figures}.
+\begin{enumerate}
+   \item \textbf{Make an Initial guess}.
+      Guess any positive number $x_{0}$.
+   \item \textbf{Improve the first guess}.
+      Apply the formula $x_{1} = \frac{x_{0} + \frac{S}{x_{0}}}{2}$. The number $x_{1}$
+      is a better approximation to $\sqrt{S}$.
+   \item \textbf{Iterate until convergence}.
+      Apply the formula $x_{n+1} = \frac{x_{n} + \frac{S}{x_{n}}}{2}$ until the
+      convergence is reached.
+\end{enumerate}
+\textbf{Convergence} is reached when the digits of $x_{n+1}$ and $x_{n}$ agree to as many
+   decimal places as you desire.
+\end{frame}
+% \begin{frame}{}
+% \begin{tcolorbox}[colback=white,colframe=bluepoli]
+%    $>>$ \textcolor{blue}{function} SquareRoot = ComputeSquareRoot(S)\\
+%    $>>$ \hspace{1em}iter = 0;\\
+%    $>>$ \hspace{1em}x0 = S;\\
+%    $>>$ \hspace{1em}y = 0.5*(x0+S/x0);\\
+%    $>>$ \hspace{1em}\textcolor{blue}{while} abs(x0-y)>1e-5 \&\& iter<50\\
+%    $>>$ \hspace{1em}\hspace{1em}x0 = y;\\
+%    $>>$ \hspace{1em}\hspace{1em}y = 0.5*(x0+S/x0);\\
+%    $>>$ \hspace{1em}\hspace{1em}iter = iter+1;\\
+%    $>>$ \hspace{1em}\textcolor{blue}{end}\\
+%    $>>$ \hspace{1em}disp(['Number of iteration to reach convergence: ', num2str(iter)])\\
+%    $>>$ \hspace{1em}SquareRoot = y;\\
+%    $>>$ \textcolor{blue}{end}\\
+% \end{tcolorbox}
+% \end{frame}
+
+\begin{frame}{Vancouver: a nickel at a time}
+   \vspace{-.5cm}
+   \small{Analogously to what happened on the Vancouver stock market
+   (\href{https://slate.com/technology/2019/10/round-floor-software-errors-stock-market-battlefield.html}{reference}),
+   starting from a stock value of 1000, check what happens when a random variation of
+   $\pm1\%$ in its value is iterated for 10000 times. Try to round or approximate
+   (truncate) to the lower or upper \alert{second} decimal figure. Compare the results
+   with the number obtained using the computer precision.
+
+   Please verify on the help page in Matlab how the functions {\it rand, floor, ceil,
+   fix, round} work.
+
+   % \begin{tcolorbox}[colback=white,colframe=bluepoli]
+   \begin{tcolorbox}[colback=white,colframe=bluepoli, sidebyside]
+      $>>$ $a = 1.2345$\\
+      $>>$ $ceil(a*100)/100 \longrightarrow ans = 1.2400$\\
+      $>>$ $floor(a*100)/100 \longrightarrow ans = 1.2300$\\
+      $>>$ $round(a*100)/100 \longrightarrow ans = 1.2300$
+      \tcblower
+      $>>$ $a = -1.2345$\\
+      $>>$ $ceil(a*100)/100 \longrightarrow ans = -1.2300$\\
+      $>>$ $floor(a*100)/100 \longrightarrow ans = -1.2400$\\
+      $>>$ $round(a*100)/100 \longrightarrow ans = -1.2300$
+   \end{tcolorbox}}
 \end{frame}
 
 %%%%%%%%%%%%%%% CLOSING
@@ -147,4 +304,18 @@ sorting=ynt
 %    % \bibliographystyle{alpha}
 %    \printbibliography
 % \end{frame}
+% \begin{tcolorbox}[colback=white,colframe=bluepoli]
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+%    $>>$
+% \end{tcolorbox}
 \end{document}
