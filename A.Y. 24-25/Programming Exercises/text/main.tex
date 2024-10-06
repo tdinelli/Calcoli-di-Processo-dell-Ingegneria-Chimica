@@ -1,0 +1,167 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% Importing packages
+% ---------------------------------------------
+
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{tgcursor}
+\usepackage{hyperref}
+
+% Different colors
+\usepackage{xcolor}
+\usepackage{color}
+\definecolor{bluepoli}{cmyk}{0.4,0.1,0,0.4}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% Images
+\usepackage{graphicx}
+% \graphicspath{ {./Figures/} }
+
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Programming exercises}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2024-2025}
+
+
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
+\tcolorboxenvironment{proof}{% `proof' from `amsthm'
+   blanker,
+   breakable,
+   left=5mm,
+   before skip=10pt,
+   after skip=10pt,
+   borderline west={1mm}{0pt}{bluepoli}
+}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+
+\title{Additional programming exercises}
+\author{Timoteo Dinelli\footnote{timoteo.dinelli@polimi.it}, Marco Mehl\footnote{marco.mehl@polimi.it}}
+\date{3\textsuperscript{rd} of October 2024}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+
+\begin{document}
+\maketitle
+
+\section*{INFO}
+Solutions can be found on
+\href{https://github.com/Titodinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica}{GitHub}.
+
+\section*{Exercises}
+
+\begin{enumerate}
+   \item Write a function that finds the maximum value and its position, in terms of row
+      and column number, of the matrix M = magic(234) and compare the result obtained
+      with the MATLAB builtin function max() and find().
+
+   \item Write a MATLAB script that proves that the magic matrix definition is correct.
+      And compare the result with a randomly generated one.
+
+   \item Write a function that, taken as input an array A of n integers, returns its
+      number of positive elements, without using predefined MATLAB library functions. For
+      example:
+      \begin{tcolorbox}[blanker, breakable, left=5mm, before skip=10pt, after skip=10pt,
+         borderline west={1mm}{0pt}{bluepoli}]
+         \textbf{Input}: A = [1, 5, -3, -9]; \\
+         \textbf{Output}: ans = 2
+      \end{tcolorbox}
+
+   \item Write a MATLAB script that draws the plot of the function
+      $f(x)=\frac{sin(x)}{x^4 + 2}$, with x within the interval $\left[-1, 1\right]$,
+      with a spacing equal to $0.1$.
+
+   \item Write a MATLAB program, that given two random points inside the Cartesian plane
+      draws the corresponding line that pass through the two points:
+      \begin{tcolorbox}[blanker, breakable, left=5mm, before skip=10pt, after skip=10pt,
+         borderline west={1mm}{0pt}{bluepoli}]
+         Remember that the slope and the intercept of a generic line $y=mx+q$ passing by
+         two points, $P1(x_1, y_1),\:P2(x_2, y_2)$ are given by the following formulas:\\
+
+         $m = \frac{y_2 - y_1}{x_2 - x_1}$ and $q = y_1 - mx_1$\\
+
+         \textbf{Input}: $P_{1} = \left(4,-3\right)$; $P_{2} = \left(5,1\right)$;\\
+         \textbf{Output}: $m = 4$, $q = -19$\\
+      \end{tcolorbox}
+
+   \item Given a square matrix \textbf{A}. We want to create a matrix \textbf{B} equal to
+      the matrix \textbf{A} while replacing only the elements on the main diagonal with
+      the average value of the corresponding rows.
+      \begin{tcolorbox}[blanker, breakable, left=5mm, before skip=10pt, after skip=10pt,
+         borderline west={1mm}{0pt}{bluepoli}]
+         \textbf{Input}: \begin{equation*}
+            A = \begin{bmatrix}
+               1 & 2 & 3 \\
+               4 & 5 & 6 \\
+               7 & 8 & 9
+            \end{bmatrix}
+            \end{equation*}\\
+         \textbf{Output}: \begin{equation*}
+            B = \begin{bmatrix}
+               2 & 2 & 3 \\
+               4 & 5 & 6 \\
+               7 & 8 & 8
+            \end{bmatrix}
+            \end{equation*}
+      \end{tcolorbox}
+
+   \item
+      Given a square matrix A. You want to create a matrix B containing below the main
+      diagonal all null elements, above the main diagonal all elements equal to the sum
+      of all elements of matrix A, and on the main diagonal the corresponding elements of
+      matrix A.
+      \begin{tcolorbox}[blanker, breakable, left=5mm, before skip=10pt, after skip=10pt,
+         borderline west={1mm}{0pt}{bluepoli}]
+         \textbf{Input}: \begin{equation*}
+            A = \begin{bmatrix}
+               1 & 2 & 3 \\
+               4 & 5 & 6 \\
+               7 & 8 & 9
+            \end{bmatrix}
+            \end{equation*}\\
+         \textbf{Output}: \begin{equation*}
+            B = \begin{bmatrix}
+               1 & 45 & 45 \\
+               0 & 5 & 45 \\
+               0 & 0 & 9
+            \end{bmatrix}
+            \end{equation*}
+      \end{tcolorbox}
+
+   \item Write a function that given a random vector returns the same vector but with the
+      elements sorted in ascending order, by implementing a simple version of the {\it
+      bubble sort} algorithm (\href{https://it.wikipedia.org/wiki/Bubble_sort}{reference}).
+      \begin{tcolorbox}[blanker, breakable, left=5mm, before skip=10pt, after skip=10pt,
+         borderline west={1mm}{0pt}{bluepoli}]
+         \textbf{Pseudo code}:\\
+         0. procedure BubbleSort(A:lista of elements to be sorted)\\
+         1.\hspace{1em}change is true\\
+         2.\hspace{1em}while scambio do\\
+         3.\hspace{2em}change is false\\
+         4.\hspace{2em}for i = 0 to length(A)-1  do\\
+         5.\hspace{3em}if A[i] > A[i+1] then\\
+         6.\hspace{4em}swap( A[i], A[i+1] ) \\
+         7.\hspace{4em}change is true\\
+         \textbf{Input}: v = [5, 4, 6, 8, 11];\\
+         \textbf{Output}: ans = [4, 5, 6, 8, 11]
+      \end{tcolorbox}
+\end{enumerate}
+\end{document}
