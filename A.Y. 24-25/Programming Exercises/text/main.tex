@@ -85,8 +85,39 @@ Solutions can be found on
          \textbf{Output}: ans = 2
       \end{tcolorbox}
 
+   \item Given a randomly generated matrix $8 \times 8$ substitute, within the matrix,
+      the central $4 \times 4$ submatrix with a matrix where all the elements are equal
+      to one.
+      \begin{tcolorbox}[blanker, breakable, left=5mm, before skip=10pt, after skip=10pt,
+         borderline west={1mm}{0pt}{bluepoli}]
+         \textbf{Input}: \begin{equation*}
+            A = \begin{bmatrix}
+               0.1981 & 0.4228 & 0.5391 & 0.5612 & 0.8555 & 0.2262 & 0.9827 & 0.2607\\
+               0.4897 & 0.5479 & 0.6981 & 0.8819 & 0.6448 & 0.3846 & 0.7302 & 0.5944\\
+               0.3395 & 0.9427 & 0.6665 & 0.6692 & 0.3763 & 0.5830 & 0.3439 & 0.0225\\
+               0.9516 & 0.4177 & 0.1781 & 0.1904 & 0.1909 & 0.2518 & 0.5841 & 0.4253\\
+               0.9203 & 0.9831 & 0.1280 & 0.3689 & 0.4283 & 0.2904 & 0.1078 & 0.3127\\
+               0.0527 & 0.3015 & 0.9991 & 0.4607 & 0.4820 & 0.6171 & 0.9063 & 0.1615\\
+               0.7379 & 0.7011 & 0.1711 & 0.9816 & 0.1206 & 0.2653 & 0.8797 & 0.1788\\
+               0.2691 & 0.6663 & 0.0326 & 0.1564 & 0.5895 & 0.8244 & 0.8178 & 0.4229
+            \end{bmatrix}
+            \end{equation*}\\
+         \textbf{Output}: \begin{equation*}
+            A^* = \begin{bmatrix}
+               0.1981 & 0.4228 & 0.5391 & 0.5612 & 0.8555 & 0.2262 & 0.9827 & 0.2607\\
+               0.4897 & 0.5479 & 0.6981 & 0.8819 & 0.6448 & 0.3846 & 0.7302 & 0.5944\\
+               0.3395 & 0.9427 & 1 & 1 & 1 & 1 & 0.3439 & 0.0225\\
+               0.9516 & 0.4177 & 1 & 1 & 1 & 1 & 0.5841 & 0.4253\\
+               0.9203 & 0.9831 & 1 & 1 & 1 & 1 & 0.1078 & 0.3127\\
+               0.0527 & 0.3015 & 1 & 1 & 1 & 1 & 0.9063 & 0.1615\\
+               0.7379 & 0.7011 & 0.1711 & 0.9816 & 0.1206 & 0.2653 & 0.8797 & 0.1788\\
+               0.2691 & 0.6663 & 0.0326 & 0.1564 & 0.5895 & 0.8244 & 0.8178 & 0.4229
+            \end{bmatrix}
+            \end{equation*}
+      \end{tcolorbox}
+
    \item Write a MATLAB script that draws the plot of the function
-      $f(x)=\frac{sin(x)}{x^4 + 2}$, with x within the interval $\left[-1, 1\right]$,
+      $f(x)=\frac{sin(x)}{x^4 + 2}$, with x within the interval $\left[-1, 1 \right]$,
       with a spacing equal to $0.1$.
 
    \item Write a MATLAB program, that given two random points inside the Cartesian plane
