@@ -1,0 +1,395 @@
+\documentclass[xcolor={dvipsnames,rgb}, aspectratio=169]{beamer}
+
+%%% PACKAGES %%%
+\usepackage[T1]{fontenc}
+\usepackage{tgheros}
+
+% Metropolis customization
+\usetheme[sectionpage=none]{metropolis}
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{frametitle}{bg = white, fg=black}
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{footline}{
+   \textcolor{bluepoli}{\rule{\paperwidth}{1pt}}
+   \vskip4pt
+   \hskip5pt \tiny Linear System Of Equations (Pt. 1) $|$ Calcoli di Processo dell' Ingegneria
+   Chimica \hskip220pt \insertframenumber
+   \vskip4pt
+}
+
+% color
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\definecolor{bluepoli}{cmyk}{0.4,0.1,0,0.4}
+\definecolor{mygreen}{RGB}{1, 121,111}
+\definecolor{myred}{RGB}{220, 20, 60}
+\definecolor{mygreen}{RGB}{28,172,0}
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{lightblue}{rgb}{56, 167, 232}
+
+\colorlet{colorp}{NavyBlue}
+\colorlet{colorT}{WildStrawberry}
+\colorlet{colork}{OliveGreen}
+\colorlet{colorM}{RoyalPurple}
+\colorlet{colorNb}{Plum}
+\colorlet{colorIs}{black}
+\newcommand{\highlight}[2]{\colorbox{#1!17}{$#2$}}
+\newcommand{\highlightdark}[2]{\colorbox{#1!47}{$#2$}}
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{tikzmark}
+\usetikzlibrary{calc}
+
+% tcolorbox env
+% Coloured box for styling theorems, proof, definitions
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{code}[2][]{
+    enhanced jigsaw,
+    colframe=bluepoli,
+    interior hidden, 
+    breakable,
+    before skip=10pt,
+    after skip=10pt
+}
+
+% URL and Hyperref
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+\usepackage{url}
+
+% Math stuff
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{blkarray}
+\usepackage{multirow}
+
+% Wrapfig
+\usepackage{wrapfig}
+
+% Bibliography
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bibliography.bib}
+
+%%% TITLE %%%
+\title{Linear System Of Equations.\\Part 1}
+\subtitle{Calcoli di Processo dell' Ingegneria Chimica}
+\author[Dinelli, Mehl]{\textbf{Timoteo~Dinelli}, \textbf{Marco~Mehl}}
+\institute{
+   \inst{} Department of Chemistry, Materials and Chemical Enginering, G. Natta.
+   Politecnico di Milano.\\
+   email: timoteo.dinelli@polimi.it \\
+   email: marco.mehl@polimi.it \\
+}
+\date{18\textsuperscript{th} of October 2024.}
+
+\begin{document}
+% external files inclusion
+\include{commands}
+{%
+   \setbeamertemplate{footline}{}
+   \begin{frame}{}
+      \maketitle
+      \begin{tikzpicture}[overlay, remember picture]
+         \node[above left=6.5cm and .01cm of current page.south east] {
+         \includegraphics[trim=1cm 1cm 1.5cm 1cm, clip=true, width=6cm]{
+            ./../../Introduction to Matlab/slides/figures/_static/ING_IND_INF-eps-converted-to.pdf
+         }
+      };
+      \end{tikzpicture}
+   \end{frame}
+}
+
+\begin{frame}{Linear System Of Equations}
+   \small{In mathematics, and particularly in linear algebra, a system of linear
+   equations, also called a linear system, is a system composed of several \alert{linear
+   equations} that must all be verified simultaneously. A solution of the system is a
+   vector whose elements are the solutions of the equations that make up the system, that
+   is, such that when substituted for the unknowns make the equations identities.}
+
+   From the classical representation to the \alert{\textbf{matricial}} form:
+   \begin{columns}
+   \column{0.5\textwidth}
+      \begin{equation*}
+      \begin{cases}
+         a_{1,1}x_{1} + a_{1,2}x_{2} + \ldots + a_{1,n}x_{n}\quad = \quad b_{1} \\
+         a_{2,1}x_{1} + a_{2,2}x_{2} + \ldots + a_{2,n}x_{n}\quad = \quad b_{2} \\
+         \quad \quad \vdots                                                     \\
+         a_{n,1}x_{1} + a_{n,2}x_{2} + \ldots + a_{n,n}x_{n}\quad = \quad b_{n}
+      \end{cases}
+      \end{equation*}
+   \column{0.5\textwidth}
+      \begin{equation*}
+         \tikzmarknode{Amatrix}{\highlight{colork}{
+            \begin{bmatrix}
+               a_{1,1} & a_{1,2} & \ldots & a_{1,n} \\
+               a_{2,1} & a_{2,2} & \ldots & a_{2,n} \\
+               \vdots  & \vdots  & \ddots & \vdots  \\
+               a_{n,1} & a_{n,2} & \ldots & a_{n,n}
+            \end{bmatrix}
+         }}\:
+         \tikzmarknode{xvector}{\highlight{colorp}{
+            \begin{bmatrix}
+               x_{1}  \\
+               x_{2}  \\
+               \vdots \\
+               x_{n}
+            \end{bmatrix}
+         }}
+         =
+         \tikzmarknode{xvector}{\highlight{colorT}{
+            \begin{bmatrix}
+               b_{1}  \\
+               b_{2}  \\
+               \vdots \\
+               b_{n}
+            \end{bmatrix}
+         }}
+      \end{equation*}
+   \end{columns}
+
+   \begin{equation*}
+      \textcolor{colork}{\textbf{\underline{\underline{A}}}} \:
+      \textcolor{colorp}{\textbf{\underline{x}}} =
+      \textcolor{colorT}{\textbf{\underline{b}}}
+      \quad \longrightarrow \quad
+      \textbf{\underline{x}} = \textbf{\underline{\underline{A}}}^{\textbf{-1}} \:
+      \textbf{\underline{b}}
+   \end{equation*}
+\end{frame}
+
+\begin{frame}{}
+    \begin{equation*}
+        \textbf{\underline{x}} = \textbf{\underline{\underline{A}}}^{\textbf{-1}} \:
+        \textbf{\underline{b}}
+    \end{equation*}
+
+    This solution is impracticable (since requires the exact inversion of
+    $\textbf{\underline{\underline{A}}}$)! So two types of method have been invented, the
+    so called \textbf{DIRECT} methods and the \textbf{ITERATIVE} methods. \\ Now let's
+    consider a $3 \times 3$ system of equations like the one below: \vspace{1cm}
+
+    \begin{columns}
+    \column{0.5\textwidth}
+    \begin{equation*}
+        \begin{cases}
+            3x + 89y + 66z = 87 \\
+            65y + 9z = 7 \\
+            46z = 3 \\
+        \end{cases}
+    \end{equation*}
+    \column{0.5\textwidth}
+    \begin{equation*}
+        \begin{bmatrix}
+        3 & 89 & 66 \\
+        0 & 65 & 9 \\
+        0 & 0 & 46
+        \end{bmatrix}
+        \begin{bmatrix}
+        x \\ y \\ z
+        \end{bmatrix} = 
+        \begin{bmatrix}
+        87 \\ 7 \\ 3
+        \end{bmatrix}
+    \end{equation*}
+    \end{columns}
+
+    So the goal is to get $\textbf{\underline{\underline{A}}}$ and after some operations
+    get its upper triangular form.
+\end{frame}
+
+\begin{frame}{Gauss elimination}
+\vspace{-.5cm}
+Given a linear system of equations in the form $\textbf{A}\textbf{x} = \textbf{b}$, it is
+convenient to introduce the augmented matrix
+$\textbf{A}^{\textbf{*}} = \left[\textbf{A}\:|\:\textbf{b}\right]$
+\vspace{-.2cm}
+\begin{equation*}
+\left[\textbf{A}\:\vline \:\textbf{b}\right] = 
+\begin{bmatrix}
+   a_{1,1}^{(0)} & \ldots & a_{1,n}^{(0)} & \vline & b_{1}^{(0)} \\
+   \vdots        & \ddots & \vdots        & \vline & \vdots \\
+   a_{n,1}^{(0)} & \ldots & a_{n,n}^{(0)} & \vline & b_{n}^{(0)} \\
+\end{bmatrix}
+\end{equation*}
+
+After $n-1$ steps we obtain the following system:
+
+\begin{equation*}
+\left[\textbf{A} \: \vline \: \textbf{b}\right] = 
+\begin{bmatrix}
+   a_{1,1}^{(0)} & \ldots        & \ldots & a_{1,n}^{(0)}   & \vline & b_{1}^{(0)}   \\
+   0             & a_{2,2}^{(1)} & \ldots & a_{2,n}^{(1)}   & \vline & b_{2}^{(1)}   \\
+   \vdots        & \ddots        & \ldots & \ldots          & \vline & \vdots        \\
+   0             & \ldots        & 0      & a_{n,n}^{(n-1)} & \vline & b_{n}^{(n-1)} \\
+\end{bmatrix}
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Key IDEA!}
+
+   \textcolor{colorT}{Let's use lower triangular matrices}.
+
+   \begin{equation*}
+       \begin{bmatrix}
+       a_{1,1} & a_{1,2} & \ldots & a_{1,n-1}  & a_{1,n} \\
+       \tikzmarknode{zeroes}{\highlight{colorT}{0}}       & a_{2,2} & \ldots & a_{2, n-1} & a_{2,n} \\
+       \tikzmarknode{zeroes}{\highlight{colorT}{0}}       & \tikzmarknode{zeroes}{\highlight{colorT}{0}}       & \ldots & a_{3, n-1} & a_{3,n} \\
+       \tikzmarknode{zeroes}{\highlight{colorT}{\vdots}}  & \tikzmarknode{zeroes}{\highlight{colorT}{\vdots}}  &
+          \tikzmarknode{zeroes}{\highlight{colorT}{\ddots}} & \vdots     & \vdots  \\
+       \tikzmarknode{zeroes}{\highlight{colorT}{0}}       &
+          \tikzmarknode{zeroes}{\highlight{colorT}{0}}       &
+          \tikzmarknode{zeroes}{\highlight{colorT}{\ldots}} &
+          \tikzmarknode{zeroes}{\highlight{colorT}{0}}          & a_{n,n}
+       \end{bmatrix} \quad \textbf{x} = \textbf{b}^{*}
+   \end{equation*}
+\end{frame}
+
+\begin{frame}{LU factorization/decomposition}
+    \begin{equation*}
+        \textbf{\underline{\underline{A}}} \: \textbf{\underline{x}} =
+        \textbf{\underline{b}}
+    \end{equation*}
+    \begin{equation*}
+        \textbf{\underline{\underline{A}}} \: \textbf{\underline{x}} \: \: = \: \:
+        \textbf{\underline{\underline{L}}} \textbf{\underline{\underline{U}}} \: \:
+        \textbf{\underline{x}} \: \: = \: \: \textbf{\underline{b}}
+    \end{equation*}
+    \begin{equation*}
+        \textbf{\underline{\underline{U}}} \: \textbf{\underline{x}} =
+        \textbf{\underline{y}}  \longrightarrow \textbf{\underline{\underline{L}}} \quad
+        \textbf{\underline{y}} =  \textbf{\underline{b}}
+    \end{equation*}
+    \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad Solution:
+    \begin{equation*}
+        \textbf{\underline{\underline{L}}} \: \textbf{\underline{y}} =
+        \textbf{\underline{b}} \longrightarrow \textbf{\underline{\underline{U}}} \:
+        \textbf{\underline{x}} = \textbf{\underline{y}}
+    \end{equation*}
+    \begin{columns}
+    \column{0.5\textwidth}
+    \begin{equation*}
+        \textbf{L} = \begin{bmatrix}
+        1 & 0 & 0 \\
+        c_{2,1} & 1 & 0 \\
+        c_{3,1} & c_{3,2} & 1
+        \end{bmatrix}
+    \end{equation*}
+    \column{0.5\textwidth}
+    \begin{equation*}
+        \textbf{U} = \begin{bmatrix}
+        d_{1,1} & d_{1,2} & d_{1,3} \\
+        0 & d_{2,2} & d_{2,3} \\
+        0 & 0 & d_{3,3}
+        \end{bmatrix}
+    \end{equation*}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{WHY LU?}
+\begin{itemize}
+    \item[$\blacktriangleright$] Once \textbf{\underline{\underline{A}}} has been
+       decomposed, it is possible to solve multiple problems having different \textbf{b}
+       values (useful for other numerical methods).
+
+    \item[$\blacktriangleright$] Once \textbf{\underline{\underline{A}}} has been
+       decomposed, it is possible to solve: $A^{T}x = c$ without doing a factorization
+       for $\textbf{\underline{\underline{A}}}^{T}$.
+
+    \item[$\blacktriangleright$] The matrices \textbf{\underline{\underline{L}}} and
+       \textbf{\underline{\underline{U}}} can be obtained using different methods than
+       the Gauss elimination. Pay attention to the built-in function \textcolor{blue}{lu}
+       of MATLAB (read the documentation).
+
+    \item[$\blacktriangleright$] If \textbf{\underline{\underline{A}}} is modified,
+       techniques that update \textbf{\underline{\underline{L}}} e
+       \textbf{\underline{\underline{U}}} accordingly to generate the new matrix
+       $\textbf{\underline{\underline{A}}}^{*}$.
+\end{itemize}
+\end{frame}
+
+{%
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+	Exercises
+\end{frame}
+}
+
+\begin{frame}{Triangularize U}
+   Write a function that takes the matrix A of size ($n\times n$) and b ($n \times 1$) as
+   the input and outputs a triangular upper matrix using the the Gauss elimination method
+   (without pivoting/balancing). \\
+   The function: \textcolor{blue}{function}[A,b]=triangularize\_U(A,b) Will generate the
+   augmented matrix $\textbf{\underline{\underline{W}}}$ and, using two nested
+   \textit{for} loops, the first with index \textit{i} ranging from \textit{1} to
+   \textit{n-1}, the second (index \textit{j}) from \textit{i+1} to \textit{n}, that will
+   operate the linear combination that eliminates the element \textit{(j,i)} from
+   $\textbf{\underline{\underline{W}}}$. A second function
+   \textcolor{blue}{solve\_upper\_triangular\_system(A,b)} will take the output of the
+   first function and will solve the system using the algorithms discussed in class
+   (solution either by row or by column). Finally, write a function
+   \textcolor{blue}{my\_linear\_solver(A,b)} that calls the first two and returns the
+   solution of a linear system. And compare your solution with the one obtained using the
+   built-in function \textcolor{blue}{linsolve} or \textcolor{blue}{mldivide}.
+\end{frame}
+
+\begin{frame}{}
+To test out if your algorithm works properly use the following systems of equations:
+\vspace{1.5cm}
+\begin{columns}
+\column{0.5\textwidth}
+   \begin{equation*}
+       \begin{cases}
+       x + 2y - z + 2t = 3 \\
+       x + 2z + t = 1 \\
+       2x + y - 2t = 1 \\
+       -z + t = 2
+       \end{cases}
+   \end{equation*}
+\column{0.5\textwidth}
+   \begin{equation*}
+       \begin{cases}
+       x + 45y - t = 6 \\
+       x - 3t = 12 \\
+       x + y + z + 6 = 0 \\
+       x - y + z + t = 12
+       \end{cases}
+   \end{equation*}
+\end{columns}
+\end{frame}
+
+\begin{frame}{LU}
+   Let's modify the previously implemented code and implemented a function to perform the
+   \alert{LU} decomposition of a given square matrix. Then combine this function inside
+   our linear solver and compare the results.
+\end{frame}
+%%%%%%%%%%%%%%% CLOSING
+{%
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+	Thank you for the attention!
+\end{frame}
+}
+
+\end{document}

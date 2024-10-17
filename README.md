@@ -22,3 +22,8 @@ statements, functions, plotting and other basic functionalities for the first 3 
 - [Practical Session
 1](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%201/slides):
 Numbers representation, numerical errors and approximations, rounding ($\sim$ 2 hours).
+
+- [Practical Session
+2](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%202/slides):
+Linear systems of equations Part 1 ($\sim$ 2 hours).
+<!-- - [Practical Session 3](): Linear systems of equations Part 2 ($\sim$ 2 hours). -->
