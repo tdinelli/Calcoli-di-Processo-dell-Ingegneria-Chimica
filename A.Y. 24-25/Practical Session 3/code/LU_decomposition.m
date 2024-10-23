@@ -15,18 +15,31 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
+%                                                                         %
+%       Function to perform the LU decomposition                          %
+%       of a square matrix  with gaussian elimination                     %
+%       and no pivoting                                                   %
+%                                                                         %
+% ----------------------------------------------------------------------- %
 
-clear, close, clc;
+function [L, U]=LUdecomposition(A)
+    [n_rows, n_cols] = size(A);
+    C = A; % Let's copy A into C
+    L = eye(n_rows); % eye function return an Identity square matrix given the size 
 
-A = [67*1e6 0      0        0        0;
-     0      36*1e6 0        0        0;
-     67*1e6 36*1e6 -161*1e6 0        0;
-     0      0      161*1e6  -182*1e6 0;
-     0      0      0        182*1e6  -212*1e12];
-
-b = [180*1e3 710*1e3 -740*1e3 -3850*1e3 -4720*1e3]';
-
-[L, U] = LU_decomposition(A);
-
-y = linsolve(L, b);
-x = linsolve(U, y);
+    if n_rows == n_cols
+        for i = 1:n_rows
+            if C(i, i) == 0
+                error('This algorithm does not perform pivoting')
+            end
+            for k = i+1:n_rows
+                coeff = C(k,i)/C(i,i);
+                C(k,:) = C(k,:) - C(i,:)*coeff;
+                L(k,i) = coeff;
+            end
+        end
+        U = C(1:n_rows, 1:n_cols);
+    else
+        error('The matrix must be square!')
+    end
+end
