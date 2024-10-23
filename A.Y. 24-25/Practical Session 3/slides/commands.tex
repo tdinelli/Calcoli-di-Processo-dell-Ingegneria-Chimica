@@ -1,0 +1,22 @@
+% Double underline
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% \newcommand{\zm}{%
+%    \begin{bmatrix}
+%       X_{11} & X_{12} & \cdots & X_{1p} \\
+%       X_{12} & X_{22} & \cdots & X_{2p} \\
+%       \vdots & \vdots & \tikzmarknode{Is}{\highlight{colorT}{X_{ij}}} & \vdots \\
+%       X_{n1} & X_{n2} & \cdots & X_{np} \\
+%    \end{bmatrix}%
+% }
+
+\makeatletter
+\newcommand{\DrawLine}{%
+  \begin{tikzpicture}
+  \path[use as bounding box] (0,0) -- (\linewidth,0);
+  \draw[color=bluepoli,dashed,dash phase=2pt]
+        (0-\kvtcb@leftlower-\kvtcb@boxsep,0)--
+        (\linewidth+\kvtcb@rightlower+\kvtcb@boxsep,0);
+  \end{tikzpicture}%
+  }
+\makeatother
