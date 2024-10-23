@@ -23,12 +23,12 @@ rng(1) % Set the seed of the random generator
        % random generated matrix
 A = rand(3);
 
-[L,U] = LUdecomposition(A); % Apply the function for the LU decomposition
+[L,U] = LU_decomposition(A); % Apply the function for the LU decomposition
 
 Astar = L * U; % Test the LU factorization
 
 disp('Error due to the factorization: ')
-disp(A - Amult)
+disp(A - Astar)
 
 %% Use LU decomposition
 A = [1 0 0 -1 1 0;...
@@ -40,7 +40,7 @@ A = [1 0 0 -1 1 0;...
 
 b = [0 0 0 -100 200 -100]';
 
-[L, U] = LUdecomposition(A);
+[L, U] = LU_decomposition(A);
 
 for i=1:1000 % Solve 1000 times the system of equations factorizing the 
              % matrix just one time updating the vector containing the
