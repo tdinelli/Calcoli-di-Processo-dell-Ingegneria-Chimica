@@ -353,12 +353,15 @@ sorting=ynt
 
 \begin{frame}{}
    Now the system to be solved is:\\
-   \begin{align*}
-      C_{A,0} &= C_{A}\left(1+\tau K_{1} + \tau K_{4}\right) \\
-      C_{B,0} &= -C_{A}\left(\tau K_{1}\right) + C_{B}\left(1+\tau K_{2} + \tau K_{3}\right) \\
-      C_{C,0} &= -C_{B}\left(\tau K_{2}\right) + C_{C} \\
-      C_{D,0} &= -C_{A}\left(\tau K_{4}\right)-C_{B}\left(\tau K_{3}\right) + C_{D}
-   \end{align*}
+   \begin{equation*}
+   \begin{cases}
+      C_{A,0} = C_{A}\left(1+\tau K_{1} + \tau K_{4}\right) \\
+      C_{B,0} = -C_{A}\left(\tau K_{1}\right) + C_{B}\left(1+\tau K_{2} + \tau K_{3}\right) \\
+      C_{C,0} = -C_{B}\left(\tau K_{2}\right) + C_{C} \\
+      C_{D,0} = -C_{A}\left(\tau K_{4}\right)-C_{B}\left(\tau K_{3}\right) + C_{D}
+      C_{A,0} = C_{A}\left(1+\tau K_{1} + \tau K_{4}\right) \\
+   \end{cases}
+   \end{equation*}
 
    With $\tau = 1$s find the solution for the different inlet compositions reported
    below:
