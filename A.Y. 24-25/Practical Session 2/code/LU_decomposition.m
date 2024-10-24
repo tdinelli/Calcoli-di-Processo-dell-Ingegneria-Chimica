@@ -22,7 +22,7 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-function [L, U]=LUdecomposition(A)
+function [L, U]=LU_decomposition(A)
     [n_rows, n_cols] = size(A);
     C = A; % Let's copy A into C
     L = eye(n_rows); % eye function return an Identity square matrix given the size 

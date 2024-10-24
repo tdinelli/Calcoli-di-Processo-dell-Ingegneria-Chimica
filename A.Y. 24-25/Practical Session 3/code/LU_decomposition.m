@@ -22,7 +22,7 @@
 %                                                                         %
 % ----------------------------------------------------------------------- %
 
-function [L, U]=LUdecomposition(A)
+function [L, U] = LU_decomposition(A)
     [n_rows, n_cols] = size(A);
     C = A; % Let's copy A into C
     L = eye(n_rows); % eye function return an Identity square matrix given the size 
@@ -33,7 +33,7 @@ function [L, U]=LUdecomposition(A)
                 error('This algorithm does not perform pivoting')
             end
             for k = i+1:n_rows
-                coeff = C(k,i)/C(i,i);
+                coeff = C(k, i)/C(i, i);
                 C(k,:) = C(k,:) - C(i,:)*coeff;
                 L(k,i) = coeff;
             end
