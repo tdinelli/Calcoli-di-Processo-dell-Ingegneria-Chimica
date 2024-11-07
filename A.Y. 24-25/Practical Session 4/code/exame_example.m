@@ -35,15 +35,9 @@ newton_errors = cell(length(x0_tests), 1);
 
 % Try Newton method with each initial guess
 for i = 1:length(x0_tests)
-    try
-        [sol, err] = Newton_numerical(x0_tests(i), f, df, tol, maxiter);
-        newton_solutions{i} = sol;
-        newton_errors{i} = err;
-    catch
-        fprintf('Newton method failed for x0 = %.1f\n', x0_tests(i));
-        newton_solutions{i} = NaN;
-        newton_errors{i} = NaN;
-    end
+    [sol, err] = Newton(x0_tests(i), f, tol, maxiter);
+    newton_solutions{i} = sol;
+    newton_errors{i} = err;
 end
 
 %% Find appropriate interval for Bisection method
