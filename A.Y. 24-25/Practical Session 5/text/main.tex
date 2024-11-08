@@ -172,7 +172,17 @@ esempio, isolando il denominatore:
 \end{equation}
 
 L'equazione \ref{eq:tobesol} può essere vista come l'uguaglianza tra due funzioni: $y_1 =
-D$ e $y_2 = 0.837\sqrt[3]{\sqrt{D/4} + 0.5}$
+D$ e $y_2 = 0.837\sqrt[3]{\sqrt{D/4} + 0.5}$ ed essere risolta in maniera efficiente per
+sostituzioni successive. In realtà a partire dall' equazione \ref{eq:tryerror} si può
+derivare la seguente equazione isolando il diametro $D$ a partire da
+$\sqrt{\frac{D}{4}}$:
+
+\begin{equation}
+   D = 4 \left(\sqrt{\frac{Y D^6}{10.37}}- 0.5\right)^2
+\end{equation}
+E' facile dimostrare, graficamente, che questa scelta ci porta ad avere problemi di
+convergenza in quanto si rischia di oscillare tra due soluzioni, matematicamente valide
+ma fisicamente no.
 
 \section{``Rubinetti in Serie''}
 \begin{figure}[htp]
