@@ -74,7 +74,6 @@ variabile indipendente (in genere il tempo) un valore della funzione pari alla m
 tutti i valori precedenti a quel momento per un certo intervallo ($n$ elementi) riducendo
 il "rumore" nei dati e mettendo in evidenza dei possibili trend.
 Quindi, data la seguente serie di coppie $(x, \:y)$:
-
 \begin{table}[h!]
    \centering
    \begin{tabular}{c | c}
@@ -86,23 +85,20 @@ Quindi, data la seguente serie di coppie $(x, \:y)$:
       4 & 5 \\ \hline
    \end{tabular}
 \end{table}
-
 Una media mobile semplice di ordine \textbf{2} partirebbe dalla seconda coppia e calcolerebbe il
 valore associato al punto $x(2) = 1$ come la media di $y(2) = 2$ e $y(1) = 1$, mentre al punto
-successivo $x(3) = 2$ verrebbe associato il valore medio tra $y(3) = 4$ e $y(2) = 2$. Otterremmo
+successivo $x(3) = 2$ verrebbe associato il valore medio tra $y(3) = 3$ e $y(2) = 2$. Otterremmo
 quindi una serie di coppie $(x_{mm}, \: y_{mm})$ come la seguente:
-
 \begin{table}[h!]
    \centering
    \begin{tabular}{c | c}
       x\textsubscript{mm} & y\textsubscript{mm} \\ \hline
       1 & 1.5 \\
-      2 & 3 \\
+      2 & 2.5 \\
       3 & 3.5 \\
-      4 & 4 \\ \hline
+      4 & 4.5 \\ \hline
    \end{tabular}
 \end{table}
-
 Si noti come la serie mm inizi in ritardo rispetto ai dati originali. Si chiede di
 scrivere una funzione che prenda come input una coppia di vettori $(x, \: y)$ di
 lunghezza $l$ e restituisca una coppia di vettori $(x_{mm}, \: y_{mm})$ di lunghezza
@@ -115,7 +111,7 @@ dall’equilibrio.
 
 La reazione di interesse è: \ce{N2 + 3 H2 -> 2 NH3}.
 
-Ricordando le seguenti relazioni termodinamiche:
+Ricordando le seguenti relazioni:
 
 \begin{align}
    K_P (T)  &= \frac{y_{NH_3}^2}{y_{H_2}^{3} y_{N_2}} \frac{1}{P^2}, \; y_{NH_3} =
@@ -153,18 +149,19 @@ Sul set di un film di azione 3 stuntman cercano di capire come esercitarsi in si
 per una scena che prevede la caduta da un'altezza di $15 \: m$. I 3 sono collegati tra
 loro da 2 corde, che vengono considerate senza peso, mentre sono in caduta libera. La
 velocità di un corpo in caduta libera può essere calcolata utilizzando l'equazione del
-moto rettilineo uniformemente accelerato $v^2 = v_{init}^2 + 2a(s - s_0)$ con $v$ la
+moto rettilineo uniformemente accelerato $v^2 = v_{init}^2 + 2a(s - s_0)$ dove $v$ é la
 velocità, $v_{init}$ la velcità iniziale, $a$ l'accelerazione e $s$ lo spostamento. In
-caduta libera, il corpo è soggetto all'accelerazione gravitazionale, che è
+caduta libera, un corpo è soggetto all'accelerazione gravitazionale, che è
 approssimativamente di $9.81 \: \frac{m}{s^2}$ sulla superficie terrestre. Le masse degli
 stuntman sono $m_1 = 70 \: kg$, $m_2 = 60 \: kg$, $m_3 = 40 \: kg$. Prima di effettuare
-le esercitazione si vuole avere una stima della tensione che le 2 corde subiranno
-assumento che la velocità di caduta dei 3 collegati sia pari a quella di caduta libera.
+l' esercitazione si vuole avere una stima della tensione che le 2 corde subiranno
+assumendo che la velocità di caduta dei 3 collegati sia pari a quella di caduta libera.
 Per semplicità si applica la seconda legge di Newton: $m \: a = \sum_{i=0}^{n}F_i$ dove
-$m$ è la massa, $a$ l'accelerazione e $F_i$ le forze che agiscono sul corpo, tra le quali
-è necessario ora considerare anche la forza di resistenza esercitata dall'aria come
-$F_{drug} = c_{drug} \nu$. I coefficienti dei singoli stuntman sono rispettivamente $c_1
-= 10 \frac{kg}{s}$, $c_2 = 14 \frac{kg}{s}$, $c_3 = 17 \frac{kg}{s}$. Quindi calcolare la
-tensione in ogni corda e l'accelerazione del team. 
+$m$ è la massa, $a$ l'accelerazione e $F_i$ le singole forze agenti sul corpo, tra le
+quali è necessario ora considerare anche la forza di resistenza esercitata dall'aria come
+$F_{drug} = c_{drug} v_{free fall}$, dove $v_{free fall} = \sqrt{2gh}$. I coefficienti
+dei singoli stuntman sono rispettivamente $c_1 = 10 \frac{kg}{s}$, $c_2 = 14
+\frac{kg}{s}$, $c_3 = 17 \frac{kg}{s}$. Si chiede quindi di calcolare la tensione in ogni
+corda e l'accelerazione del team.
 
 \end{document}
