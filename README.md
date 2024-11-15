@@ -39,3 +39,7 @@ Root finding Part 1 ($\sim$ 2 hours).
 - [Practical Session
 5](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%205/text):
 Root finding Part 2 ($\sim$ 2 hours).
+
+- [Practical Session
+6](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%206/text):
+Final exam simulation ($\sim$ 2 hours).
