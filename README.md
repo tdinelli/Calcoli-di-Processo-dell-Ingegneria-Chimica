@@ -14,28 +14,28 @@ For the academic years 22-23 and 24-25 I ([Timoteo Dinelli]()) was the teaching 
 
 ## Repository organization (A.Y. 24-25)
 
-- [Matlab introduction](A.Y.\ 24-25/Introduction to Matlab):
+- [Matlab introduction](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Introduction%20to%20Matlab):
 introduction to the usage of matlab, covered topics around variables assignments, loops, conditional
 statements, functions, plotting and other basic functionalities for the first 3 lessons ($\sim$ 6
 hours).
 
-- [Practical Session 1](A.Y. 24-25/Practical Session 1):
+- [Practical Session 1](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%201):
 Numbers representation, numerical errors and approximations, rounding ($\sim$ 2 hours).
 
-- [Practical Session 2](A.Y. 24-25/Practical Session 2):
+- [Practical Session 2](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%202):
 Linear systems of equations Part 1 ($\sim$ 2 hours).
 
-- [Practical Session 3](A.Y. 24-25/Practical Session 3):
+- [Practical Session 3](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%203):
 Linear systems of equations Part 2 ($\sim$ 2 hours).
 
-- [Practical Session 4](A.Y. 24-25/Practical Session 4):
+- [Practical Session 4](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%204):
 Root finding Part 1 ($\sim$ 2 hours).
 
-- [Practical Session 5](A.Y. 24-25/Practical Session 5):
+- [Practical Session 5](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%205):
 Root finding Part 2 ($\sim$ 2 hours).
 
-- [Practical Session 6](A.Y. 24-25/Practical Session 6):
+- [Practical Session 6](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%206):
 Final exam simulation ($\sim$ 2 hours).
 
-- [Practical Session 7](A.Y. 24-25/Practical Session 7):
+- [Practical Session 7](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%207):
 Numerical Integration ($\sim$ 2 hours).
