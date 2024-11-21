@@ -14,7 +14,7 @@ For the academic years 22-23 and 24-25 I ([Timoteo Dinelli]()) was the teaching 
 
 ## Repository organization (A.Y. 24-25)
 
-- [Matlab introduction](A.Y. 24-25/Introduction to Matlab):
+- [Matlab introduction](A.Y.\ 24-25/Introduction to Matlab):
 introduction to the usage of matlab, covered topics around variables assignments, loops, conditional
 statements, functions, plotting and other basic functionalities for the first 3 lessons ($\sim$ 6
 hours).
