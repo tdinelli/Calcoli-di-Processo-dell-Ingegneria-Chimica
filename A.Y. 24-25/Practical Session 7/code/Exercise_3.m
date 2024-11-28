@@ -70,8 +70,8 @@ ylabel('X concentration [mol/l]', 'FontSize', 18)
 
 %% Functions
 function f = tank_dynamics(t)
-% Calculate difference between average and target concentration
-global X
+    % Calculate difference between average and target concentration
+    global X
    integral = trapezoidal(X, 0, t,20);
    f = (integral/t) - 0.3;     % Average concentration minus target
 end

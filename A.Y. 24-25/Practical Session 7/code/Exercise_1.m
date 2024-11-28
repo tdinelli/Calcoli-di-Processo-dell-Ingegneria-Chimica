@@ -43,7 +43,7 @@ end
 % Display results using different integration methods
 disp(['The volume of the tank is: ', num2str(V(end)), ' L'])
 disp(['Trapezoidal: ', num2str(trapezoidal(q,0,24,30))])
-disp(['Matlab numerical integral built-in', num2str(integral(q,0,24))])
+disp(['Matlab numerical integral built-in ', num2str(integral(q, 0, 24))])
 
 %% Benchmarks
 % Compare performance of different integration methods
