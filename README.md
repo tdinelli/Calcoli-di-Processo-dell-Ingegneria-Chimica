@@ -45,3 +45,9 @@ Ordinary Differential Equations Part 1 ($\sim$ 2 hours).
 
 - [Practical Session 9](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%209):
 Ordinary Differential Equations Part 2 ($\sim$ 2 hours).
+
+- [Practical Session 10](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2010):
+Final exam simulation ($\sim$ 2 hours).
+
+- [Practical Session 11](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2011):
+Final exam simulation ($\sim$ 2 hours).
