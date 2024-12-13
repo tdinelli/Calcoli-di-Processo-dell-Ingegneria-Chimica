@@ -1,0 +1,143 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% Importing packages
+% ---------------------------------------------
+
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{tgcursor}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+
+% Different colors
+\usepackage{xcolor}
+\usepackage{color}
+\definecolor{bluepoli}{cmyk}{0.4,0.1,0,0.4}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% Chemistry
+\usepackage[version=4]{mhchem}
+
+% Images
+\usepackage{graphicx}
+% \graphicspath{ {./Figures/} }
+
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Additional Random Exercises}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2024-2025}
+
+
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
+\tcolorboxenvironment{proof}{% `proof' from `amsthm'
+   blanker,
+   breakable,
+   left=5mm,
+   before skip=10pt,
+   after skip=10pt,
+   borderline west={1mm}{0pt}{bluepoli}
+}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+
+\title{Additional (Random) Exercises}
+\author{Timoteo Dinelli\footnote{timoteo.dinelli@polimi.it}, Marco Mehl\footnote{marco.mehl@polimi.it}}
+% \date{13\textsuperscript{th} of December 2024}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+
+\begin{document}
+\maketitle
+
+\section*{Exercise 1}
+Inside a tank in a chemical plant, there is a mixture composed of hydrogen, ammonia, nitrogen, and water. Inside the tank, the pressure is $0.15$ [bar] and $25$ [$^{\circ}$C]. The components are distributed in two different phases: liquid and vapor. Initially, there are 3 moles of hydrogen, 1 of nitrogen, and 5 of water. Calculate the molar fractions of the components in both phases making the following assumptions:
+
+\begin{itemize}
+   \item The gas phase is treated as a perfect gas
+   \item The liquid mixture is ideal
+\end{itemize}
+
+The following table shows the Gibbs free energy of formation values in the pure perfect gas state at $298.15$ [K] and $0.15$ [bar]. Additionally, the Henry's constant values and Vapor Pressure at $298.15$ [K] are reported.
+
+\begin{table}[htp]
+\begin{tabular}{l|l|l|l}
+\textbf{Compound} & $\Delta g^{\circ}_{f,j}$ [kJ$\cdot$mol$^{-1}$] & \textbf{Henry's Constant [Pa] $H_{j}$} & \textbf{Vapor Pressure [Pa] $(P^{\circ}_{j})$} \\
+\hline
+$H_{2}$       & 0                   & $7.158 \cdot 10^{10}$                &                             \\
+$N_{2}$       & 0                   & $9.244 \cdot 10^{10}$                 &                             \\
+$NH_{3}$      & -16.33              & $9.758 \cdot 10^{4}$                  &                             \\
+$H_{2}O$      &                     &                            & $3.167 \cdot 10^{3}$                  
+\end{tabular}
+\end{table}
+
+In general, using the extent of reaction method, we can write the following system, which relates the extent of reaction ($\lambda$) with the moles of species in each phase. (Note: superscript V indicates species j in Vapor phase while superscript L indicates species j in liquid phase)
+
+\begin{equation}
+   \begin{cases}
+       n_{N_{2}^{V}} = 1 - 0.5\lambda_{1} - \lambda_{2} \\
+       n_{H_{2}^{V}} = 3 - 1.5\lambda_{1} - \lambda_{3} \\
+       n_{NH_{3}^{V}} = \lambda_{1} - \lambda_{4} \\
+       n_{H_{2}O^{V}} = 5 - \lambda_{5} \\
+       n_{N_{2}^{L}} = \lambda_{2} \\
+       n_{H_{2}^{L}} = \lambda_{3} \\
+       n_{NH_{3}^{L}} = \lambda_{4} \\
+       n_{H_{2}O^{L}} = \lambda_{5} 
+   \end{cases}
+\end{equation}
+
+Additionally, the following relations hold, where $n_{T}^{L}$ is the total moles present in the liquid phase, $n_{T}^{V}$ is the total moles present in vapor phase, $x_{i}$ and $y_{i}$ are the molar fractions of species i in liquid and vapor phase respectively:
+
+\begin{equation}
+   n_{T}^{L} = \lambda_{2} + \lambda_{3} + \lambda_{4} + \lambda_{5} 
+\end{equation}
+
+\begin{equation}
+   n_{T}^{V} = 9 - \lambda_{1} - \lambda_{2} - \lambda_{3} - \lambda_{4} - \lambda_{5}
+\end{equation}
+
+\begin{equation}
+   x_{i} = \frac{n_{i}^{L}}{n_{T}^{L}}
+\end{equation}
+
+\begin{equation}
+   y_{i} = \frac{n_{i}^{V}}{n_{T}^{V}}
+\end{equation}
+
+Finally, using pure perfect gas at $298.15$ [K] and $0.15$ [bar] as reference, assuming perfect gas and ideal liquid mixture, the system that solves our problem takes the following form:
+
+\begin{equation}
+   \begin{cases}
+       \frac{y_{NH_{3}^{V}}}{y_{N_{2}}^{0.5} \cdot y_{H_{2}}^{1.5}} = \exp\left(-\frac{\Delta g^{\circ}_{f,NH_{3}^{*}}(298.15\text{ K}; 0.15\text{ bar})}{RT}\right) \\
+       Py_{H_{2}} = H_{H_{2}} \cdot x_{H_{2}} \\
+       Py_{N_{2}} = H_{N_{2}} \cdot x_{N_{2}} \\
+       Py_{NH_{3}} = H_{NH_{3}} \cdot x_{NH_{3}} \\
+       Py_{H_{2}O} = P_{H_{2}O}^{\circ} \cdot x_{H_{2}O} 
+   \end{cases}
+\end{equation}
+
+\section*{\color{bluepoli} TIPS}
+\begin{itemize}
+   \item The unknowns of our system are the lambda values
+   \item To solve the problem, consider that the system of equations to be solved is (6); it contains the molar fractions of species in both gas and liquid phase, these can be easily written as functions of our problem's unknowns, namely the $\lambda$ values, as shown in system (1), and the relations reported in equations 2-3-4-5
+   \item Reasonable initial guess values: $\lambda_{0}=[1, 0, 0, 0.5, 4.5]$
+\end{itemize}
+\end{document}

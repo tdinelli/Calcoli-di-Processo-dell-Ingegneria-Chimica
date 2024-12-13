@@ -1,0 +1,192 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% Importing packages
+% ---------------------------------------------
+
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{tgcursor}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+
+% Different colors
+\usepackage{xcolor}
+\usepackage{color}
+\definecolor{bluepoli}{cmyk}{0.4,0.1,0,0.4}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% Chemistry
+\usepackage[version=4]{mhchem}
+
+% Images
+\usepackage{graphicx}
+% \graphicspath{ {./Figures/} }
+
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Practical Session 11}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2024-2025}
+
+
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
+\tcolorboxenvironment{proof}{% `proof' from `amsthm'
+   blanker,
+   breakable,
+   left=5mm,
+   before skip=10pt,
+   after skip=10pt,
+   borderline west={1mm}{0pt}{bluepoli}
+}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+
+\title{Practical Session 11}
+\author{Timoteo Dinelli\footnote{timoteo.dinelli@polimi.it}, Marco Mehl\footnote{marco.mehl@polimi.it}}
+\date{13\textsuperscript{th} of December 2024}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+
+\begin{document}
+\maketitle
+
+\section*{Exercise 1}
+Inside 4 perfectly mixed reactors, the following irreversible first-order reaction
+occurs: $A \rightarrow B$ with kinetic constant $k$.
+
+\noindent The rate at which A is transformed into B is expressed as $R = k V c
+\left[\frac{mol}{h}\right]$ with $V[L]$ and $c\left[\frac{mol}{L}\right]$
+
+\noindent The reactors have different volumes and, since they operate at different temperatures,
+they have different reaction rates. Determine the concentration of A and B in each
+reactor under steady-state conditions.
+
+\begin{table}[h]
+   \centering
+   \begin{tabular}{|c|c|c|}
+   \hline
+   Reactor & V [L] & k [h⁻¹] \\
+   \hline
+   1 & 25 & 0.05 \\
+   2 & 75 & 0.1 \\
+   3 & 100 & 0.5 \\
+   4 & 25 & 0.1 \\
+   \hline
+   \end{tabular}
+\end{table}
+
+Recall that the material balance is expressed as: Accumulation = $F_{in} - F_{out} \pm R$
+with $F\left[\frac{mol}{h}\right]$
+
+$Q_{in} = 10\frac{L}{h}$, \quad $C_{A,in} = 1\frac{mol}{L}$, \quad $C_{B,in} =
+0\frac{mol}{L}$
+
+\begin{center}
+\begin{tikzpicture}[
+   reactor/.style={circle, draw, minimum size=1cm},
+   >=Stealth
+]
+   % Reactors
+   \node[reactor] (R1) at (0,0) {1};
+   \node[reactor] (R2) at (3,0) {2};
+   \node[reactor] (R3) at (6,0) {3};
+   \node[reactor] (R4) at (9,0) {4};
+
+   % Main flow path
+   \draw[->] (-1.5,0) -- (R1);
+   \draw[->] (R1) -- (R2);
+   \draw[->] (R2) -- (R3);
+   \draw[->] (R3) -- (R4);
+   \draw[->] (R4) -- (10.5,0);
+
+   % Qin and Qout labels
+   \node[above] at (-2,0) {$Q_{in}=10 \frac{L}{h}$};
+   \node[above] at (10,0) {$Q_{out}$};
+
+   % Q13 recycle loop
+   \draw[->] (R1) -- (0,2) -- (6,2) -- (R3);
+   \node at (3,2.3) {$Q_{13}=5 \frac{L}{h}$};
+
+   % Q43 recycle loop
+   \draw[->] (R4) -- (9,-2) -- (6,-2) -- (R3);
+   \node at (7.5,-2.3) {$Q_{43}=3 \frac{L}{h}$};
+\end{tikzpicture}
+\end{center}
+
+\section*{Exercise 2}
+Una parete è costituita da una serie di strati isolanti di diverso spessore e
+conducibilità termica $\mathbf{k}$. Se la temperatura dell'interfaccia tra ogni strato è
+indicata con $\mathbf{T_{j}},\:j\:=\:0, 1, ... , 4$ situata in posizione
+$\mathbf{z_{j}}$, il flusso di calore $\mathbf{q}$ attraverso ogni strato può essere
+approssimato dalla seguente equazione
+
+\begin{equation*}
+   q = k_{j} \: \frac{T_{j}-T_{j-1}}{z_{j} - z_{j-1}}
+\end{equation*}
+
+\noindent Data $\mathbf{T_{0}}=0\: ^{\circ}C$, $\mathbf{T_{4}}=100\: ^{\circ}C$,
+$\mathbf{k_{1,2,3,4}}\:=[3,1.5,5,2]\:\frac{W}{mK}$ e
+$\mathbf{z_{0,1,2,3,4}}\:=\:[0,0.1,0.2,0.4,0. 45]\:m$. Risolvere il seguente sistema di
+equazioni lineari nelle \textbf{4} incognite $\mathbf{T_{1}}$, $\mathbf{T_{2}}$,
+$\mathbf{T_{3}}$ e $\mathbf{q}$, e diagrammare il valore della Temperatura nei punti
+corrispondenti di \textbf{z}.
+
+\begin{equation*}
+   \begin{cases}
+      q = k_{1}\frac{T_{1}-T_{0}}{z_{1}-z_{0}}\\
+      q = k_{2}\frac{T_{2}-T_{1}}{z_{2}-z_{1}}\\
+      q = k_{3}\frac{T_{3}-T_{2}}{z_{3}-z_{2}}\\
+      q = k_{4}\frac{T_{4}-T_{3}}{z_{4}-z_{3}}
+   \end{cases}
+\end{equation*}
+% In a scenario where the price of electrical energy depends on instantaneous consumption
+% with cost values equal to 0.15 €/kWh when the power absorption is below 1500 W and 0.2
+% €/kWh when exceeding that threshold, determine the ideal time to start a washing machine
+% cycle whose power absorption is equal to 1 kW for a duration of 30 minutes, knowing that
+% other utilities typically have an instantaneous power absorption in W given by the
+% following function:
+%
+% \[
+% 3000 \cdot \left(0.2 \cdot \sin^8\left(\frac{t+6}{24}\pi\right) +
+% \sin^8\left(\frac{t-6}{24}\pi\right)\right)
+% \]
+%
+% \noindent where {\it t} represents the time of day. Save the solution in the variable
+% \texttt{optimaltime}
+
+\section*{Exercise 3}
+Numerically determine the temperature extremes at the lunar surface between day and night
+by applying an energy balance (the sum of incoming thermal fluxes equals the sum of
+outgoing fluxes). Given the low thermal conductivity of the lunar soil (approximately $k
+= 0.005 \frac{W}{mK}$), at a depth of $d = 30$ cm the temperature remains constant at a
+value of $T0 = 253$ K. Consider 3 contributions: the incoming solar thermal flux, which
+varies between $1200 \frac{W}{m^2}$ and $0 \frac{W}{m^2}$; the outgoing radiative flux,
+which can be approximated as:
+
+\begin{equation}
+   0.89 \cdot 5.67e^{-8} \cdot T^4 \quad (T \text{ in } K)
+\end{equation}
+\noindent and an outgoing conduction contribution equal to:
+\begin{equation}
+   (T - T0) \cdot \frac{k}{d}
+\end{equation}
+
+\end{document}
