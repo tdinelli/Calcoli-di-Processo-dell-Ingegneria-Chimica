@@ -1,6 +1,8 @@
 # Calcoli di Processo dell' Ingegneria Chimica
 
+<div align="center">
 <img src="_static/Chimica_logo_orizzontale_blu_ita.png" alt="drawing" width="500">
+</div>
 
 ---
 
