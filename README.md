@@ -1,6 +1,6 @@
 # Calcoli di Processo dell' Ingegneria Chimica
 
-<img src="_static/Chimica_logo_orizzontale_blu_ita.png" alt="drawing" width="350">
+<img src="_static/Chimica_logo_orizzontale_blu_ita.png" alt="drawing" width="500">
 
 ---
 
@@ -14,7 +14,7 @@ For the academic years 22-23, 24-25 and 25-26 I ([Timoteo Dinelli](https://tdine
 
 ## Repository organization (A.Y. 25-26)
 
-- [Matlab introduction]():
+- [Matlab introduction](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/00-Matlab-Introduction/slides):
 introduction to the usage of matlab, covered topics around variables assignments, loops, conditional
 statements, functions, plotting and other basic functionalities for the first 3 lessons ($\sim$ 6
 hours).
