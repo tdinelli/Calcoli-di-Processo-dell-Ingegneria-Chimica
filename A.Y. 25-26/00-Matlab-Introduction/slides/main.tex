@@ -81,11 +81,11 @@
 \begin{frame}{Contacts \& Information}
     \textbf{Professor}: Marco Mehl \\
     \textbf{e-mail}: marco.mehl@polimi.it \\
-    \textbf{Office}: Leonardo Campus, Building 6, Department of Chemistry, Materials and Chemical Enginering, ``Giulio Natta''. Politecnico di Milano. \\
+    \textbf{Office}: Leonardo Campus, Building 6, Department of Chemistry, Materials and Chemical Enginering, ``Giulio Natta'', Politecnico di Milano. \\
     \vskip 1cm
     \textbf{Teacher assistant}: Timoteo Dinelli \\
     \textbf{e-mail}: timoteo.dinelli@polimi.it \\
-    \textbf{Office}: Leonardo Campus, Building 6, Department of Chemistry, Materials and Chemical Enginering, ``Giulio Natta''. Politecnico di Milano. \\
+    \textbf{Office}: Leonardo Campus, Building 6, Department of Chemistry, Materials and Chemical Enginering, ``Giulio Natta'', Politecnico di Milano. \\
 \end{frame}
 
 \begin{frame}{Resources}
@@ -93,12 +93,16 @@
     \begin{itemize}
         \item[$\blacktriangleright$]
             \href{http://hdl.handle.net/11311/579545}{\footnotesize G., Buzzi Ferraris; Manenti, Flavio. Fundamentals and Linear Algebra for the Chemical Engineer: Solving Numerical Problems.} 
+
         \item[$\blacktriangleright$]
             \href{http://hdl.handle.net/11311/579546}{\footnotesize G., Buzzi Ferraris; Manenti, Flavio. Interpolation and Regression Models for the Chemical Engineer: Solving Numerical Problems.} 
+
         \item[$\blacktriangleright$]
             \href{http://hdl.handle.net/11311/663722}{\footnotesize G., Buzzi Ferraris; Manenti, Flavio. Nonlinear Systems and Optimization for the Chemical Engineer: Solving Numerical Problems.}
+
         \item[$\blacktriangleright$]
             \href{http://hdl.handle.net/11311/1003033}{\footnotesize G., Buzzi Ferraris; Manenti, Flavio. Differential and Differential-Algebraic Systems for the Chemical Engineer: Solving Numerical Problems.}
+
         \item[$\blacktriangleright$]
             \href{https://www.biblio.com/9780199660346}{\footnotesize J. Nathan Kutz. Data-Driven Modeling and Scientific Computation.}
    \end{itemize}
@@ -108,10 +112,13 @@
     \begin{itemize}
         \item[$\blacktriangleright$]
             \href{https://www.amazon.it/Data-Driven-Science-Engineering-Learning-Dynamical/dp/1009098489/ref=asc_df_1009098489/?tag=googshopit-21&linkCode=df0&hvadid=560287860614&hvpos=&hvnetw=g&hvrand=14266207767663986773&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1008463&hvtargid=pla-1599460130783&psc=1}{\footnotesize Steven L. Brunton; J. Nathan Kutz. Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control.}
+
         \item[$\blacktriangleright$]
             \href{https://link.springer.com/book/10.1007/978-88-470-5644-2}{\footnotesize A. Quarteroni; R. Sacco; F. Saleri; P. Gervasio. Matematica Numerica.}
+
         \item[$\blacktriangleright$]
             \href{https://www.amazon.it/Calcolo-Scientifico-Esercizi-problemi-risolti-dp-8847039525/dp/8847039525/ref=dp_ob_title_bk}{\footnotesize A. Quarteroni; F. Saleri; P. Gervasio. Calcolo Scientifico: Esercizi e problemi risolti con MATLAB e Octave.}
+
         \item[$\blacktriangleright$]
             \href{https://www.ibs.it/calcolo-numerico-applicato-libro-davide-manca/e/9788837116972}{\footnotesize D. Manca. Calcolo numerico applicato.}
     \end{itemize}
@@ -120,10 +127,10 @@
     \begin{itemize}
         \item[$\blacktriangleright$]
             \href{https://ocw.mit.edu/courses/10-34-numerical-methods-applied-to-chemical-engineering-fall-2015/pages/syllabus/}{\footnotesize Numerical Methods applied to chemical engineering (MIT).}
-            
+
         \item[$\blacktriangleright$]
             \href{https://github.com/Titodinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica}{\footnotesize GitHub repository of the practical sessions.}
-            
+
         \item[$\blacktriangleright$]
             \href{https://it.mathworks.com/help/matlab/getting-started-with-matlab.html}{\footnotesize Matlab online tutorial and documentation.}
     \end{itemize}
@@ -463,8 +470,149 @@ M * C
             \texttt{ans =} \\
             \texttt{14 \hspace{3em}32} \\
             \texttt{32 \hspace{3em}77} \\
-            \alert{N.B. size(M) = 2 3; size(C) =  3 2}
+            \vspace{5pt}
+            \alert{N.B.} \footnotesize{\texttt{size(M) = 2 3; size(C) =  3 2}}
         \end{itemize}
+    \end{columns}
+\end{frame}
+
+% ==================================================================
+% PART 2
+{
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+        Loops and conditional statements
+    \end{frame}
+}
+\begin{frame}[fragile]{\textcolor{blue}{for} loop}
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        The \textbf{for} loop repeats a series of instructions a
+        \alert{fixed number of times}.
+        \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+for i = 1:10
+    paperino(i) = i;
+end
+        \end{minted}
+        \texttt{paperino = 1} \\
+        \texttt{paperino = 1 2} \\
+        \texttt{paperino = 1 2 3} \\
+        \texttt{...} \\
+        \texttt{paperino = 1 2 3 4 5 6 7 8 9} \\
+        \texttt{paperino = 1 2 3 4 5 6 7 8 9 10}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        The index of the \textbf{for} loop can be changed by an \alert{arbitrary increment}:
+        \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+for i = 10:-1:1
+    pluto(i) = i;
+end
+        \end{minted}
+        \texttt{pluto = 0 0 0 0 0 0 0 0 0 10} \\
+        \texttt{pluto = 0 0 0 0 0 0 0 0 9 10} \\
+        \texttt{pluto = 0 0 0 0 0 0 0 8 9 10} \\
+        \texttt{...} \\
+        \texttt{pluto = 0 2 3 4 5 6 7 8 9 10} \\
+        \texttt{pluto = 1 2 3 4 5 6 7 8 9 10}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Examples}
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        Sum the first hundred natural numbers.
+        \begin{equation*}
+            \sum_{i = 1}^{100} i = ?.
+        \end{equation*}
+        
+        \item[$\blacktriangleright$]
+        Sum hundred times one.
+        \begin{equation*}
+            \sum_{i=1}^{100} 1 = ?
+        \end{equation*}
+        
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+sum = 0;
+for i = 1:100
+    sum = sum + i;
+end
+disp(sum);
+                \end{minted}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+sum = 0;
+for i = 1:100
+    sum += 1;
+end
+disp(sum);
+                \end{minted}
+            \end{column}
+        \end{columns}
+    \end{itemize}
+\end{frame}
+
+\subsection{While}
+\begin{frame}[fragile]{\textcolor{blue}{while} loop}
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        The \textbf{while} loop repeats a series of instructions \alert{until a condition is TRUE}.
+
+        \item[$\blacktriangleright$]
+        N.B. pay attention with the while loop it can run till infinite, \alert{handle with care}.
+    \end{itemize}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+sum = 0;
+while (sum < 325)
+    token = token + 1;
+    sum = sum + token;
+end
+disp(['Iteration number: ', num2str(token)]);
+disp(['Sum is equal to:  ', num2str(sum)]);
+    \end{minted}
+    \texttt{Iteration number: 25} \\
+    \texttt{Sum is equal to: 325}
+\end{frame}
+
+\section{Conditional statements}
+\subsection{If, else if, else}
+\begin{frame}[fragile]{\textcolor{blue}{IF} Statement}
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        The \textcolor{blue}{\textbf{IF}} statement executes a series of instructions only \textcolor{blue}{\textbf{IF}} a condition is TRUE:
+    \end{itemize}
+
+    \vspace{1.cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+if (condition)
+    % instructions
+elseif (condition)
+    % instructions
+elseif (condition)
+    % instructions
+else
+    % instructions
+end
+        \end{minted}
+        \column{0.5\textwidth}
+        \textcolor{NavyBlue}{\textbf{Example}: Write a simple script to compute the absolute value of a number.}
+        \vspace{0.01cm}
+        \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+x = 35;
+if (x >= 0)
+    abs = x;
+else
+    abs = -x;
+end
+        \end{minted}
     \end{columns}
 \end{frame}
 
