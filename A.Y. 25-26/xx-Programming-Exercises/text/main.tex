@@ -1,0 +1,290 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% Importing packages
+% ---------------------------------------------
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+% Different colors (consistent with presentation)
+\usepackage[dvipsnames]{xcolor}
+
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% Images
+\usepackage{graphicx}
+
+% Code rendering (consistent with presentation)
+\usepackage{minted}
+
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Programming Exercises}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2024-2025}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+
+\title{Additional Programming Exercises}
+\author{Timoteo Dinelli\footnote{\href{mailto:timoteo.dinelli@polimi.it}{timoteo.dinelli@polimi.it}}, Marco Mehl\footnote{\href{mailto:marco.mehl@polimi.it}{marco.mehl@polimi.it}}}
+\date{3\textsuperscript{rd} of October 2024}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+
+\begin{document}
+\maketitle
+
+\section*{Information}
+\textcolor{NavyBlue}{\textbf{Solutions}} can be found on the
+\href{https://github.com/Titodinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica}{GitHub
+repository} and on the WeBeep page of the course.
+
+\noindent \textcolor{NavyBlue}{\textbf{Objectives:}} These exercises will help you practice
+fundamental MATLAB programming concepts including matrix operations, function writing,
+control structures, and algorithm implementation.
+
+\section*{Exercises}
+
+\textbf{Exercise 1: Finding Maximum Values}
+
+\noindent Write a function that finds the maximum value and its position (row and column) of the
+matrix \texttt{M = magic(234)} and compare the result with MATLAB's built-in functions
+\texttt{max()} and \texttt{find()}.
+
+\noindent \textbf{Hint}:
+
+\noindent Use nested loops to iterate through the matrix elements and keep track of the maximum value and its indices.
+
+\vspace{0.5cm}
+
+\textbf{Exercise 2: Magic Matrix Validation}
+
+Write a MATLAB script that proves the magic matrix definition is correct (all rows,
+columns, and diagonals sum to the same value). Compare the result with a randomly
+generated matrix.
+
+\begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% Magic matrix properties to verify:
+% - All row sums are equal
+% - All column sums are equal  
+% - Both diagonal sums are equal
+% - All sums equal n(n²+1)/2 where n is matrix size
+\end{minted}
+
+\vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 3: Counting Positive Elements}
+% \end{exercisebox}
+%
+% Write a function that counts positive elements in an array without using predefined MATLAB library functions.
+%
+% \begin{solutionbox}
+% 	\textbf{Input:} \texttt{A = [1, 5, -3, -9]} \\
+% 	\textbf{Output:} \texttt{ans = 2}
+% \end{solutionbox}
+%
+% \vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 4: Matrix Substitution}
+% \end{exercisebox}
+%
+% Given a randomly generated $8 \times 8$ matrix, substitute the central $4 \times 4$ submatrix with a matrix of ones.
+%
+% \begin{solutionbox}
+% 	\textbf{Input:}
+% 	\begin{equation*}
+% 		A = \begin{bmatrix}
+% 			0.1981 & 0.4228 & 0.5391 & 0.5612 & 0.8555 & 0.2262 & 0.9827 & 0.2607 \\
+% 			0.4897 & 0.5479 & 0.6981 & 0.8819 & 0.6448 & 0.3846 & 0.7302 & 0.5944 \\
+% 			0.3395 & 0.9427 & 0.6665 & 0.6692 & 0.3763 & 0.5830 & 0.3439 & 0.0225 \\
+% 			0.9516 & 0.4177 & 0.1781 & 0.1904 & 0.1909 & 0.2518 & 0.5841 & 0.4253 \\
+% 			0.9203 & 0.9831 & 0.1280 & 0.3689 & 0.4283 & 0.2904 & 0.1078 & 0.3127 \\
+% 			0.0527 & 0.3015 & 0.9991 & 0.4607 & 0.4820 & 0.6171 & 0.9063 & 0.1615 \\
+% 			0.7379 & 0.7011 & 0.1711 & 0.9816 & 0.1206 & 0.2653 & 0.8797 & 0.1788 \\
+% 			0.2691 & 0.6663 & 0.0326 & 0.1564 & 0.5895 & 0.8244 & 0.8178 & 0.4229
+% 		\end{bmatrix}
+% 	\end{equation*}
+%
+% 	\textbf{Output:}
+% 	\begin{equation*}
+% 		A^* = \begin{bmatrix}
+% 			0.1981 & 0.4228 & 0.5391                              & 0.5612                              & 0.8555                              & 0.2262                              & 0.9827 & 0.2607 \\
+% 			0.4897 & 0.5479 & 0.6981                              & 0.8819                              & 0.6448                              & 0.3846                              & 0.7302 & 0.5944 \\
+% 			0.3395 & 0.9427 & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & 0.3439 & 0.0225 \\
+% 			0.9516 & 0.4177 & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & 0.5841 & 0.4253 \\
+% 			0.9203 & 0.9831 & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & 0.1078 & 0.3127 \\
+% 			0.0527 & 0.3015 & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & \textcolor{accentcolor}{\mathbf{1}} & 0.9063 & 0.1615 \\
+% 			0.7379 & 0.7011 & 0.1711                              & 0.9816                              & 0.1206                              & 0.2653                              & 0.8797 & 0.1788 \\
+% 			0.2691 & 0.6663 & 0.0326                              & 0.1564                              & 0.5895                              & 0.8244                              & 0.8178 & 0.4229
+% 		\end{bmatrix}
+% 	\end{equation*}
+% \end{solutionbox}
+%
+% \begin{hintbox}
+% 	Use matrix indexing: \texttt{A(3:6, 3:6) = ones(4,4)}
+% \end{hintbox}
+%
+% \vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 5: Function Plotting}
+% \end{exercisebox}
+%
+% Write a MATLAB script that plots the function $f(x)=\frac{\sin(x)}{x^4 + 2}$ for $x \in [-1, 1]$ with spacing $\Delta x = 0.1$.
+%
+% \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% % Template structure:
+% x = -1:0.1:1;           % Create x vector
+% y = sin(x) ./ (x.^4 + 2);  % Calculate y values (note element-wise operations)
+% plot(x, y);             % Create plot
+% xlabel('x');            % Add labels
+% ylabel('f(x)');
+% title('Plot of f(x) = sin(x)/(x^4 + 2)');
+% grid on;                % Add grid for better readability
+% \end{minted}
+%
+% \vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 6: Line Through Two Points}
+% \end{exercisebox}
+%
+% Write a MATLAB program that, given two random points in the Cartesian plane, calculates and plots the line passing through them.
+%
+% \begin{hintbox}
+% 	For a line $y = mx + q$ passing through points $P_1(x_1, y_1)$ and $P_2(x_2, y_2)$:
+% 	\begin{itemize}
+% 		\item Slope: $m = \frac{y_2 - y_1}{x_2 - x_1}$
+% 		\item Intercept: $q = y_1 - mx_1$
+% 	\end{itemize}
+% \end{hintbox}
+%
+% \begin{solutionbox}
+% 	\textbf{Input:} $P_1 = (4, -3)$, $P_2 = (5, 1)$ \\
+% 	\textbf{Output:} $m = 4$, $q = -19$
+% \end{solutionbox}
+%
+% \vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 7: Diagonal Replacement with Row Averages}
+% \end{exercisebox}
+%
+% Given a square matrix \textbf{A}, create matrix \textbf{B} where diagonal elements are replaced with their corresponding row averages.
+%
+% \begin{solutionbox}
+% 	\textbf{Input:}
+% 	$A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix}$
+%
+% 	\textbf{Output:}
+% 	$B = \begin{bmatrix} 2 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 8 \end{bmatrix}$
+% \end{solutionbox}
+%
+% \begin{hintbox}
+% 	Use \texttt{mean(A, 2)} to calculate row averages, then use \texttt{diag()} function or a loop to replace diagonal elements.
+% \end{hintbox}
+%
+% \vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 8: Special Matrix Construction}
+% \end{exercisebox}
+%
+% Given square matrix A, create matrix B with:
+% \begin{itemize}
+% 	\item Below main diagonal: zeros
+% 	\item Above main diagonal: sum of all elements of A
+% 	\item On main diagonal: original elements from A
+% \end{itemize}
+%
+% \begin{solutionbox}
+% 	\textbf{Input:}
+% 	$A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix}$
+%
+% 	\textbf{Output:}
+% 	$B = \begin{bmatrix} 1 & 45 & 45 \\ 0 & 5 & 45 \\ 0 & 0 & 9 \end{bmatrix}$
+% \end{solutionbox}
+%
+% \begin{hintbox}
+% 	Use \texttt{triu()}, \texttt{tril()}, and \texttt{diag()} functions, or implement with loops and conditional statements.
+% \end{hintbox}
+%
+% \vspace{0.5cm}
+%
+% \begin{exercisebox}
+% 	\textbf{Exercise 9: Bubble Sort Implementation}
+% \end{exercisebox}
+%
+% Implement the bubble sort algorithm to sort a vector in ascending order without using MATLAB's built-in \texttt{sort()} function.
+%
+% \begin{hintbox}
+% 	\textbf{Bubble Sort Algorithm:}
+% 	\begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% function sorted_vec = bubbleSort(vec)
+%     n = length(vec);
+%     for i = 1:(n-1)
+%         for j = 1:(n-i)
+%             if vec(j) > vec(j+1)
+%                 % Swap elements
+%                 temp = vec(j);
+%                 vec(j) = vec(j+1);
+%                 vec(j+1) = temp;
+%             end
+%         end
+%     end
+%     sorted_vec = vec;
+% end
+% \end{minted}
+% \end{hintbox}
+%
+% \begin{solutionbox}
+% 	\textbf{Input:} \texttt{v = [5, 4, 6, 8, 11]} \\
+% 	\textbf{Output:} \texttt{ans = [4, 5, 6, 8, 11]}
+% \end{solutionbox}
+%
+% \section*{Additional Challenges}
+%
+% \begin{exercisebox}
+% 	\textbf{Bonus Exercise: Algorithm Efficiency}
+% \end{exercisebox}
+%
+% Compare the execution time of your bubble sort implementation with MATLAB's built-in \texttt{sort()} function using the \texttt{tic} and \texttt{toc} functions. Test with vectors of different sizes (e.g., 100, 1000, 10000 elements).
+%
+% \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% % Timing example:
+% vec = rand(1000, 1);  % Random vector of 1000 elements
+%
+% tic;                  % Start timing
+% sorted1 = bubbleSort(vec);
+% time1 = toc;         % End timing
+%
+% tic;
+% sorted2 = sort(vec);
+% time2 = toc;
+%
+% fprintf('Bubble sort time: %.4f seconds\n', time1);
+% fprintf('Built-in sort time: %.4f seconds\n', time2);
+% \end{minted}
+%
+% \vspace{1cm}
+
+\noindent \textit{Remember to test your functions with different inputs and edge cases.
+Good programming practice includes commenting your code and using descriptive variable
+names!}
+
+\end{document}
