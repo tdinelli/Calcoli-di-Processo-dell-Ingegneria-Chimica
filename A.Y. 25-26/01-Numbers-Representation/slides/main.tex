@@ -1,0 +1,345 @@
+\documentclass[aspectratio=169]{beamer}
+
+% ==================================================================
+% Define custom colors
+\definecolor{primarycolor}{RGB}{25, 74, 166} % blue
+\definecolor{accentcolor}{RGB}{65, 155, 232} % lighter blue
+\definecolor{bluepoli}{RGB}{2, 30, 54}
+\newcommand{\highlight}[2]{\colorbox{#1!17}{$#2$}}
+
+% ==================================================================
+% Apply these colors
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{alerted text}{fg=accentcolor}
+\setbeamercolor{example text}{fg=accentcolor!80!black}
+\setbeamercolor{progress bar}{fg=accentcolor, bg=accentcolor!20}
+\setbeamercolor{frametitle}{bg=bluepoli, fg=bluepoli!80!black}
+\setbeamercolor{title separator}{fg=bluepoli}
+
+% ==================================================================
+% Metropolis customization
+\usetheme[sectionpage=none]{metropolis}
+\setbeamercolor{background canvas}{bg=black!1.5}
+\setbeamercolor{frametitle}{bg=black!1.5,fg=black}
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{footline}{
+    \centerline{\textcolor{bluepoli}{\rule{0.95\paperwidth}{.3pt}}}
+    \vskip2.5pt
+    \hskip15pt \tiny Numbers, errors and computers \hskip330pt \insertframenumber
+    \vskip4pt
+}
+
+% ==================================================================
+% Images
+\usepackage{graphicx}
+
+% ==================================================================
+% Colors
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+% ==================================================================
+% Code rendering
+\usepackage{minted}
+% \usemintedstyle{colorful}  % or 'vs', 'github', 'monokai'
+
+% ==================================================================
+% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{positioning,tikzmark}
+
+% ==================================================================
+% URL and Hyperref
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdfpagemode=FullScreen,
+}
+
+% ==================================================================
+% TITLE
+\title{Numbers, errors and computers.}
+\subtitle{Calcoli di Processo dell' Ingegneria Chimica}
+\author[Dinelli, Mehl]{\textbf{Timoteo~Dinelli}}
+\institute{
+   \inst{} Department of Chemistry, Materials and Chemical Enginering, ``Giulio Natta'', Politecnico di Milano.\\ \\
+   \textbf{email}: timoteo.dinelli@polimi.it
+}
+\date{
+    07\textsuperscript{\underline{th}} of October 2025.
+}
+
+\begin{document}
+{
+    \setbeamertemplate{footline}{} 
+    \begin{frame}{}
+        \maketitle
+        \begin{tikzpicture}[overlay, remember picture]
+            \node[above left=3.6cm and 0.01cm of current page.south east] {
+                \includegraphics[trim=1cm 1cm 5.5cm 1cm, clip=true, width=8cm]{figures/logo.pdf}
+            };
+        \end{tikzpicture}
+    \end{frame}
+}
+
+% ==================================================================
+% Slides
+
+\begin{frame}{Numbers representation.}
+    ``{\it In computing, \alert{floating-point arithmetic (\textbf{FP})} is arithmetic that represents subsets of real numbers using an integer with a fixed precision, called the significand, scaled by an integer exponent of a fixed base. Numbers of this form are called floating-point numbers. For example, 12.345 is a floating-point number in base ten with five digits of precision.}'' \href{https://en.wikipedia.org/wiki/Floating-point_arithmetic}{Wikipedia}.
+
+    \begin{equation*}
+        12.345 = \tikzmarknode{mantissa}{\highlight{OliveGreen}{12345}} \: \times \:
+        \tikzmarknode{exponent}{\highlight{NavyBlue}{10^{-3}}}
+    \end{equation*}
+
+    \begin{tikzpicture}[overlay, remember picture, >=stealth, nodes={align=left,inner ysep=1pt},<-]
+        \node[anchor=west, color=OliveGreen!85, yshift=-1em, xshift=-9.2em] (mantissa_text) at (mantissa.south)
+        {\textsf{\footnotesize Significand (Mantissa)}};
+        \draw [color=OliveGreen](mantissa.south) |- ([yshift=-0.2ex]mantissa_text.south west);
+
+        \node[anchor=west, color=NavyBlue!85, yshift=-1em, xshift=3.2em] (exp_text) at (exponent.south)
+        {\textsf{\footnotesize Exponent}};
+        \draw [color=NavyBlue](exponent.south) |- ([yshift=-0.2ex]exp_text.south east);
+    \end{tikzpicture}
+
+    Additional RECOMMENDED read:
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        \href{https://en.wikibooks.org/wiki/A-level_Computing/AQA/Paper_2/Fundamentals_of_data_representation/Floating_point_numbers}{Floating point representations}.
+
+        \item[$\blacktriangleright$]
+        \href{https://medium.com/@lmpo/understanding-model-quantization-for-llms-1573490d44ad}{LLM quantization}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Elementary operations}
+    \small{
+        Initialize a single precision variable in MATLAB (e.g. x = $1e^{+25}$) using the function:
+        \vspace{-.3cm}
+        \begin{minted}[framesep=1mm,fontsize=\footnotesize]{octave}
+                            x = single(1.e+25)
+        \end{minted}
+        \vspace{-.3cm}
+        Working in single precision predict and calculate from x = 1.e+25  and y = 1.e+18 the following values of z:
+    }
+    
+    \begin{table}
+    \centering
+    \begin{tabular}{l c c} 
+    \hline
+    \multicolumn{1}{l}{} & \multicolumn{1}{l}{\textbf{Single Precision}} & \textbf{Double Precision}  \\ 
+    \hline
+        $z = x * y$               & inf        & 1.0000e+43 \\
+        $z = x / y$               & 10000000   & 10000000 \\
+        $z = y / x$               & 1.0000e-07 & 1.0000e-07 \\
+        $z = x^2$                 & inf        & 1.0000e+50 \\
+        $z = y^2$                 & 1.0000e+36 & 1.0000e+36 \\
+        $z = 1./(x*y)$            & 0          & 1.0000e-43 \\
+        $z = 1./x/y$              & 9.9492e-44 & 1.0000e-43 \\
+        $z = y + 1e10$            & 1.0000e+18 & 1.0000e+18 \\
+        $z = x * y / (x * y + 1)$ & NaN        & 1 \\
+    \hline
+    \end{tabular}
+    \end{table}
+\end{frame}
+
+{%
+   \setbeamertemplate{footline}{}
+   \begin{frame}[standout]
+      Exercises
+   \end{frame}
+}
+
+\begin{frame}{Compute the Machine Epsilon (MACHEPS)}
+    Machine epsilon (denoted as $\varepsilon_{\text{mach}}$) is the smallest positive floating-point number such that $1.0 + \varepsilon_{\text{mach}} \neq 1.0$ in floating-point arithmetic. It represents the relative precision of floating-point numbers and is a fundamental constant for a given floating-point format (e.g., approximately $2.22 \times 10^{-16}$ for double precision).
+    
+    Machine epsilon is important because it quantifies the limit of precision in numerical computations and helps estimate round-off errors in calculations.
+    
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        The algorithm iterates by halving epsilon until $1.0 + \varepsilon/2$ is indistinguishable from $1.0$ in floating-point arithmetic. At this point, we've found the machine epsilon.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Implementation}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+function epsilon = macheps_implementation()
+    epsilon = 1.0; % Initialize epsilon to 1
+    while (1.0 + epsilon/2) > 1.0
+        % Iterate as long as 1.0 + epsilon/2 is distinguishable from 1.0
+        epsilon = epsilon / 2; % Halve epsilon at each iteration
+    end
+    % At the end of the loop, epsilon is the machine epsilon
+    % (the smallest value where 1.0 + epsilon > 1.0)
+end
+    \end{minted}
+    
+    \textbf{Usage:}
+    \begin{minted}[frame=lines,framesep=2mm,fontsize=\footnotesize]{octave}
+eps_computed = macheps_implementation()
+eps_builtin = eps(1.0)  % Compare with built-in function
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Sum of the inverse of numbers (order matters!)}
+    Write a script which computes:
+    \begin{equation*}
+        \sum_{n = 1}^{1000000}\dfrac{1}{n}
+    \end{equation*}
+
+    in \alert{single} and \alert{double} precision. Then compare with the results obtained inverting the order of the sum, so by computing:
+
+    \begin{equation*}
+        \sum_{n=1000000}^{1}\dfrac{1}{n}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]{Implementation}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% Sum from 1 to 1000000 (forward)
+sum_forward_single = single(0);
+sum_forward_double = 0;
+for n = 1:1000000
+    sum_forward_single = sum_forward_single + single(1/n);
+    sum_forward_double = sum_forward_double + 1/n;
+end
+
+% Sum from 1000000 to 1 (backward)
+sum_backward_single = single(0);
+sum_backward_double = 0;
+for n = 1000000:-1:1
+    sum_backward_single = sum_backward_single + single(1/n);
+    sum_backward_double = sum_backward_double + 1/n;
+end
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos,firstnumber=16]{octave}
+
+% Display results
+fprintf('Forward sum (single):  %.10f\n', sum_forward_single);
+fprintf('Forward sum (double):  %.15f\n', sum_forward_double);
+fprintf('Backward sum (single): %.10f\n', sum_backward_single);
+fprintf('Backward sum (double): %.15f\n', sum_backward_double);
+
+fprintf('\nDifferences:\n');
+fprintf('Single precision:  %.10e\n', ...
+    abs(sum_forward_single - sum_backward_single));
+fprintf('Double precision:  %.15e\n', ...
+    abs(sum_forward_double - sum_backward_double));
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Vancouver: a nickel at a time}
+    Analogously to what happened on the Vancouver stock market (\href{https://slate.com/technology/2019/10/round-floor-software-errors-stock-market-battlefield.html}{reference}), starting from a stock value of 1000, check what happens when a random variation of $\pm1\%$ in its value is iterated for 10000 times. Try to round or truncate to \alert{two decimal places} using floor, ceil, and round. Compare the results with the number obtained using full computer precision.
+   
+    Please verify in the MATLAB help how the functions {\it rand, floor, ceil, fix, round} work.
+\end{frame}
+
+\begin{frame}[fragile]{Solution - Part 1: Setup}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% Initial stock value
+initial_value = 1000;
+n_iterations = 10000;
+
+% Initialize values for different rounding methods
+value_full_precision = initial_value;
+value_floor = initial_value;
+value_ceil = initial_value;
+value_round = initial_value;
+
+% Set random seed for reproducibility (optional)
+rng(42);
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Solution - Part 2: Iteration Loop}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos,firstnumber=13]{octave}
+% Iterate 10000 times with random ±1% variation
+for i = 1:n_iterations
+    % Generate random variation: ±1%
+    % rand() gives [0,1], so 2*rand()-1 gives [-1,1]
+    variation = (2 * rand() - 1) * 0.01;
+    
+    % Full precision (no rounding)
+    value_full_precision = value_full_precision * (1 + variation);
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Solution - Part 3: Rounding Methods}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos,firstnumber=21]{octave}
+    % Floor (round down to 2 decimal places)
+    temp = value_floor * (1 + variation);
+    value_floor = floor(temp * 100) / 100;
+    
+    % Ceil (round up to 2 decimal places)
+    temp = value_ceil * (1 + variation);
+    value_ceil = ceil(temp * 100) / 100;
+    
+    % Round (round to nearest 2 decimal places)
+    temp = value_round * (1 + variation);
+    value_round = round(temp * 100) / 100;
+end
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Solution - Part 4: Display Results}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos,firstnumber=34]{octave}
+% Display results
+fprintf('Results after %d iterations:\n', n_iterations);
+fprintf('=========================================\n');
+fprintf('Initial value:        %.2f\n', initial_value);
+fprintf('Full precision:       %.6f\n', value_full_precision);
+fprintf('Floor (round down):   %.2f\n', value_floor);
+fprintf('Ceil (round up):      %.2f\n', value_ceil);
+fprintf('Round (to nearest):   %.2f\n', value_round);
+fprintf('=========================================\n');
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Solution - Part 5: Differences Analysis}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos,firstnumber=44]{octave}
+% Calculate differences from full precision
+fprintf('\nDifferences from full precision:\n');
+fprintf('Floor:  %.6f (%.2f%%)\n', ...
+    value_full_precision - value_floor, ...
+    100*(value_full_precision - value_floor)/value_full_precision);
+fprintf('Ceil:   %.6f (%.2f%%)\n', ...
+    value_full_precision - value_ceil, ...
+    100*(value_full_precision - value_ceil)/value_full_precision);
+fprintf('Round:  %.6f (%.2f%%)\n', ...
+    value_full_precision - value_round, ...
+    100*(value_full_precision - value_round)/value_full_precision);
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Expected observations}
+    \begin{itemize}
+        \item[$\blacktriangleright$]
+        Floor will consistently lose value (downward bias, similar to Vancouver bug)
+
+        \item[$\blacktriangleright$]
+        Ceil will consistently gain value (upward bias)
+
+        \item[$\blacktriangleright$]
+        Round should be closer to full precision (unbiased rounding)
+    
+        \item[$\blacktriangleright$]
+        The cumulative effect over 10,000 iterations will be significant, demonstrating the Vancouver Stock Exchange issue where the index lost about 50\% of its value due to truncation errors!
+    \end{itemize}
+\end{frame}
+
+{
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+        Thank you for the attention!
+    \end{frame}
+}
+\end{document}
