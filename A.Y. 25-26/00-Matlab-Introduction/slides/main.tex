@@ -46,7 +46,13 @@
 % ==================================================================
 % TIKZ
 \usepackage{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning,tikzmark}
+
+% ==================================================================
+% Highlighting command for math mode
+\newcommand{\mathcolorbox}[2]{\tikz[baseline=(char.base)]{
+    \node[rectangle, fill=#1!20, inner sep=1pt, rounded corners=2pt] (char) {$#2$};}
+}
 
 % ==================================================================
 % TITLE
@@ -549,7 +555,7 @@ disp(sum);
                 \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
 sum = 0;
 for i = 1:100
-    sum += 1;
+    sum = sum + 1;
 end
 disp(sum);
                 \end{minted}
@@ -568,13 +574,14 @@ disp(sum);
         N.B. pay attention with the while loop it can run till infinite, \alert{handle with care}.
     \end{itemize}
     \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
-sum = 0;
+result = 0;
+token = 0;
 while (sum < 325)
     token = token + 1;
-    sum = sum + token;
+    result = result + token;
 end
 disp(['Iteration number: ', num2str(token)]);
-disp(['Sum is equal to:  ', num2str(sum)]);
+disp(['Sum is equal to:  ', num2str(result)]);
     \end{minted}
     \texttt{Iteration number: 25} \\
     \texttt{Sum is equal to: 325}
@@ -614,6 +621,98 @@ else
 end
         \end{minted}
     \end{columns}
+\end{frame}
+
+\section{Functions}
+\begin{frame}{Functions}
+    In MATLAB, a \alert{function} is a block of code that takes inputs, performs a set of operations, and returns outputs. Functions allow you to organize code in a clearer and more reusable way, especially when you need to perform the same operation in different parts of your program.
+
+    \textbf{Why using functions?}
+    \begin{itemize}
+        \item[$\blacktriangleright$] \textbf{Modularity}: Separating code into functions makes the program more readable and easier to maintain.
+
+        \item[$\blacktriangleright$] \textbf{Reusability}: A function can be reused in different parts of the program without rewriting the code.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Syntax}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos,escapeinside=||]{octave}
+function |\tikzmark{out}|[y1, ..., yN] = |\tikzmark{name}|function_name|\tikzmark{inp}|(x1, ..., xM)
+% ...
+% ...
+% ...
+% Some code
+% ...
+% ...
+% ...
+end
+    \end{minted}
+    \begin{tikzpicture}[overlay, remember picture, >=stealth, nodes={align=left,inner ysep=1pt},<-]
+        \node[anchor=west, color=RoyalPurple!85, yshift=-2em, xshift=5.2em] (inputtext) at (pic cs:inp)
+        {\textsf{\footnotesize Input variables.}};
+        \draw [color=RoyalPurple]([xshift=35pt,yshift=-0.3em]pic cs:inp) |- ([yshift=-0.2ex]inputtext.south east);
+        
+        \node[anchor=west, color=WildStrawberry!85, yshift=-4em, xshift=4em] (fnametext) at (pic cs:name)
+        {\textsf{\footnotesize Name of the function (user defined).}};
+        \draw [color=WildStrawberry]([yshift=-0.3em,xshift=35pt]pic cs:name) |- ([yshift=-0.2ex]fnametext.south east);
+        
+        \node[anchor=west, color=OliveGreen!85, yshift=-6em, xshift=7.5em] (outtext) at (pic cs:out)
+        {\textsf{\footnotesize Output variables (parenthesis can be omitted).}};
+        \draw [color=OliveGreen]([yshift=-0.3em,xshift=35pt]pic cs:out) |- ([yshift=-0.2ex]outtext.south east);
+    \end{tikzpicture}
+\end{frame}
+
+\section{Exercises}
+% \begin{frame}[fragile]{Example}
+%     Let's define a square matrix populated with random numbers, using the function
+%     \textbf{magic()} and loop over its rows and columns to match specific conditions.
+% 
+%     \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+% clear, clc
+% M = magic(300);
+% for i = 1:300
+%     for j = 1:300
+%         if (M(i,j) == 569)
+%             disp('Found!')
+%         end
+%     end
+% end
+%     \end{minted}
+% \end{frame}
+
+\begin{frame}{The Babylonian method}
+    \textcolor{NavyBlue}{Let's write a script implementing the Babylonian method to compute the square root of a number with a precision of four decimal figures, then wrap this code into a function.}
+    \begin{enumerate}
+        \item \textbf{Make an Initial guess}.
+              Guess any positive number $x_{0}$.
+        \item \textbf{Improve the first guess}.
+              Apply the formula $x_{1} = \frac{x_{0} + \frac{S}{x_{0}}}{2}$. The number $x_{1}$
+              is a better approximation to $\sqrt{S}$.
+        \item \textbf{Iterate until convergence}.
+              Apply the formula $x_{n+1} = \frac{x_{n} + \frac{S}{x_{n}}}{2}$ until the
+              convergence is reached.
+    \end{enumerate}
+    \textbf{Convergence} is reached when the digits of $x_{n+1}$ and $x_{n}$ agree to as many
+    decimal places as you desire.
+\end{frame}
+
+\begin{frame}[fragile]{Implementation}
+    \begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{octave}
+function SquareRoot = ComputeSquareRoot(S)
+    iter = 0;
+    x0 = S;
+    y = 0.5 * (x0 + S/x0);
+    
+    while abs(x0-y) > 1e-4 && iter < 50
+        x0 = y;
+        y = 0.5 * (x0 + S/x0);
+        iter = iter + 1;
+    end
+    
+    disp(['Number of iteration to reach convergence: ', num2str(iter)])
+    SquareRoot = y;
+end
+    \end{minted}
 \end{frame}
 
 {
