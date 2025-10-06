@@ -18,11 +18,7 @@ For the academic years 22-23, 24-25 and 25-26 I ([Timoteo Dinelli](https://tdine
 
 - [Matlab introduction](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/00-Matlab-Introduction/slides):
 introduction to the usage of matlab, covered topics around variables assignments, loops, conditional
-statements, functions, plotting and other basic functionalities for the first 3 lessons ($\sim$ 6
-hours).
-
-- [Practical Session 1](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/01-Numbers-Representation):
-Numbers representation, numerical errors and approximations, rounding ($\sim$ 2 hours).
+statements, functions, plotting and other basic functionalities, and [Practical Session 1](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/01-Numbers-Representation): Numbers representation, numerical errors and approximations, rounding ($\sim$ 6 hours).
 
 <!-- - [Practical Session 2](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2002): -->
 <!-- Linear systems of equations Part 1 ($\sim$ 2 hours). -->
