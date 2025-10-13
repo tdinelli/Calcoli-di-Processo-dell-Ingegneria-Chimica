@@ -22,60 +22,22 @@
 % functions.
 
 % Clear workspace and command window for a fresh start
-clear all  % Removes all variables from workspace
-close all  % Closes all figure windows
+clear variables  % Removes all variables from workspace
 clc        % Clears command window
 
-%% Test Arrays
-% Define two test arrays with different lengths and mixture of
-% positive/negative numbers
-A = [1, 5, -3, -9];                % 4-element array with 2 positive numbers
-B = [-1, 2, 3, 4, 5, -5, -8, -22]; % 8-element array with 4 positive numbers
+% Test the function
+A = [1, 5, -3, -9];
+result = count_positive(A);
+fprintf('Number of positive elements: %d\n', result);
 
-%% Count Positive Elements
-% Use our custom function to count positive elements in each array
-numberOfPositiveElementsInA = countPositive(A);
-numberOfPositiveElementsInB = countPositive(B);
-
-% Note: This could also be done using MATLAB's built-in functions:
-% numberOfPositiveElementsInA = sum(A >= 0);
-% numberOfPositiveElementsInB = sum(B >= 0);
-
-%% Function Definition
-function numberOfPositiveElements = countPositive(a)
-    % COUNTPOSITIVE Count the number of non-negative elements in an array
-    %   numberOfPositiveElements = countPositive(a) returns the count of
-    %   elements that are greater than or equal to zero in the input array
-    %
-    % Input:
-    %   a - Input array of any size
-    %
-    % Output:
-    %   numberOfPositiveElements - Scalar value representing the count of
-    %                             non-negative elements
-    %
-    % Example:
-    %   arr = [1, -2, 0, 3, -4];
-    %   count = countPositive(arr)
-    %   % Returns: count = 3 (counting 1, 0, and 3)
-    %
-    % Notes:
-    %   - Zero is considered a positive number in this implementation
-    %   - The function works with arrays of any size or shape
-    %   - For efficiency with large arrays, consider using MATLAB's
-    %     built-in
-    %     sum(a >= 0) instead
+function count = count_positive(A)
+    % Count positive elements without using built-in functions
+    count = 0;
+    n = length(A);
     
-    % Get the length of the input array
-    ne = length(a);
-    
-    % Initialize counter
-    numberOfPositiveElements = 0;
-    
-    % Count positive elements (including zero)
-    for i = 1:ne
-        if a(i) >= 0
-            numberOfPositiveElements = numberOfPositiveElements + 1;
+    for i = 1:n
+        if A(i) > 0
+            count = count + 1;
         end
     end
 end

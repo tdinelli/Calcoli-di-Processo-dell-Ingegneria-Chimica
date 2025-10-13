@@ -16,94 +16,53 @@
 %   P.zza Leonardo da Vinci 32, 20133 Milano                              %
 %                                                                         %
 % ----------------------------------------------------------------------- %
-%% Bubble Sort Algorithm Implementation
-% This script demonstrates the bubble sort algorithm by:
-% 1. Creating a test vector
-% 2. Implementing bubble sort
-% 3. Visualizing the sorting process
-
 % Clear workspace and prepare for fresh start
-clear all   % Remove all variables from workspace
-close all   % Close all figure windows
+clear variables   % Remove all variables from workspace
 clc         % Clear command window
 
-%% Test the Bubble Sort Function
-% Create a random test vector
-testVector = randi([1, 100], 1, 10);  % Random vector of 10 integers between 1 and 100
+% Test the function
+A = [1 2 3 4; 5 6 7 8; 9 10 11 12; 13 14 15 16];
+spiral = spiral_traversal(A);
+fprintf('Original matrix:\n');
+disp(A);
+fprintf('Spiral traversal: %s\n', mat2str(spiral));
 
-% Display original vector
-fprintf('Original vector: ');
-disp(testVector)
-
-% Sort the vector using our bubble sort implementation
-sortedVector = bubbleSort(testVector);
-
-% Display sorted vector
-fprintf('Sorted vector:   ');
-disp(sortedVector)
-
-% Verify with MATLAB's built-in sort (for comparison)
-matlabSorted = sort(testVector);
-fprintf('MATLAB sort:     ');
-disp(matlabSorted)
-
-%% Function Definition
-function sortedVector = bubbleSort(inputVector)
-    % BUBBLESORT Sort a vector in ascending order using bubble sort
-    %   algorithm sortedVector = bubbleSort(inputVector) returns a sorted
-    %   version of the input vector using the bubble sort algorithm.
-    %
-    % Input:
-    %   inputVector - Vector of numbers to be sorted
-    %
-    % Output:
-    %   sortedVector - Sorted vector in ascending order
-    %
-    % Example:
-    %   v = [64, 34, 25, 12, 22, 11, 90];
-    %   sorted = bubbleSort(v)
-    %   % Returns: [11, 12, 22, 25, 34, 64, 90]
-
-    % Make a copy of the input vector to avoid modifying the original
-    sortedVector = inputVector;
-
-    % Get the length of the vector
-    n = length(sortedVector);
-
-    % Bubble sort algorithm:
-    % - Outer loop: number of passes through the vector
-    % - We need at most n-1 passes (if the vector is in reverse order)
-    for pass = 1:(n-1)
-        % Flag to check if any swaps occurred in this pass
-        hasSwapped = false;
-
-        % Inner loop: compare adjacent elements
-        % Note: We only need to go up to n-pass because:
-        % - After each pass, the largest remaining element "bubbles up"
-        %   to its final position
-        % - So we don't need to check the last 'pass' elements
-        for i = 1:(n-pass)
-            % Compare adjacent elements
-            if sortedVector(i) > sortedVector(i+1)
-                % If they're in wrong order, swap them
-                % Store first element temporarily
-                temp = sortedVector(i);
-                % Move second element to first position
-                sortedVector(i) = sortedVector(i+1);
-                % Move first element (from temp) to second position
-                sortedVector(i+1) = temp;
-                % Record that we made a swap
-                hasSwapped = true;
-            end
-
-            % Optional: Uncomment to see the vector after each comparison
-            % disp(sortedVector)
+function spiral_vec = spiral_traversal(A)
+    n = size(A, 1);
+    spiral_vec = [];
+    
+    top = 1;
+    bottom = n;
+    left = 1;
+    right = n;
+    
+    while top <= bottom && left <= right
+        % Traverse right along top row
+        for col = left:right
+            spiral_vec = [spiral_vec, A(top, col)];
         end
-
-        % If no swaps occurred in this pass, the vector is already sorted
-        if ~hasSwapped
-            fprintf('Early termination after %d passes (vector is sorted)\n', pass);
-            break
+        top = top + 1;
+        
+        % Traverse down along right column
+        for row = top:bottom
+            spiral_vec = [spiral_vec, A(row, right)];
+        end
+        right = right - 1;
+        
+        % Traverse left along bottom row (if still valid)
+        if top <= bottom
+            for col = right:-1:left
+                spiral_vec = [spiral_vec, A(bottom, col)];
+            end
+            bottom = bottom - 1;
+        end
+        
+        % Traverse up along left column (if still valid)
+        if left <= right
+            for row = bottom:-1:top
+                spiral_vec = [spiral_vec, A(row, left)];
+            end
+            left = left + 1;
         end
     end
 end

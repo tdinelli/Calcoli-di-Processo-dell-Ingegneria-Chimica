@@ -22,73 +22,48 @@
 % advantages in terms of readability, performance, and educational value.
 
 % Clear workspace, figures, and command window for a fresh start
-clear all  % Removes all variables from workspace
-close all  % Closes all figure windows
+clear variables  % Removes all variables from workspace
 clc        % Clears command window
 
-%% Create Test Matrix
-% Create a magic square matrix of size 234x234
-% A magic square is a square matrix where the sum of each row, column, and
-% diagonal is the same, making it useful for testing
-M = magic(234);
+find_max_magic()
 
-%% Method 1: Custom Implementation
-% This method uses a manual search through the matrix using nested loops
-% It's slower but demonstrates the fundamental concept clearly
-[index_row, index_col, maximum_value] = findMaximum(M);
-
-%% Method 2: Using find() and max()
-% This method combines MATLAB's built-in find() and max() functions
-% The '1' parameter limits the output to the first occurrence if there are
-% multiple maxima
-[row_1, col_1] = find(M == max(M(:)), 1);
-matlab_max_1 = M(row_1, col_1);
-
-%% Method 3: Using max() with 'all' parameter
-% This is the most concise modern approach, available in newer MATLAB
-% versions The 'all' parameter finds the maximum across all dimensions at
-% once
-[matlab_max_2, linearIndex] = max(M, [], 'all');
-[row_2, col_2] = ind2sub(size(M), linearIndex);
-
-%% Custom Function Definition
-function [index_row, index_column, value] = findMaximum(A)
-    % FINDMAXIMUM Find the maximum value and its location in a matrix
-    %   [row, col, max_val] = findMaximum(A) returns:
-    %   - row: row index of the maximum value
-    %   - col: column index of the maximum value
-    %   - max_val: the maximum value itself
-    %
-    % Input:
-    %   A - Input matrix of any size
-    %
-    % Output:
-    %   index_row - Row index of the maximum value
-    %   index_column - Column index of the maximum value
-    %   value - Maximum value found in the matrix
-    %
-    % Example:
-    %   A = [1 2 3; 4 5 6; 7 8 9];
-    %   [row, col, max_val] = findMaximum(A)
-    %   % Returns: row = 3, col = 3, max_val = 9
+function [max_val, row, col] = find_max_magic()
+    % Create magic matrix
+    M = magic(234);
     
-    % Get matrix dimensions
-    [nr, nc] = size(A);
+    % Manual approach - initialize variables
+    max_val = M(1,1);
+    row = 1;
+    col = 1;
     
-    % Initialize with first element
-    value = A(1, 1);
-    index_row = 1;
-    index_column = 1;
-    
-    % Iterate through each element
-    for i = 1:nr
-        for j = 1:nc
-            % Update if current element is larger than stored maximum
-            if A(i, j) > value
-                value = A(i, j);
-                index_row = i;
-                index_column = j;
+    % Loop through all elements
+    [n_rows, n_cols] = size(M);
+    for i = 1:n_rows
+        for j = 1:n_cols
+            if M(i,j) > max_val
+                max_val = M(i,j);
+                row = i;
+                col = j;
             end
         end
     end
+    
+    fprintf('Manual approach:\n');
+    fprintf('Maximum value: %d at position (%d, %d)\n', max_val, row, col);
+    
+    % Using MATLAB built-in functions
+    [max_cols, row_indices] = max(M);
+    [max_val_builtin, col_idx] = max(max_cols);
+    row_builtin = row_indices(col_idx);
+    col_builtin = col_idx;
+    
+    fprintf('\nBuilt-in approach (max):\n');
+    fprintf('Maximum value: %d at position (%d, %d)\n', ...
+            max_val_builtin, row_builtin, col_builtin);
+    
+    % Using find
+    [r, c] = find(M == max_val_builtin);
+    fprintf('\nUsing find:\n');
+    fprintf('Maximum value: %d at position (%d, %d)\n', ...
+            max_val_builtin, r(1), c(1));
 end

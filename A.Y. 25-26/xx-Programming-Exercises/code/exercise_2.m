@@ -22,88 +22,53 @@
 % that can perform these operations more efficiently.
 
 % Clear the workspace and command window for a fresh start
-clear all  % Removes all variables from workspace
-close all  % Closes all figure windows
-clc        % Clears command window
+clear variables  % Removes all variables from workspace
+clc              % Clears command window
 
 %% Create Test Matrix
 % Create a 5x5 magic square for testing
 % A magic square has the property that all rows, columns, and diagonals 
 % sum to the same value, making it perfect for testing sum operations
-M = magic(5);
+% Script to verify magic matrix properties
+n = 5;  % Size of magic matrix
+M = magic(n);
 
-%% Calculate Sums
-% Calculate the sum of each column and row using our custom functions
-columns_sum = sumColumns(M);
-rows_sum = sumRows(M);
+fprintf('Testing magic matrix of size %dx%d\n\n', n, n);
 
-% Note: These operations could also be performed using MATLAB's
-% built-in sum():
-% columns_sum = sum(M);  % Sum of each column
-% rows_sum = sum(M, 2)'; % Sum of each row (transposed to match our implementation)
+% Calculate the magic constant
+magic_constant = n * (n^2 + 1) / 2;
+fprintf('Expected magic constant: %.0f\n\n', magic_constant);
 
-%% Function Definitions
-
-function columnsSum = sumColumns(M)
-    % SUMCOLUMNS Calculate the sum of each column in a matrix
-    %   columnsSum = sumColumns(M) returns a row vector where each element
-    %   is the sum of the corresponding column in matrix M
-    %
-    % Input:
-    %   M - Input matrix of size [nr x nc]
-    %
-    % Output:
-    %   columnsSum - Row vector of length nc containing column sums
-    %
-    % Example:
-    %   M = [1 2 3; 4 5 6];
-    %   sums = sumColumns(M)
-    %   % Returns: sums = [5 7 9]
-    
-    % Get matrix dimensions
-    [nr, nc] = size(M);
-    
-    % Pre-allocate output vector for efficiency
-    columnsSum = zeros(1, nc);
-    
-    % Calculate sum for each column
-    for i = 1:nc            % Loop through each column
-        tmp_sum = 0;        % Initialize sum for current column
-        for j = 1:nr        % Loop through each row in current column
-            tmp_sum = tmp_sum + M(j, i);
-        end
-        columnsSum(i) = tmp_sum;
-    end
+% Check row sums
+fprintf('Row sums:\n');
+row_sums = sum(M, 2);
+for i = 1:n
+    fprintf('Row %d: %.0f\n', i, row_sums(i));
 end
 
-function rowsSum = sumRows(M)
-    % SUMROWS Calculate the sum of each row in a matrix
-    %   rowsSum = sumRows(M) returns a row vector where each element
-    %   is the sum of the corresponding row in matrix M
-    %
-    % Input:
-    %   M - Input matrix of size [nr x nc]
-    %
-    % Output:
-    %   rowsSum - Row vector of length nr containing row sums
-    %
-    % Example:
-    %   M = [1 2 3; 4 5 6];
-    %   sums = sumRows(M)
-    %   % Returns: sums = [6 15]
-    
-    % Get matrix dimensions
-    [nr, nc] = size(M);
-    
-    % Pre-allocate output vector for efficiency
-    rowsSum = zeros(1, nr);  % Note: Length should be nr, not nc
-    
-    % Calculate sum for each row
-    for i = 1:nr            % Loop through each row
-        tmp_sum = 0;        % Initialize sum for current row
-        for j = 1:nc        % Loop through each column in current row
-            tmp_sum = tmp_sum + M(i, j);
-        end
-        rowsSum(i) = tmp_sum;
-    end
+% Check column sums
+fprintf('\nColumn sums:\n');
+col_sums = sum(M, 1);
+for i = 1:n
+    fprintf('Column %d: %.0f\n', i, col_sums(i));
 end
+
+% Check diagonal sums
+main_diag_sum = sum(diag(M));
+anti_diag_sum = sum(diag(fliplr(M)));
+fprintf('\nMain diagonal sum: %.0f\n', main_diag_sum);
+fprintf('Anti-diagonal sum: %.0f\n', anti_diag_sum);
+
+% Verify all sums are equal
+is_magic = all(row_sums == magic_constant) && ...
+           all(col_sums == magic_constant) && ...
+           main_diag_sum == magic_constant && ...
+           anti_diag_sum == magic_constant;
+
+fprintf('\nIs magic matrix valid? %s\n\n', mat2str(is_magic));
+
+% Compare with random matrix
+R = randi([1, n^2], n, n);
+fprintf('Random matrix row sums: %s\n', mat2str(sum(R, 2)'));
+fprintf('Random matrix column sums: %s\n', mat2str(sum(R, 1)));
+fprintf('Random matrix is NOT magic!\n');
