@@ -1,0 +1,570 @@
+\documentclass[aspectratio=169]{beamer}
+
+% ==================================================================
+% Define custom colors
+\definecolor{primarycolor}{RGB}{25, 74, 166} % blue
+\definecolor{accentcolor}{RGB}{65, 155, 232} % lighter blue
+\definecolor{bluepoli}{RGB}{2, 30, 54}
+\newcommand{\highlight}[2]{\colorbox{#1!9}{$#2$}}
+
+% ==================================================================
+% Apply these colors
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{alerted text}{fg=accentcolor}
+\setbeamercolor{example text}{fg=accentcolor!80!black}
+\setbeamercolor{progress bar}{fg=accentcolor, bg=accentcolor!20}
+\setbeamercolor{frametitle}{bg=bluepoli, fg=bluepoli!80!black}
+\setbeamercolor{title separator}{fg=bluepoli}
+
+% ==================================================================
+% Metropolis customization
+\usetheme[sectionpage=none]{metropolis}
+\setbeamercolor{background canvas}{bg=black!1.5}
+\setbeamercolor{frametitle}{bg=black!1.5,fg=black}
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{footline}{
+    \centerline{\textcolor{bluepoli}{\rule{0.95\paperwidth}{.3pt}}}
+    \vskip2.5pt
+    \hskip15pt \tiny Linear system of equations \hskip330pt \insertframenumber
+    \vskip4pt
+}
+
+% ==================================================================
+% Images
+\usepackage{graphicx}
+
+% ==================================================================
+% Colors
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+% ==================================================================
+% Code rendering
+\usepackage{minted}
+
+% ==================================================================
+% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{positioning,tikzmark,backgrounds,arrows,shapes,calc}
+
+% ==================================================================
+% TITLE
+\title{Linear System Of Equations\\Part 2}
+\subtitle{Calcoli di Processo dell' Ingegneria Chimica}
+\author[Dinelli]{\textbf{Timoteo~Dinelli}}
+\institute{
+   \inst{} Department of Chemistry, Materials and Chemical Engineering, ``Giulio Natta'', Politecnico di Milano.\\ \\
+   \textbf{email}: timoteo.dinelli@polimi.it
+}
+\date{21\textsuperscript{st} of October 2025}
+
+\begin{document}
+{
+\setbeamertemplate{footline}{}
+\begin{frame}{}
+	\maketitle
+	\begin{tikzpicture}[overlay, remember picture]
+		\node[above left=3.6cm and 0.01cm of current page.south east]{\includegraphics[trim=1cm 1cm 5.5cm 1cm, clip=true, width=8cm]{figures/logo.pdf}};
+	\end{tikzpicture}
+\end{frame}
+}
+
+% ==================================================================
+% Slides
+\begin{frame}{Linear System Of Equations}
+	\small{
+		A system of linear equations consists of several \alert{linear equations} that must all be satisfied simultaneously. A solution is a vector whose elements, when substituted for the unknowns, satisfy all equations.
+	}
+
+	From the classical representation to the \alert{\textbf{matrix}} form:
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{equation*}
+			\begin{cases}
+				a_{1,1}x_{1} + a_{1,2}x_{2} + \ldots + a_{1,n}x_{n} = b_{1} \\
+				a_{2,1}x_{1} + a_{2,2}x_{2} + \ldots + a_{2,n}x_{n} = b_{2} \\
+				\quad \quad \vdots                                          \\
+				a_{n,1}x_{1} + a_{n,2}x_{2} + \ldots + a_{n,n}x_{n} = b_{n}
+			\end{cases}
+		\end{equation*}
+
+		\column{0.5\textwidth}
+		\begin{equation*}
+			\tikzmarknode{Amatrix}{\highlight{OliveGreen}{
+					\begin{bmatrix}
+						a_{1,1} & a_{1,2} & \ldots & a_{1,n} \\
+						a_{2,1} & a_{2,2} & \ldots & a_{2,n} \\
+						\vdots  & \vdots  & \ddots & \vdots  \\
+						a_{n,1} & a_{n,2} & \ldots & a_{n,n}
+					\end{bmatrix}
+				}}\:
+			\tikzmarknode{xvector}{\highlight{NavyBlue}{
+					\begin{bmatrix}
+						x_{1}  \\
+						x_{2}  \\
+						\vdots \\
+						x_{n}
+					\end{bmatrix}
+				}}
+			=
+			\tikzmarknode{bvector}{\highlight{WildStrawberry}{
+					\begin{bmatrix}
+						b_{1}  \\
+						b_{2}  \\
+						\vdots \\
+						b_{n}
+					\end{bmatrix}
+				}}
+		\end{equation*}
+	\end{columns}
+
+	\Huge{\begin{equation*}
+			\textcolor{OliveGreen}{\mathbf{A}} \: \textcolor{NavyBlue}{\mathbf{x}} = \textcolor{WildStrawberry}{\mathbf{b}}
+		\end{equation*}}
+\end{frame}
+
+\begin{frame}{Last practical}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\footnotesize{
+			\alert{Gauss Elimination} transforms the matrix $\mathbf{A}$ into an upper triangular matrix $\mathbf{A}^{*}$ through systematic row operations:
+			\begin{equation*}
+				\mathbf{A}^{*} =
+				\begin{bmatrix}
+					a_{1,1}^{(0)} & \ldots        & \ldots & a_{1,n}^{(0)}   & \vline & b_{1}^{(0)}   \\
+					0             & a_{2,2}^{(1)} & \ldots & a_{2,n}^{(1)}   & \vline & b_{2}^{(1)}   \\
+					\vdots        & \ldots        & \ddots & \vdots          & \vline & \vdots        \\
+					0             & \ldots        & 0      & a_{n,n}^{(n-1)} & \vline & b_{n}^{(n-1)}
+				\end{bmatrix}
+			\end{equation*}
+
+			\textbf{Algorithm:} At step $k$, eliminate column $k$ below the diagonal:
+			\begin{equation*}
+				m_{i,k} = \frac{a_{i,k}^{(k-1)}}{a_{k,k}^{(k-1)}}, \quad i = k+1, \ldots, n
+			\end{equation*}
+			\begin{equation*}
+				a_{i,j}^{(k)} = a_{i,j}^{(k-1)} - m_{i,k} \cdot a_{k,j}^{(k-1)}
+			\end{equation*}
+
+			Then solve by \alert{back substitution}.
+		}
+		\column{0.5\textwidth}
+		\footnotesize{
+			\alert{LU Decomposition} factorizes $\mathbf{A}$ into a lower triangular matrix $\mathbf{L}$ and an upper triangular matrix $\mathbf{U}$ such that:
+			\begin{equation*}
+				\mathbf{A} = \mathbf{L} \mathbf{U}
+			\end{equation*}
+
+			\textbf{Example for $3 \times 3$ system:}
+			\begin{equation*}
+				\mathbf{L} = \begin{bmatrix}
+					1         & 0         & 0 \\
+					\ell_{21} & 1         & 0 \\
+					\ell_{31} & \ell_{32} & 1
+				\end{bmatrix},\ \mathbf{U} = \begin{bmatrix}
+					u_{11} & u_{12} & u_{13} \\
+					0      & u_{22} & u_{23} \\
+					0      & 0      & u_{33}
+				\end{bmatrix}
+			\end{equation*}
+
+			\textbf{Solution process:}
+			\begin{enumerate}
+				\item Solve $\mathbf{L}\mathbf{y} = \mathbf{b}$ by forward substitution
+				\item Solve $\mathbf{U}\mathbf{x} = \mathbf{y}$ by back substitution
+			\end{enumerate}
+
+			\textbf{Advantage:} Once computed, $\mathbf{L}$ and $\mathbf{U}$ can be reused for multiple right-hand sides $\mathbf{b}$.
+		}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{When Methods Can Fail}
+	\vspace{-0.5cm}
+	\textbf{Singular matrices:} If $\det(\mathbf{A}) = 0$, the system has either:
+	\begin{itemize}
+		\item[$\blacktriangleright$]
+		      No solution (inconsistent)
+		\item[$\blacktriangleright$]
+		      Infinitely many solutions (underdetermined)
+	\end{itemize}
+
+	\vspace{0.3cm}
+	\textbf{Numerical issues during elimination:}
+	\begin{itemize}
+		\item[$\blacktriangleright$]
+		      \alert{Zero pivot:} If $a_{k,k}^{(k-1)} = 0$, division by zero occurs
+
+		\item[$\blacktriangleright$]
+		      \alert{Small pivot:} If $a_{k,k}^{(k-1)} \approx 0$, amplifies rounding errors
+	\end{itemize}
+
+	\vspace{0.3cm}
+	\textbf{Solution:} \alert{Partial pivoting}
+	\begin{itemize}
+		\item[$\blacktriangleright$]
+		      At each step, swap rows to bring the largest element to the pivot position
+		\item[$\blacktriangleright$]
+		      Improves numerical stability significantly
+		\item[$\blacktriangleright$]
+		      MATLAB's \texttt{\textcolor{blue}{lu}(A)} and \texttt{\textcolor{blue}{linsolve}(A, b)} use pivoting by default
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Partial Pivoting}
+	\vspace{-0.4cm}
+	\textbf{Problem:} Small or zero pivots cause numerical instability or failure.
+
+	\vspace{-0.2cm}
+	\textbf{Solution:} At step $k$, swap rows to maximize $|a_{k,k}^{(k-1)}|$.
+
+	\vspace{-0.3cm}
+	\alert{\textbf{Algorithm:}}
+	\begin{enumerate}
+		\item At elimination step $k$, find the row $p \geq k$ with maximum $|a_{p,k}^{(k-1)}|$:
+		      \begin{equation*}
+			      |a_{p,k}^{(k-1)}| = \max_{i=k,\ldots,n} |a_{i,k}^{(k-1)}|
+		      \end{equation*}
+
+		\item If $p \neq k$, swap rows $p$ and $k$ in both $\mathbf{A}^{(k-1)}$ and $\mathbf{b}^{(k-1)}$
+
+		\item Proceed with standard Gauss elimination using the new pivot
+	\end{enumerate}
+
+	\vspace{0.1cm}
+	\textbf{Benefits:}
+	\begin{itemize}
+		\item[$\blacktriangleright$] Avoids division by zero (if matrix is non-singular)
+		\item[$\blacktriangleright$] Minimizes rounding error propagation
+		\item[$\blacktriangleright$] Guarantees $|m_{i,k}| \leq 1$ for all multipliers
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Partial Pivoting: Example}
+	\footnotesize{Solve $\mathbf{Ax} = \mathbf{b}$ with partial pivoting:}
+	\begin{columns}
+		\column{0.48\textwidth}
+		\footnotesize{\textbf{Initial system:}
+			\begin{equation*}
+				\begin{bmatrix}
+					2  & 1  & -1 & \vline & 8   \\
+					-3 & -1 & 2  & \vline & -11 \\
+					-2 & 1  & 2  & \vline & -3
+				\end{bmatrix}
+			\end{equation*}
+
+			\textbf{Step 1:} Find max in column 1
+			\begin{itemize}
+				\item $|a_{1,1}| = 2$, $|a_{2,1}| = 3$, $|a_{3,1}| = 2$
+				\item Swap rows 1 and 2
+			\end{itemize}
+
+			\begin{equation*}
+				\begin{bmatrix}
+					-3 & -1 & 2  & \vline & -11 \\
+					2  & 1  & -1 & \vline & 8   \\
+					-2 & 1  & 2  & \vline & -3
+				\end{bmatrix}
+			\end{equation*}}
+
+		\column{0.48\textwidth}
+		\footnotesize{Eliminate column 1:
+		\begin{equation*}
+			\begin{bmatrix}
+				-3 & -1  & 2    & \vline & -11   \\
+				0  & 1/3 & 1/3  & \vline & 2/3   \\
+				0  & 1/3 & 10/3 & \vline & -35/3
+			\end{bmatrix}
+		\end{equation*}
+
+		\textbf{Step 2:} Find max in column 2 (rows 2-3)
+		\begin{itemize}
+			\item $|a_{2,2}| = 1/3$, $|a_{3,2}| = 1/3$ (equal, no swap)
+		\end{itemize}
+
+		Eliminate column 2:
+		\begin{equation*}
+			\begin{bmatrix}
+				-3 & -1  & 2   & \vline & -11   \\
+				0  & 1/3 & 1/3 & \vline & 2/3   \\
+				0  & 0   & 3   & \vline & -37/3
+			\end{bmatrix}
+		\end{equation*}
+
+		Back substitution: $\mathbf{x} = [3, 1, 2]^T$
+		}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Scaled Partial Pivoting (Balanced Pivoting)}
+	\small{\textbf{Problem:} Partial pivoting ignores the relative magnitude of coefficients in each row.
+
+		\textbf{Idea:} Choose pivot based on \alert{relative size} compared to other elements in its row.
+
+		\vspace{-0.15cm}
+		\alert{\textbf{Algorithm:}}
+		\begin{enumerate}
+			\item Compute the \alert{scaling factors} for each row (done once at the beginning):
+			      \begin{equation*}
+				      s_i = \max_{j=1,\ldots,n} |a_{i,j}|, \quad i = 1, \ldots, n
+			      \end{equation*}
+
+			\item At elimination step $k$, find the row $p \geq k$ that maximizes the \alert{scaled pivot}:
+			      \begin{equation*}
+				      \frac{|a_{p,k}^{(k-1)}|}{s_p} = \max_{i=k,\ldots,n} \frac{|a_{i,k}^{(k-1)}|}{s_i}
+			      \end{equation*}
+
+			\item If $p \neq k$, swap rows $p$ and $k$ (and their scaling factors)
+
+			\item Proceed with standard Gauss elimination
+		\end{enumerate}
+
+		\vspace{-0.3cm}
+		\textbf{Note:} Scaling factors remain constant after row swaps, not recomputed.}
+\end{frame}
+
+\begin{frame}{Scaled Partial Pivoting: Example}
+	Consider the system where row magnitudes differ significantly:
+
+	\begin{columns}
+		\column{0.48\textwidth}
+		\footnotesize{
+			\textbf{Initial system:}
+			\begin{equation*}
+				\begin{bmatrix}
+					2 & 100000 & \vline & 100000 \\
+					1 & 1      & \vline & 2
+				\end{bmatrix}
+			\end{equation*}
+
+			\textbf{Standard partial pivoting:}
+			\begin{itemize}
+				\item $|a_{1,1}| = 2 > |a_{2,1}| = 1$
+				\item No swap! Use pivot $a_{1,1} = 2$
+				\item Multiplier: $m_{2,1} = 1/2$
+				\item Result: Poor numerical behavior
+			\end{itemize}}
+
+		\column{0.48\textwidth}
+		\footnotesize{
+			\textbf{Scaled partial pivoting:}
+			\begin{itemize}
+				\item Compute scales:
+				      \begin{equation*}
+					      s_1 = 100000, \quad s_2 = 1
+				      \end{equation*}
+				\item Compare scaled pivots:
+				      \begin{equation*}
+					      \frac{|a_{1,1}|}{s_1} = \frac{2}{100000} = 0.00002
+				      \end{equation*}
+				      \begin{equation*}
+					      \frac{|a_{2,1}|}{s_2} = \frac{1}{1} = 1
+				      \end{equation*}
+				\item Swap rows! Better numerical stability
+			\end{itemize}
+		}
+	\end{columns}
+
+	\small{\vspace{0.3cm}
+		\textbf{Conclusion:} Scaled pivoting accounts for different row magnitudes, providing better stability for ill-conditioned systems.}
+\end{frame}
+
+{%
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+	Exercises
+\end{frame}
+}
+
+\begin{frame}[fragile]{MATLAB Implementation}
+	\textbf{Function signature:}
+	\begin{minted}[fontsize=\small, bgcolor=black!5]{matlab}
+function [A, b] = gauss_elimination_scaled_pivoting(A, b)
+    \end{minted}
+
+	\vspace{0.3cm}
+	\textbf{Key steps in the implementation:}
+	\begin{enumerate}
+		\item Compute scaling factors \alert{once} at the beginning:
+		      \begin{minted}[fontsize=\small, bgcolor=black!5]{matlab}
+s = max(abs(A), [], 2);  % Maximum absolute value per row
+        \end{minted}
+
+		\item For each column $k$, find the best pivot:
+		      \begin{minted}[fontsize=\small, bgcolor=black!5]{matlab}
+[~, p] = max(abs(A(k:n, k)) ./ s(k:n));
+        \end{minted}
+
+		\item Swap rows in both $\mathbf{A}$, $\mathbf{b}$, and scaling vector $\mathbf{s}$
+
+		\item Eliminate below the pivot using standard Gauss elimination
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 1: Why Scaling Matters}
+	\textbf{System with vastly different row magnitudes:}
+	\begin{equation*}
+		\begin{bmatrix}
+			2 & 100000 \\
+			1 & 1
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1 \\ x_2
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			100000 \\ 2
+		\end{bmatrix}
+	\end{equation*}
+
+	\begin{columns}
+		\column{0.48\textwidth}
+		\textbf{Without scaling:}
+		\begin{itemize}
+			\item Choose pivot $a_{1,1} = 2$ (larger)
+			\item Multiplier: $m_{2,1} = 0.5$
+			\item Row 2 becomes: $[0, -49999]$
+			\item \alert{Numerical instability!}
+		\end{itemize}
+
+		\column{0.48\textwidth}
+		\textbf{With scaled pivoting:}
+		\begin{itemize}
+			\item $s_1 = 100000$, $s_2 = 1$
+			\item Scaled: $2/100000$ vs $1/1$
+			\item Swap rows! Use pivot $a_{2,1} = 1$
+			\item \alert{Better stability}
+		\end{itemize}
+	\end{columns}
+
+	\vspace{0.3cm}
+	\begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{matlab}
+[A_scaled, b_scaled] = gauss_elimination_scaled_pivoting(A, b);
+x = back_substitution(A_scaled, b_scaled);
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 2: Complete 3×3 System}
+	\textbf{Solve the system from lecture slides:}
+	\begin{equation*}
+		\begin{bmatrix}
+			2  & 1  & -1 \\
+			-3 & -1 & 2  \\
+			-2 & 1  & 2
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1 \\ x_2 \\ x_3
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			8 \\ -11 \\ -3
+		\end{bmatrix}
+	\end{equation*}
+
+	\begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{matlab}
+A = [2, 1, -1; -3, -1, 2; -2, 1, 2];
+b = [8; -11; -3];
+
+% Apply Gauss elimination with scaled pivoting
+[A_upper, b_upper] = gauss_elimination_scaled_pivoting(A, b);
+
+% Solve by back substitution
+x = back_substitution(A_upper, b_upper);
+    \end{minted}
+
+	\footnotesize{\textbf{Result:} $\mathbf{x} = [3, 1, 2]^T$, \textbf{Verification:} $\|\mathbf{Ax} - \mathbf{b}\| \approx 0$}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 3: Ill-Conditioned Systems}
+	\vspace{-0.25cm}
+	\textbf{The Hilbert matrix} is notoriously difficult to solve numerically:
+	\begin{equation*}
+		H_{ij} = \frac{1}{i + j - 1}, \quad \text{e.g., } H_4 =
+		\begin{bmatrix}
+			1   & 1/2 & 1/3 & 1/4 \\
+			1/2 & 1/3 & 1/4 & 1/5 \\
+			1/3 & 1/4 & 1/5 & 1/6 \\
+			1/4 & 1/5 & 1/6 & 1/7
+		\end{bmatrix}
+	\end{equation*}
+
+	Condition number: $\kappa(\mathbf{H}_4) \approx 1.55 \times 10^4$ (very ill-conditioned!)
+
+	\vspace{-0.25cm}
+	\begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{matlab}
+A = hilb(4);
+b = sum(A, 2);  % Ensures solution is x = [1, 1, 1, 1]'
+
+[A_upper, b_upper] = gauss_elimination_scaled_pivoting(A, b);
+x = back_substitution(A_upper, b_upper);
+    \end{minted}
+
+	\footnotesize{\textbf{Key insight:} Even with scaled pivoting, ill-conditioned systems require careful numerical handling!}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 4: Chemical Engineering Application}
+	\vspace{-0.25cm}
+	\small{\textbf{Material balance for a multi-component system:}
+		\vspace{-0.1cm}
+		Three components (A, B, C) flowing through three units. Find flow rates $x_1, x_2, x_3$ (kmol/h):
+		\vspace{-0.2cm}
+		\begin{align*}
+			2x_1 + 3x_2 + x_3 & = 100 \quad \text{(Component A balance)} \\
+			x_1 + 2x_2 + 3x_3 & = 150 \quad \text{(Component B balance)} \\
+			3x_1 + x_2 + 2x_3 & = 120 \quad \text{(Component C balance)}
+		\end{align*}
+
+		\begin{minted}[frame=lines,framesep=2mm,numbersep=5pt,fontsize=\footnotesize,linenos]{matlab}
+A = [2, 3, 1; 1, 2, 3; 3, 1, 2];
+b = [100; 150; 120];
+
+[A_upper, b_upper] = gauss_elimination_scaled_pivoting(A, b);
+x = back_substitution(A_upper, b_upper);
+
+fprintf('Flow rates: x1=%.2f, x2=%.2f, x3=%.2f kmol/h\n', x);
+    \end{minted}
+		\vspace{-0.25cm}
+		\textbf{Solution:} $x_1 = 10$ kmol/h, $x_2 = 20$ kmol/h, $x_3 = 30$ kmol/h}
+\end{frame}
+
+\begin{frame}[fragile]{Best Practices and Tips}
+	\small{\alert{\textbf{When to use scaled partial pivoting:}}
+		\begin{itemize}
+			\item[$\checkmark$]
+			      Systems with coefficients of vastly different magnitudes
+
+			\item[$\checkmark$]
+			      Ill-conditioned matrices (high condition number)
+
+			\item[$\checkmark$]
+			      When numerical stability is critical
+
+			\item[$\checkmark$]
+			      Material/energy balance problems with different units
+		\end{itemize}
+
+		\vspace{0.3cm}
+		\alert{\textbf{Implementation tips:}}
+		\begin{itemize}
+			\item[$\blacktriangleright$]
+			      Always check for singular matrices: $\det(\mathbf{A}) \approx 0$
+
+			\item[$\blacktriangleright$]
+			      Verify your solution: compute residual $\|\mathbf{Ax} - \mathbf{b}\|$
+
+			\item[$\blacktriangleright$]
+			      For very large systems, consider iterative methods
+
+			\item[$\blacktriangleright$]
+			      MATLAB's built-in \texttt{\textcolor{blue}{linsolve}} uses pivoting by default
+		\end{itemize}}
+\end{frame}
+
+{
+\setbeamertemplate{footline}{}
+\begin{frame}[standout]
+	Thank you for your attention!
+\end{frame}
+}
+\end{document}
