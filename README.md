@@ -20,24 +20,18 @@ For the academic years 22-23, 24-25 and 25-26 I ([Timoteo Dinelli](https://tdine
 introduction to the usage of matlab, covered topics around variables assignments, loops, conditional
 statements, functions, plotting and other basic functionalities, and [Practical Session 1](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/01-Numbers-Representation): Numbers representation, numerical errors and approximations, rounding ($\sim$ 6 hours).
 
-<!-- - [Practical Session 2](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2002): -->
-<!-- Linear systems of equations Part 1 ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 3](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2003): -->
-<!-- Linear systems of equations Part 2 ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 4](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2004): -->
-<!-- Root finding Part 1 ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 5](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2005): -->
-<!-- Root finding Part 2 ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 6](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2006): -->
-<!-- Final exam simulation ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 7](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2007): -->
-<!-- Numerical Integration ($\sim$ 2 hours). -->
-<!---->
+- [Practical Session 2](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/02-Linear-Systems-Part-1): Linear systems of equations Part 1 ($\sim$ 2 hours).
+
+- [Practical Session 3](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/03-Linear-Systems-Part-2): Linear systems of equations Part 2 ($\sim$ 2 hours).
+
+- [Practical Session 4](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/04-Root-Finding-Part-1): Root finding Part 1 ($\sim$ 2 hours).
+
+- [Practical Session 5](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/05-Root-Finding-Part-2): Root finding Part 2 ($\sim$ 2 hours).
+
+- [Practical Session 6](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/06-Integrals): Numerical Integration ($\sim$ 2 hours).
+
+- [Practical Session 7](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/07-Exercises): Final Exam Simulation($\sim$ 2 hours).
+
 <!-- - [Practical Session 8](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2008): -->
 <!-- Ordinary Differential Equations Part 1 ($\sim$ 2 hours). -->
 <!---->
