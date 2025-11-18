@@ -1,0 +1,308 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% PACKAGES
+% ---------------------------------------------
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{tgcursor}
+\usepackage{hyperref}
+
+% ---------------------------------------------
+% Different colors
+\usepackage{xcolor}
+\usepackage{color}
+
+% ---------------------------------------------
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+
+% ---------------------------------------------
+% Images
+\usepackage{graphicx}
+
+% ---------------------------------------------
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% ---------------------------------------------
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Practical Session 07}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2025-2026}
+
+\usepackage{amsthm}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+\title{Practical Session 7}
+\author{Timoteo Dinelli\footnote{timoteo.dinelli@polimi.it}, Marco Mehl\footnote{marco.mehl@polimi.it}}
+\date{18\textsuperscript{th} of November 2025}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+\begin{document}
+\maketitle
+
+\section{Lagrange era un pazzo}
+Il metodo dei moltiplicatori di Lagrange prende il nome dal matematico e astronomo Joseph-Louis Lagrange (1736-1813). Questo metodo venne introdotto nel suo lavoro ``Méchanique Analytique'' del 1788, rivoluzionando l'approccio all'ottimizzazione vincolata. I moltiplicatori di Lagrange ($\lambda$) hanno un'interpretazione geometrica significativa: rappresentano la sensibilità della funzione obiettivo rispetto a variazioni dei vincoli. In termini più tecnici, il moltiplicatore $\lambda$ misura quanto rapidamente la funzione obiettivo cambierebbe se modificassimo leggermente il vincolo. Il principio fondamentale si basa sull'osservazione che nel punto di ottimo vincolato, il gradiente della funzione obiettivo deve essere parallelo al gradiente del vincolo. Matematicamente, questo significa che deve esistere un coefficiente (il moltiplicatore $\lambda$) tale che:
+
+\begin{equation}
+    \nabla f = \lambda \nabla g
+\end{equation}
+
+Considerando il seguente problema, si chiede di \textbf{minimizzare}:
+
+\begin{equation}
+    f(x, y, z) = x^2 + 2y^2 + 3z^2    
+\end{equation}
+
+\textbf{soggetto ai seguenti vincoli:}
+
+\begin{align*}
+    g_1(x, y, z) &= x + y + z - 2 = 0 \\
+    g_2(x, y, z) &= xy + yz - 1 = 0
+\end{align*}
+
+La Lagrangiana combina la funzione obiettivo e i vincoli in un'unica funzione:
+
+\begin{equation}
+    \mathscr{L}(x, y, z, \lambda_1, \lambda_2) = x^2 + 2y^2 + 3z^2 - \lambda_1(x + y + z - 2) - \lambda_2(xy + yz - 1)    
+\end{equation}
+
+Il problema si riduce quindi all'azzeramento del seguente sistema non lineare (derivato applicando le condizioni di Karush-Kuhn-Tucker):
+
+\begin{align}
+\frac{\partial \mathscr{L}}{\partial x} &= 2x - \lambda_1 - \lambda_2 y = 0 \\
+\frac{\partial \mathscr{L}}{\partial y} &= 4y - \lambda_1 - \lambda_2(x + z) = 0 \\
+\frac{\partial \mathscr{L}}{\partial z} &= 6z - \lambda_1 - \lambda_2 y = 0 \\
+\frac{\partial \mathscr{L}}{\partial \lambda_1} &= x + y + z - 2 = 0 \\
+\frac{\partial \mathscr{L}}{\partial \lambda_2} &= xy + yz - 1 = 0
+\end{align}
+
+Risolvendo il seguente sistema si ottiene quindi il valore di minimo secondo le tre coordinate cartesiane $(x, y, z)$ e i valori dei due moltiplicatori di Lagrange $\lambda_1, \lambda_2$. Si chiede quindi di scrivere uno script in matlab per risolvere il sistema riportato qui sopra e trovare il punto di minimo e i valori dei due moltiplicatori.
+
+\section{Svuotamento di un serbatoio}
+
+Un serbatoio cilindrico con raggio $R = 1\,m$ ha un'altezza iniziale dell'acqua $h_0 = 2\,m$. Il serbatoio ha un'uscita circolare sul fondo con raggio $r = 0.05\,m$. Nota la legge di Torricelli, la velocità del fluido in uscita dal serbatoio vale:
+
+\begin{equation}
+    v = C \sqrt{2gh}
+\end{equation}
+
+\noindent dove:
+
+\begin{itemize}
+    \item $g = 9.81\,m/s^2$ è l'accelerazione di gravità
+    \item $h$ è l'altezza del fluido nel serbatoio in qualsiasi momento
+    \item $C = 0.65$ è il coefficiente di scarico (o coefficiente di efflusso)
+\end{itemize}
+
+Il coefficiente di scarico $C$ è un parametro adimensionale che tiene conto di diversi fattori tra cui: le perdite di carico dovute alla viscosità del fluido, la contrazione della vena fluida all'uscita del foro (\textit{vena contracta}), gli effetti di attrito e turbolenza. Per orifizi a spigolo vivo, tipicamente $C \approx 0.60$--$0.65$.
+
+\subsection{Bilancio di Massa}
+
+Consideriamo un bilancio di massa sul serbatoio. La variazione di volume nel serbatoio deve essere uguale al volume che esce dal foro:
+
+\begin{equation}
+    A_{\text{cilindro}} \cdot dh = -a_{\text{foro}} \cdot v \cdot dt
+\end{equation}
+
+\noindent dove:
+
+\begin{itemize}
+    \item $A_{\text{cilindro}} = \pi R^2$ è l'area della sezione trasversale del serbatoio
+    \item $a_{\text{foro}} = \pi r^2$ è l'area del foro di uscita
+    \item Il segno negativo indica che l'altezza $h$ diminuisce nel tempo
+\end{itemize}
+
+\subsection{Sostituzione della Legge di Torricelli}
+
+Sostituendo l'espressione di $v$ dalla legge di Torricelli:
+
+\begin{equation}
+A_{\text{cilindro}} \cdot dh = -a_{\text{foro}} \cdot C\sqrt{2gh} \cdot dt
+\end{equation}
+
+\subsection{Separazione delle Variabili}
+
+Riorganizzando l'equazione per separare le variabili $h$ e $t$:
+
+\begin{equation}
+    dt = -\frac{A_{\text{cilindro}}}{a_{\text{foro}} \cdot C \sqrt{2g}} \cdot \frac{dh}{\sqrt{h}}
+\end{equation}
+
+\noindent Sapendo che vale la seguente relazione:
+
+\begin{equation}
+dt = -\frac{A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g\sqrt{h}}} \, dh
+\end{equation}
+
+\subsection{Calcolo del Tempo di Svuotamento}
+
+Viene chiesto di calcolare il tempo necessario affinché il serbatoio risulti vuoto attraverso la risoluzione dell'opportuno integrale definito:
+
+\begin{equation}
+    \int_{t_0}^{t_f} dt = \int_{h_0}^{0} -\frac{A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g\sqrt{h}}} \, dh
+\end{equation}
+
+\noindent Ovvero:
+
+\begin{equation}
+    t_{\text{svuotamento}} = \int_{h_0}^{0} -\frac{A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g}} \cdot h^{-1/2} \, dh
+\end{equation}
+
+\subsection{Soluzione Analitica}
+
+L'integrale può essere risolto analiticamente. Ricordando che:
+
+\begin{equation}
+    \int h^{-1/2} \, dh = 2\sqrt{h} + \text{costante}
+\end{equation}
+
+\noindent si ottiene:
+
+\begin{align}
+    t_{\text{svuotamento}} &= -\frac{A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g}} \cdot \left[2\sqrt{h}\right]_{h_0}^{0} \\
+    &= -\frac{A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g}} \cdot \left(0 - 2\sqrt{h_0}\right) \\
+    &= \frac{2A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g}} \cdot \sqrt{h_0}
+\end{align}
+
+\noindent Questa è la \textbf{soluzione analitica} del problema, riportata di seguito:
+
+\begin{equation}
+    \boxed{t_{\text{svuotamento}} = \frac{2A_{\text{cilindro}}}{a_{\text{foro}} C} \cdot \frac{\sqrt{h_0}}{\sqrt{2g}}}
+\end{equation}
+
+Si chiede di confrontare la soluzione ottenuta numericamente con la seguente relazione analitica riportata di seguito:
+
+\begin{equation}
+    t_{\text{svuotamento}} = \frac{2A_{\text{cilindro}}}{a_{\text{foro}} C \sqrt{2g}} \sqrt{h_0}
+\end{equation}
+
+\section{Sintesi dell' Ammoniaca}
+Si chiede di diagrammare la conversione del processo di produzione dell'ammoniaca rispetto alla temperatura [600K--900K], sapendo che la reazione è controllata dall'equilibrio termodinamico. La reazione di sintesi dell'ammoniaca (processo Haber-Bosch) è:
+
+\begin{equation}
+    \text{N}_2 + 3\text{H}_2 \rightleftharpoons 2\text{NH}_3
+\end{equation}
+
+Dove:
+
+\begin{itemize}
+    \item $\Delta H = -22\,\text{kcal/mol}$ (reazione esotermica)
+    \item $\Delta S = -47.35\,\text{cal/mol/K}$ (diminuzione di entropia)
+    \item $\Delta G^0 = \Delta H - T\Delta S$ (energia libera standard di Gibbs)
+    \item $K_p = \exp\left(-\dfrac{\Delta G^0}{RT}\right)$ (costante di equilibrio)
+\end{itemize}
+
+\begin{itemize}
+    \item La reazione è \textbf{esotermica} ($\Delta H < 0$): rilascia calore
+    \item L'entropia \textbf{diminuisce} ($\Delta S < 0$): passaggio da 4 moli di gas a 2 moli
+    \item La temperatura influenza l'equilibrio secondo il principio di Le Chatelier
+    \item Temperature più basse favoriscono la formazione di ammoniaca (reazione esotermica)
+\end{itemize}
+
+\subsection{Formulazione del Problema di Equilibrio}
+
+Sapendo che la composizione di equilibrio può essere calcolata dall'equazione \ref{eq:equil}, e che le frazioni molari in fase gas $y$ delle specie coinvolte nella reazione possono essere scritte in funzione di una variabile $\lambda$ detta \textbf{grado di avanzamento della reazione}, basata sulla conversione dell'azoto come indicato nelle espressioni indicate come Eqs. \ref{eq:gradodi}, mappare il valore di $\lambda$ nello spazio delle $T$ e delle $P$ utilizzando la funzione \texttt{contourf} nello spazio da 600 K a 900 K e da 50 atm a 600 atm.
+
+Si scriva una funzione che calcoli il valore della $K$ di equilibrio in funzione della temperatura. Costante di equilibrio in funzione delle frazioni molari
+
+\begin{equation}\label{eq:equil}
+    \frac{y_{\text{NH}_3}^2}{y_{\text{H}_2}^3 \cdot y_{\text{N}_2}} \cdot \frac{1}{P^2} = K_p(T)
+\end{equation}
+
+\noindent con:
+\begin{equation}
+    y_{\text{NH}_3} = \frac{n_{\text{NH}_3}}{n_{\text{tot}}}; \quad 
+    y_{\text{H}_2} = \frac{n_{\text{H}_2}}{n_{\text{tot}}}; \quad 
+    y_{\text{N}_2} = \frac{n_{\text{N}_2}}{n_{\text{tot}}}
+\end{equation}
+
+\subsection{Bilancio di Materia}
+
+Espressioni delle moli in funzione del grado di avanzamento $\lambda$
+
+\begin{align}\label{eq:gradodi}
+    n_{\text{tot}} &= 4 - 2\lambda \\
+    n_{\text{NH}_3} &= 2\lambda \\
+    n_{\text{H}_2} &= 3 - 3\lambda \\
+    n_{\text{N}_2} &= 1 - \lambda
+\end{align}
+
+\subsection{Interpretazione del Grado di Avanzamento}
+Il grado di avanzamento $\lambda$ rappresenta:
+\begin{itemize}
+    \item $\lambda = 0$: nessuna reazione (solo reagenti)
+    \item $\lambda = 1$: conversione completa dell'azoto
+    \item $0 < \lambda < 1$: equilibrio chimico
+\end{itemize}
+
+Assumendo che inizialmente si abbia una miscela stechiometrica di N$_2$ e H$_2$:
+\begin{itemize}
+    \item $n_{\text{N}_2,0} = 1$ mole
+    \item $n_{\text{H}_2,0} = 3$ moli
+    \item $n_{\text{NH}_3,0} = 0$ moli
+    \item $n_{\text{tot},0} = 4$ moli
+\end{itemize}
+
+\subsection{Equazione da Risolvere}
+
+Sostituendo le Eqs. \ref{eq:gradodi} nell'Eq \ref{eq:equil}, si ottiene l'equazione non lineare in $\lambda$:
+
+\begin{equation}
+    \frac{\left(\frac{2\lambda}{4-2\lambda}\right)^2}{\left(\frac{3-3\lambda}{4-2\lambda}\right)^3 \cdot \left(\frac{1-\lambda}{4-2\lambda}\right)} \cdot \frac{1}{P^2} = K_p(T)
+\end{equation}
+
+\noindent Semplificando:
+
+\begin{equation}
+    \frac{4\lambda^2 \cdot (4-2\lambda)^2}{27(1-\lambda)^4 \cdot P^2} = K_p(T)
+\end{equation}
+
+Questa equazione deve essere risolta numericamente per $\lambda$ per ogni coppia $(T, P)$.
+
+\subsection{Analisi dei Risultati Attesi}
+
+\subsubsection{Effetto della Temperatura}
+
+\begin{itemize}
+    \item \textbf{Temperature basse}: favoriscono la formazione di NH$_3$ ($\lambda$ alto)
+    \item \textbf{Temperature alte}: sfavoriscono la formazione di NH$_3$ ($\lambda$ basso)
+    \item Questo è coerente con il principio di Le Chatelier per reazioni esotermiche
+\end{itemize}
+
+\subsubsection{Effetto della Pressione}
+
+\begin{itemize}
+    \item \textbf{Pressioni alte}: favoriscono la formazione di NH$_3$ ($\lambda$ alto)
+    \item \textbf{Pressioni basse}: sfavoriscono la formazione di NH$_3$ ($\lambda$ basso)
+    \item La reazione riduce il numero di moli (4 → 2), quindi è favorita da alte pressioni
+\end{itemize}
+
+\subsubsection{Condizioni Industriali Ottimali}
+
+Il processo Haber-Bosch industriale opera tipicamente a:
+\begin{itemize}
+    \item Temperatura: 400--500°C (673--773K)
+    \item Pressione: 150--300 atm
+    \item Presenza di catalizzatore (Fe$_3$O$_4$ con K$_2$O, Al$_2$O$_3$)
+\end{itemize}
+
+Queste condizioni rappresentano un compromesso tra:
+\begin{itemize}
+    \item Termodinamica (equilibrio favorevole)
+    \item Cinetica (velocità di reazione accettabile)
+    \item Considerazioni economiche e di sicurezza
+\end{itemize}
+
+\end{document}
