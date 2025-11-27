@@ -1,0 +1,268 @@
+\documentclass[aspectratio=169]{beamer}
+
+% ==================================================================
+% Define custom colors
+\definecolor{primarycolor}{RGB}{25, 74, 166} % blue
+\definecolor{accentcolor}{RGB}{65, 155, 232} % lighter blue
+\definecolor{bluepoli}{RGB}{2, 30, 54}
+\newcommand{\highlight}[2]{\colorbox{#1!9}{$#2$}}
+
+% ==================================================================
+% Apply these colors
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{alerted text}{fg=accentcolor}
+\setbeamercolor{example text}{fg=accentcolor!80!black}
+\setbeamercolor{progress bar}{fg=accentcolor, bg=accentcolor!20}
+\setbeamercolor{frametitle}{bg=bluepoli, fg=bluepoli!80!black}
+\setbeamercolor{title separator}{fg=bluepoli}
+
+% ==================================================================
+% Metropolis customization
+\usetheme[sectionpage=none]{metropolis}
+\setbeamercolor{background canvas}{bg=black!1.5}
+\setbeamercolor{frametitle}{bg=black!1.5,fg=black}
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{footline}{
+    \centerline{\textcolor{bluepoli}{\rule{0.95\paperwidth}{.3pt}}}
+    \vskip2.5pt
+    \hskip15pt \tiny Ordinary Differential Equations \hskip330pt \insertframenumber
+    \vskip4pt
+}
+
+% ==================================================================
+% Images
+\usepackage{graphicx}
+
+% ==================================================================
+% Colors
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+% ==================================================================
+% Code rendering
+\usepackage{minted}
+
+% ==================================================================
+% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{positioning,tikzmark,backgrounds,arrows,shapes,calc}
+
+% ==================================================================
+% TITLE
+\title{Ordinary Differential Equations\\Part 1}
+\subtitle{Calcoli di Processo dell' Ingegneria Chimica}
+\author[Dinelli]{\textbf{Timoteo~Dinelli}}
+\institute{
+   \inst{} Department of Chemistry, Materials and Chemical Engineering, ``Giulio Natta'', Politecnico di Milano.\\ \\
+   \textbf{email}: timoteo.dinelli@polimi.it
+}
+\date{27\textsuperscript{th} of November 2025}
+
+\begin{document}
+{
+    \setbeamertemplate{footline}{} 
+    \begin{frame}{}
+        \maketitle
+        \begin{tikzpicture}[overlay, remember picture]
+            \node[above left=3.6cm and 0.01cm of current page.south east]{\includegraphics[trim=1cm 1cm 5.5cm 1cm, clip=true, width=8cm]{figures/logo.pdf}};
+        \end{tikzpicture}
+    \end{frame}
+}
+
+% ==================================================================
+% Slides
+\begin{frame}{Ordinary Differential Equations}
+    We will discuss different methods to approximate numerically the solution of the following Ordinary Differential Equation:
+    
+    \begin{equation*}
+        \frac{dy}{dt} = f(t,y, \Theta)
+    \end{equation*}
+
+    Generally speaking we are going to solve what it is usually called an \textbf{IVP} (Initial Value Problems), a differential equation associated with a set of initial conditions.
+    
+    \begin{equation*}
+        \begin{cases}
+            \frac{dC_{A}}{dt} = - C_{A}\\
+            C_{A}(t = t^{*}) = C_{A}^{*}
+        \end{cases}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}{Forward Euler Method - Implementation}
+    \textbf{Explicit scheme}: $y_{n+1} = y_{n} + hf(t_n, y_n)$
+    
+    \vspace{0.1cm}
+    
+    \textbf{Implementation steps}:
+    \begin{enumerate}
+        \item Start with initial condition: $y_0 = y(t_0)$
+        \item Evaluate the derivative at current point: $f(t_n, y_n)$
+        \item Update directly: $y_{n+1} = y_n + h \cdot f(t_n, y_n)$
+        \item Advance time: $t_{n+1} = t_n + h$
+    \end{enumerate}
+    
+    \vspace{0.1cm}
+    
+    \textbf{Practical example}: $\frac{dC_A}{dt} = -kC_A$, with $C_A(0) = 1$ mol/L, $k = 0.5$ s$^{-1}$, $h = 0.1$ s
+    
+    \begin{equation*}
+        C_A(t_{n+1}) = C_A(t_n) + h \cdot (-k \cdot C_A(t_n))
+    \end{equation*}
+    
+    \textbf{Key point}: Easy to implement, but watch out for stability with large $h$!
+\end{frame}
+
+\begin{frame}{Backward Euler Method - Implementation}
+    \textbf{Implicit scheme}: $y_{n+1} = y_{n} + hf(t_{n+1}, y_{n+1})$
+    
+    \vspace{0.1cm}
+    
+    \textbf{Implementation steps}:
+    \begin{enumerate}
+        \item Start with initial condition: $y_0 = y(t_0)$
+        \item Set up implicit equation: $y_{n+1} = y_n + h \cdot f(t_{n+1}, y_{n+1})$
+        \item \textbf{Solve} for $y_{n+1}$ (requires root-finding or algebraic manipulation)
+        \item Advance time: $t_{n+1} = t_n + h$
+    \end{enumerate}
+    
+    \vspace{0.1cm}
+    
+    \textbf{Practical example}: $\frac{dC_A}{dt} = -kC_A$, with $C_A(0) = 1$ mol/L, $k = 0.5$ s$^{-1}$, $h = 0.1$ s
+    
+    \begin{equation*}
+        C_A(t_{n+1}) = C_A(t_n) - h \cdot k \cdot C_A(t_{n+1}) \quad \Rightarrow \quad C_A(t_{n+1}) = \frac{C_A(t_n)}{1 + hk}
+    \end{equation*}
+    
+    \textbf{Key point}: More stable, but requires solving (non)linear equations at each step!
+\end{frame}
+
+\begin{frame}{Methods Comparison}
+    \begin{columns}
+    \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=1.2\textwidth]{figures/expVSimp.png}
+        \end{figure}
+
+    \column{0.5\textwidth}
+    \centering
+        Forward Euler (\textbf{explicit}):
+        \begin{equation*}
+            y_{n+1} = y_{n} + hy_{n}^{'}
+        \end{equation*}
+        \centering
+        Backward Euler (\textbf{implicit}):
+        \begin{equation*}
+            y_{n+1} = y_{n} + hy_{n+1}^{'}
+        \end{equation*}
+    \end{columns}
+\end{frame}
+
+
+
+{%
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+	   Exercises
+    \end{frame}
+}
+
+\begin{frame}{Exercise 1: ODE Integration Methods}
+    \textbf{Problem}: Solve $\frac{dx}{dt} = -kx$, with $x(0) = 1.0$
+    
+    \vspace{0.2cm}
+    \small{Analytical solution: $x(t) = x_0 e^{-kt}$}
+    
+    \vspace{0.4cm}
+    
+    \textbf{Tasks}:
+    \begin{enumerate}
+        \item Implement \textbf{Forward Euler}: $x_{n+1} = x_n + hf(t_n, x_n)$
+        \item Implement \textbf{Backward Euler}: $x_{n+1} = x_n + hf(t_{n+1}, x_{n+1})$
+        \begin{itemize}
+            \item For this linear ODE: $x_{n+1} = \frac{x_n}{1 + hk}$
+        \end{itemize}
+        \item Implement \textbf{Heun method with adaptive stepping}
+        \begin{itemize}
+            \item Use error estimation (1 full step vs 2 half steps)
+            \item Adjust $h$ based on tolerance: $|error| < tol$
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Exercise 1: Testing \& Analysis}
+    \textbf{Test parameters}:
+    \begin{itemize}
+        \item $k = 1.0$, $x_0 = 1.0$, $t \in [0, 5]$
+        \item Fixed step: $h = 0.1$ (Forward/Backward Euler)
+        \item Adaptive: $h_{init} = 0.1$, $tol = 10^{-4}$ (Heun)
+    \end{itemize}
+    
+    \vspace{0.1cm}
+    
+    \textbf{Stability study}: Test with $k = [0.1, 0.5, 1.0, 2.0, 5.0]$ and $h = 0.5$
+    \begin{itemize}
+        \item When does Forward Euler become unstable? (Hint: $hk > 2$)
+        \item How does Backward Euler handle large $k$?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Exercise 2: Isothermal Batch Reactor}
+    \textbf{Problem}: Design an isothermal batch reactor for the reaction:
+    \begin{equation*}
+        A \rightarrow B \quad k = 0.01 \: \text{s}^{-1}
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Governing equations}:
+    \begin{columns}[T]
+        \column{0.48\textwidth}
+        Species balances:
+        \begin{equation*}
+            \begin{cases}
+                \frac{dC_{A}}{dt} = -k C_{A} \\
+                \frac{dC_{B}}{dt} = k C_{A}
+            \end{cases}
+        \end{equation*}
+        
+        \column{0.48\textwidth}
+        Conversion ($X_A$):
+        \begin{equation*}
+            X_A = \frac{C_A^0 - C_A}{C_A^0}
+        \end{equation*}
+        \begin{equation*}
+            \frac{dX_A}{dt} = k(1-X_A)
+        \end{equation*}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    
+    \small{Analytical solution: $X_A(t) = 1 - e^{-kt}$, \quad $C_A(t) = C_A^0 e^{-kt}$}
+\end{frame}
+
+\begin{frame}{Exercise 2: Implementation Tasks}
+    \textbf{Initial conditions}: $C_A^0 = 1.0$ mol/L, $C_B^0 = 0$ mol/L, $X_A(0) = 0$
+    
+    \vspace{0.4cm}
+    
+    \textbf{Tasks}:
+    \begin{enumerate}
+        \item Solve the system using \texttt{ode45} (MATLAB built-in solver)
+        \item Compare with your implemented methods (Forward/Backward Euler, Heun)
+        \item Determine time to reach 90\% conversion ($X_A = 0.9$)
+    \end{enumerate}
+    
+    \vspace{0.4cm}
+    
+    \textbf{Bonus}: Extend to a system of ODEs - solve for both $C_A$ and $C_B$ simultaneously and verify mass balance: $C_A(t) + C_B(t) = C_A^0$
+\end{frame}
+
+{
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+        Thank you for your attention!
+    \end{frame}
+}
+\end{document}
