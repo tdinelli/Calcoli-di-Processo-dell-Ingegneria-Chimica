@@ -1,0 +1,215 @@
+\documentclass[aspectratio=169]{beamer}
+
+% ==================================================================
+% Define custom colors
+\definecolor{primarycolor}{RGB}{25, 74, 166} % blue
+\definecolor{accentcolor}{RGB}{65, 155, 232} % lighter blue
+\definecolor{bluepoli}{RGB}{2, 30, 54}
+\newcommand{\highlight}[2]{\colorbox{#1!9}{$#2$}}
+
+% ==================================================================
+% Apply these colors
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{alerted text}{fg=accentcolor}
+\setbeamercolor{example text}{fg=accentcolor!80!black}
+\setbeamercolor{progress bar}{fg=accentcolor, bg=accentcolor!20}
+\setbeamercolor{frametitle}{bg=bluepoli, fg=bluepoli!80!black}
+\setbeamercolor{title separator}{fg=bluepoli}
+
+% ==================================================================
+% Metropolis customization
+\usetheme[sectionpage=none]{metropolis}
+\setbeamercolor{background canvas}{bg=black!1.5}
+\setbeamercolor{frametitle}{bg=black!1.5,fg=black}
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{footline}{
+    \centerline{\textcolor{bluepoli}{\rule{0.95\paperwidth}{.3pt}}}
+    \vskip2.5pt
+    \hskip15pt \tiny Ordinary Differential Equations \hskip330pt \insertframenumber
+    \vskip4pt
+}
+
+% ==================================================================
+% Images
+\usepackage{graphicx}
+
+% ==================================================================
+% Colors
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+% ==================================================================
+% Code rendering
+\usepackage{minted}
+
+% ==================================================================
+% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{positioning,tikzmark,backgrounds,arrows,shapes,calc}
+
+% ==================================================================
+% TITLE
+\title{Ordinary Differential Equations\\Part 2}
+\subtitle{Calcoli di Processo dell' Ingegneria Chimica}
+\author[Dinelli]{\textbf{Timoteo~Dinelli}}
+\institute{
+   \inst{} Department of Chemistry, Materials and Chemical Engineering, ``Giulio Natta'', Politecnico di Milano.\\ \\
+   \textbf{email}: timoteo.dinelli@polimi.it
+}
+\date{02\textsuperscript{nd} of December 2025}
+
+\begin{document}
+{
+    \setbeamertemplate{footline}{} 
+    \begin{frame}{}
+        \maketitle
+        \begin{tikzpicture}[overlay, remember picture]
+            \node[above left=3.6cm and 0.01cm of current page.south east]{\includegraphics[trim=1cm 1cm 5.5cm 1cm, clip=true, width=8cm]{figures/logo.pdf}};
+        \end{tikzpicture}
+    \end{frame}
+}
+
+% ==================================================================
+% Slides
+{%
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+	   Exercises
+    \end{frame}
+}
+
+\begin{frame}{Exercise 1}
+
+\small{A batch reactor is employed to facilitate a biological process, wherein the growth of a biomass (B) and the loss of substrate (S) occur concurrently. The objective is to ascertain the dynamics of both B and S over a 15-hour period, while adjusting the solver parameters to improve error control in the ordinary differential system. This will be achieved by adopting a relative tolerance of $10^{-9}$ and an absolute one of $10^{-12}$ (with respect to the default MATLAB values). The ODE system that describes the evolution of the process is presented below:}
+
+\begin{equation*}
+    \begin{cases}
+        \frac{dB}{dt} = \frac{k_{1} \times B \times S}{k_{2} + S} \\
+        \frac{dS}{dt} = -k_{3} \times \frac{k_{1} \times B \times S}{k_{2}+S} \\
+        B(0) = 0.03 \frac{kmol}{m^{3}}\\
+        S(0) = 4.5 \frac{kmol}{m^{3}}
+    \end{cases}
+\end{equation*}
+
+Where: $k_{1} = 0.5 h^{-1}$, $k_{2} = 10^{-7} \frac{kmol}{m^{3}}$, $k_{3} = 0.6$
+\end{frame}
+
+\begin{frame}{Exercise 2}
+\small{A perfectly mixed heated tank is subjected to a step disturbance in the inlet temperature, occurring at $t=150 \: s$ with an increase of $30 \: ^{\circ}C$. The objective is to evaluate the dynamics of the outlet temperature subsequent to the step disturbance, assuming a steady-state regime for the liquid level in the tank. The data are as follows: The heat transfer coefficient is $Q = 1 \:MW$, the inlet flow rate is $F_{in} = 8 \: kmol/s$, the mass is $m = 100 \: kmol$, the specific heat capacity is $C_p = 2.5 \: kJ/(kmol \cdot K)$, and the initial inlet temperature is $T_{in} = 300 \: K$. The associated system of equations is as follows:}
+
+\begin{equation*}
+    \begin{cases}
+        \frac{dT}{dt} = \frac{Q}{mC_p} - \frac{F_{in}}{m}\left(T-T_{in}\right) \\
+        F_{out} = F_{in}
+    \end{cases}
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Exercise 3}
+\footnotesize{The objective is to evaluate the height dynamics of a single cylindrical tank subjected to a step disturbance on the inlet flow rate, whereby the flow rate is reduced to half of its initial value. Additionally, the height dynamics of the tank are to be evaluated after a linear decrease in the inlet flow rate, occurring over a period of 30 seconds, whereby the flow rate is reduced to half of its initial value. The data are presented below: The area of the tank is $A = 30 \: m^2$, the initial flow rate is $F_{i}^{0} = 7.5 \: m^3/s$, the outflow is proportional to the height divided by the resistance coefficient, and the resistance coefficient is $r = 0.4 \: m^2/s$. The associated system of equations is as follows:}
+
+\begin{equation*}
+\begin{cases}
+    \frac{dh}{dt} = \frac{F_{i}}{A} - \frac{h}{Ar} \\
+    F_{i} = F_{i}^{0}/2 \\
+    h(0) = h_{ss} = r \times F_{i}^{0} = 3 \: m
+\end{cases}
+\end{equation*}
+
+\footnotesize{The second request of the exercise is analogous to the first. The only distinction is in the perturbation of the inlet flow rate, which now follows a linear decrease occurring over 30 seconds.}
+\end{frame}
+
+\begin{frame}{Exercise 4}
+\footnotesize{Two tanks are positioned in succession, and the two tanks can be arranged in two distinct configurations: the ``{\it non-interacting}'' and the ``{\it interacting}''. It is evident that the flow rate exiting the initial tank will influence the subsequent tank's behavior in the event of a disturbance. However, in the case of the interacting tanks, the flow rate exiting the second tank will also affect the behavior of the first tank. The data are presented below: The areas of the tanks are $A_1 = 30 \: m^2$ and $A_2 = 50 \: m^2$, respectively. The hydraulic resistance coefficients are $r_1 = 1.2 \: m^2/s$ and $r_2 = 0.7 \: m^2/s$, respectively. The initial inlet flow rate is $F_i^0 = 9.4 \: m^3/s$.}
+\vspace{.5cm}
+\begin{columns}
+\column{0.5\textwidth}
+\centering
+\textbf{Non-interacting tanks}:
+\begin{equation*}
+\begin{cases}
+    \frac{dh_{1}}{dt} = \frac{F_{i} - \frac{h_{1}}{r_{1}}}{A_{1}} \\
+    \frac{dh_{2}}{dt} = \frac{\frac{h_{1}}{r_{1}} - \frac{h_{2}}{r_{2}}}{A_{2}} \\
+    h_{1}(0) = 11.28 \: m \\
+    h_{2}(0) = 6.58 \: m
+\end{cases}
+\end{equation*}
+\column{0.5\textwidth}
+\centering
+\textbf{Interacting tanks}:
+\begin{equation*}
+\begin{cases}
+    \frac{dh_{1}}{dt} = \frac{F_{i} - \frac{h_{1} - h_{2}}{r_{1}}}{A_{1}} \\
+    \frac{dh_{2}}{dt} = \frac{\frac{h_{1}-h_{2}}{r_{1}} - \frac{h_{2}}{r_{2}}}{A_{2}} \\
+    h_{1}(0) = 17.86 \: m \\
+    h_{2}(0) = 6.58 \: m
+\end{cases}
+\end{equation*}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Exercise 5}
+\small{The following two elementary liquid-phase reactions are conducted in an adiabatic manner within a 10 $L$ plug flow reactor:}
+\begin{equation*}
+\begin{cases}
+    A+2B\rightarrow2C \quad \Delta H_{1} = 20000 \: \frac{cal}{mol}  \quad k_{1} = 0.001 \: \frac{L^{2}}{mol^{2} \cdot s} \: @ \: 300K \quad E_{1} = 5000 \: \frac{cal}{mol} \\
+    A+C\rightarrow2D \quad \Delta H_{2}  = -10000 \: \frac{cal}{mol} \quad k_{2} = 0.001 \: \frac{L}{mol \cdot s} \: @ \: 300K \quad E_{2} = 7500 \: \frac{cal}{mol}
+\end{cases}
+\end{equation*}
+\small{Once streams A and B have been combined, species A is introduced into the reactor at a concentration of $C_{A0} = 2 \: mol/L$, while species B is introduced at a concentration of $C_{B0} = 4 \: mol/L$. The total volumetric flow rate at the point of entry is $Q = 10 \: L/s$. The heat capacities are $C_{pA} = 20 \: cal/(mol \cdot K)$, $C_{pB} = 20 \: cal/(mol \cdot K)$, $C_{pC} = 60 \: cal/(mol \cdot K)$, and $C_{pD} = 80 \: cal/(mol \cdot K)$. If the entering temperature were adjustable between 600 $K$ and 700 $K$, which entering temperature would be recommended to maximize the concentration of species C exiting the reactor, with an accuracy of $\pm 10 \: K$? It is assumed that all species have the same density and that there is a negligible pressure drop along the reactor.}
+\end{frame}
+
+\begin{frame}{}
+\begin{equation*}
+\begin{cases}
+    \frac{dF_{A}}{dV} = -r_{1} - r_{2} \\
+    \frac{dF_{B}}{dV} = -2r_{1} \\
+    \frac{dF_{C}}{dV} = 2r_{1} - r_{2} \\
+    \frac{dF_{D}}{dV} = 2r_{2} \\
+    \frac{dT}{dV} = \frac{-r_{1}\Delta H_{1} - r_{2}\Delta H_{2}}{\sum F_{j}Cp_{j}}
+\end{cases}
+\end{equation*}
+
+\textbf{Where}:\\
+$r_{1} = k_{1}C_{A}C_{B}^{2}$; $r_{2} = k_{2}C_{A}C_{C}$\\\\
+$K1=k_{1}^{ref}exp\left[-\frac{E_{1}}{R}\left(\frac{1}{T}-\frac{1}{T_{ref}}\right)\right]$; $K2=k_{2}^{ref}exp\left[-\frac{E_{2}}{R}\left(\frac{1}{T}-\frac{1}{T_{ref}}\right)\right]$\\\\
+$C_{A} = F_{A}/Q_{0}$, $C_{B} = F_{B}/Q_{0}$, $C_{C} = F_{C}/Q_{0}$.
+\end{frame}
+
+\begin{frame}{Exercise 6}
+\footnotesize{A mass is attached to a spring-damper system. The temporal evolution of its relative position can be described by means of a second-order differential equation.}
+
+\begin{equation*}
+    \frac{d^2 z}{dt^2} = g - \frac{kz}{m} - \frac{cv}{m}
+\end{equation*}
+
+The second-order equation can be reformulated as a system of two ordinary differential equations as follows:
+
+\begin{columns}
+\column{0.5\textwidth}
+\footnotesize{
+\begin{equation*}
+\begin{cases}
+    \frac{dz}{dt} = v \\
+    \frac{dv}{dt} =  g - \frac{kz}{m} - \frac{cv}{m}
+\end{cases}
+\end{equation*}
+Where: $m = 1 \: kg$, $g = -9.81 \: m/s^2$, $k=10 \: N/m$, $c=1 \: N \cdot s/m$, $z_0 = 0 \: m$, $v_0 = 0 \: m/s$.
+}
+
+\column{0.5\textwidth}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/MassSpringDamper.pdf}
+\end{figure}
+\end{columns}
+\end{frame}
+
+{
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+        Thank you for your attention!
+    \end{frame}
+}
+\end{document}
