@@ -1,0 +1,124 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% PACKAGES
+% ---------------------------------------------
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{tgcursor}
+\usepackage{hyperref}
+
+% ---------------------------------------------
+% Different colors
+\usepackage{xcolor}
+\usepackage{color}
+
+% ---------------------------------------------
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+
+% ---------------------------------------------
+% Images
+\usepackage{graphicx}
+
+% ---------------------------------------------
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% ---------------------------------------------
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Practical Session 10}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2025-2026}
+
+\usepackage{amsthm}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+\title{Practical Session 10}
+\author{Timoteo Dinelli\footnote{timoteo.dinelli@polimi.it}, Marco Mehl\footnote{marco.mehl@polimi.it}}
+\date{04\textsuperscript{th} of December 2025}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+\begin{document}
+\maketitle
+
+\section*{Exercise 1}
+We want to study the start-up dynamics of a heating system. Thus, at the center of a room, a spherical thermometer is placed and connected to the heating system through a thermostat 
+
+\begin{equation}
+    D = 5 \, \text{mm}, \quad m = 10 \, \text{g}, \quad c_p = 500 \, \frac{\text{J}}{\text{kg K}}.
+\end{equation}
+
+When the temperature measured by the thermometer drops below $21.5^\circ \text{C}$, the thermostat activates the heating. The room is empty, but the temperature recorded by the thermometer does not represent the actual air temperature due to radiation exchange with the walls. On a cold winter day, the walls are at a temperature of $T_p = 10^\circ \text{C}$.
+
+The heat transfer phenomena to consider are:
+
+\begin{itemize}
+    \item
+        Convective heat exchange with the moving air inside the room, with $\nu = 1 \, \frac{\text{m}}{\text{s}}$.
+    \item
+        Radiative heat exchange with the walls, following the laws reported below:
+\end{itemize}
+
+\begin{equation}
+    \dot{Q}_\text{rad} = \sigma A \left( T^4 - T_p^4 \right), \quad \sigma = 5.67 \times 10^{-8} \, \frac{\text{W}}{\text{m}^2 \, \text{K}^4},
+\end{equation}
+
+\begin{equation}
+    \dot{Q}_\text{conv} = Nu \cdot \frac{k}{D} A \left( T_\text{air} - T \right), \quad Nu_D = 0.4 \, Re^{0.5} \, Pr^{1/3}.
+\end{equation}
+
+\noindent Assume the following properties for air:
+
+\begin{equation}
+Pr = 0.7, \quad \mu = 1.81 \times 10^{-5} \, \text{Pa} \cdot \text{s}, \quad k = 0.025 \, \frac{\text{W}}{\text{mK}}, \quad MW_\text{air} = 0.028 \, \frac{\text{kg}}{\text{mol}}.
+\end{equation}
+
+\noindent The energy balance for the thermometer is:
+
+\begin{equation}
+    m c_p \frac{dT}{dt} = - \dot{Q}_\text{rad} - \dot{Q}_\text{conv}.
+\end{equation}
+
+If at the initial time the thermometer measures $T_0 = 25^\circ \text{C}$, after 1 hour of heating, what will be the measured temperature? Assume the wall temperature and the air temperature in the room are constant, with $T_\text{air} = 20^\circ \text{C}$.
+
+\section*{Exercise 2}
+One of the first-aid remedies used to reduce the effects and pain in the case of trauma is the application of cold compresses. This is often done using devices commonly called ``cold packs''. A cold pack consists of a rectangular package containing water and a capsule of NH\textsubscript{4}NO\textsubscript{3} (molar mass 80 g/mol), a salt whose solution enthalpy is 26.2 kJ/mol. Typical dimensions for such packages are $10 \, \text{cm} \times 15 \, \text{cm}$ with a weight of 200 g, of which 140 g is water. Assuming an external temperature of $26^\circ \text{C}$ and a specific heat capacity of the solution equal to $4.186 \, \text{J/g}^\circ\text{C}$, determine the temperature reached by the cold pack after activation of the reaction ($T_0$) and its subsequent evolution assuming that the package exchanges heat with the environment with a global heat transfer coefficient $U = 40 \, \text{J/m}^2\text{ }^\circ\text{C}$. It is recalled that the temperature derivative can be written as:
+
+\begin{equation}
+    \frac{dT}{dt} = \frac{(T_\text{amb} - T) \cdot (U \cdot A)}{c_p \cdot m}.
+\end{equation}
+
+\noindent Assuming that the cold pack loses its effectiveness when its temperature exceeds $16^\circ \text{C}$, how many minutes does its effect last?
+
+\section*{Exercise 3}
+We are at the final stage of a rally race, the last time trial. The last two teams must cover the final $20 \, \text{km}$, with both cars starting side by side and from rest. The tension among the audience rises, and the bets begin! If
+
+\begin{equation}
+    v_A = 2\sqrt{t} + \cos(t + \pi/2) \, [\text{m/min}],
+\end{equation}
+
+\noindent and
+
+\begin{equation}
+    v_B = \sin(t) + 0.5t \, [\text{m/min}],
+\end{equation}
+
+\noindent Answer the following questions:
+\begin{itemize}
+    \item
+        At what time does the first overtaking occur?
+    \item
+        After $1 \, \text{h}$ from the first overtaking, which car will be in the lead?
+\end{itemize}
+\end{document}
