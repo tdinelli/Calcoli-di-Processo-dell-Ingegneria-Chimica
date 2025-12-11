@@ -1,0 +1,319 @@
+\documentclass[aspectratio=169]{beamer}
+
+% ==================================================================
+% Define custom colors
+\definecolor{primarycolor}{RGB}{25, 74, 166} % blue
+\definecolor{accentcolor}{RGB}{65, 155, 232} % lighter blue
+\definecolor{bluepoli}{RGB}{2, 30, 54}
+\newcommand{\highlight}[2]{\colorbox{#1!9}{$#2$}}
+
+% ==================================================================
+% Apply these colors
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{alerted text}{fg=accentcolor}
+\setbeamercolor{example text}{fg=accentcolor!80!black}
+\setbeamercolor{progress bar}{fg=accentcolor, bg=accentcolor!20}
+\setbeamercolor{frametitle}{bg=bluepoli, fg=bluepoli!80!black}
+\setbeamercolor{title separator}{fg=bluepoli}
+
+% ==================================================================
+% Metropolis customization
+\usetheme[sectionpage=none]{metropolis}
+\setbeamercolor{background canvas}{bg=black!1.5}
+\setbeamercolor{frametitle}{bg=black!1.5,fg=black}
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamertemplate{footline}{
+    \centerline{\textcolor{bluepoli}{\rule{0.95\paperwidth}{.3pt}}}
+    \vskip2.5pt
+    \hskip15pt \tiny Optimization \hskip380pt \insertframenumber
+    \vskip4pt
+}
+
+% ==================================================================
+% Images
+\usepackage{graphicx}
+
+% ==================================================================
+% Colors
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+% ==================================================================
+% Code rendering
+\usepackage{minted}
+
+% ==================================================================
+% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{positioning,tikzmark,backgrounds,arrows,shapes,calc}
+
+% ==================================================================
+% TITLE
+\title{Mono-dimensional optimization}
+\subtitle{Calcoli di Processo dell' Ingegneria Chimica}
+\author[Dinelli]{\textbf{Timoteo~Dinelli}}
+\institute{
+   \inst{} Department of Chemistry, Materials and Chemical Engineering, ``Giulio Natta'', Politecnico di Milano.\\ \\
+   \textbf{email}: timoteo.dinelli@polimi.it
+}
+\date{11\textsuperscript{th} of December 2025}
+
+\begin{document}
+{
+    \setbeamertemplate{footline}{} 
+    \begin{frame}{}
+        \maketitle
+        \begin{tikzpicture}[overlay, remember picture]
+            \node[above left=3.6cm and 0.01cm of current page.south east]{\includegraphics[trim=1cm 1cm 5.5cm 1cm, clip=true, width=8cm]{figures/logo.pdf}};
+        \end{tikzpicture}
+    \end{frame}
+}
+
+% ==================================================================
+% Slides
+{%
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+	   Exercises
+    \end{frame}
+}
+
+\begin{frame}{Mono dimensional optimization}
+   \footnotesize{
+      In a one-dimensional optimization problem, it is necessary to identify the value of
+      the variable $x$ (also known as the degree of freedom) that optimizes the objective
+      function $f(x)$.
+
+      The optimum of the problem can be represented by either the maximum or minimum of
+      the objective function.
+
+      \begin{equation*}
+         \underset{x}{max} \left\{f(x)\right\} \quad or \quad \underset{x}{min}
+         \left\{f(x)\right\}
+      \end{equation*}
+
+      The two problems are entirely equivalent. Indeed, it is sufficient to change the
+      sign of the objective function to transform a minimization problem into a
+      maximization problem and vice versa:
+
+      \begin{align*}
+         \underset{x}{max} \left\{f(x)\right\} &\equiv \underset{x}{min}
+         \left\{-f(x)\right\} \\
+         \underset{x}{min} \left\{g(x)\right\} &\equiv \underset{x}{max}
+         \left\{-g(x)\right\}
+      \end{align*}
+   }
+\end{frame}
+
+\begin{frame}{}
+   Using classical analysis knowledge incorrectly, one might think that to solve the
+   problem:
+   \begin{equation*}
+      \underset{x}{min}\left\{f(x)\right\} \longrightarrow
+      \frac{df(x)}{dx} = 0
+   \end{equation*}
+   Nothing could be more incorrect. It should be recalled that the aforementioned
+   condition is necessary to identify an extremum point of a continuous and
+   differentiable function. However, this condition does not cover specific cases such
+   as the following examples:
+
+   \begin{tikzpicture}[scale=0.8]
+   \begin{scope}
+      \draw[->] (0,0) -- (4,0) node[below] {$x$};
+      \draw[->] (0,0) -- (0,3) node[left] {$f(x)$};
+      \draw[blue, thick] plot[smooth] coordinates {
+         (0,2) (0.5,1) (1,1.5) (1.5,1.2) (2,0.5) (3,1.2) (4,2)
+      };
+   \end{scope}
+   \begin{scope}[xshift=6cm]
+      \draw[->] (0,0) -- (4,0) node[below] {$x$};
+      \draw[->] (0,0) -- (0,3) node[left] {$f(x)$};
+      \draw[blue, thick] plot[smooth] coordinates {
+         (0,2) (1,1.2) (2,0.5) (3,1.2) (4,2)
+      };
+   \end{scope}
+   \begin{scope}[xshift=12cm]
+      \draw[->] (0,0) -- (4,0) node[below] {$x$};
+      \draw[->] (0,0) -- (0,3) node[left] {$f(x)$};
+      % First segment (decreasing curve)
+      \draw[blue, thick] plot[smooth] coordinates {
+         (0.5,2.5) (1.5,1.5)
+      };
+      % Second segment (increasing curve)
+      \draw[blue, thick] plot[smooth] coordinates {
+         (2.5,1) (3.5,2)
+      };
+   \end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+   \small{
+      In one-dimensional function optimization, two main families of solution methods can be
+      identified:
+
+      \begin{itemize}
+         \item[$\blacktriangleright$] \alert{Comparison Methods}: These methods rely
+            exclusively on comparisons between objective function values.
+         \item[$\blacktriangleright$] \alert{Approximation Methods}: These methods
+            approximate the objective function with simpler functions and seek to find the
+            optimal point of these approximating functions.
+      \end{itemize}
+
+      An alternative classification can also be made:
+
+      \textcolor{blue}{Sequential Methods}: The evaluation of the objective function is
+      conducted sequentially. Each evaluation enables the determination of subsequent
+      actions to be taken.
+
+      \textcolor{blue}{Parallel Methods}: These methods allow multiple function evaluations
+      to be performed before deciding on the next strategy. Generally, these methods require
+      significantly more function evaluations. They become particularly relevant when
+      utilizing multiprocessor computing systems.
+   }
+\end{frame}
+
+\begin{frame}{In Matlab}
+   We are going to solve the following problem:
+   \begin{columns}
+   \column{0.5\textwidth}
+      \begin{align*}
+         \underset{x}{min} \: f(x) \: s.t. \:
+         \begin{cases}
+            c(x) \leq 0 \\
+            ceq(x) = 0 \\
+            A \cdot x \leq b \\
+            Aeq \cdot x = beq \\
+            lb \leq \: x \leq ub
+         \end{cases}
+      \end{align*}
+   \column{0.5\textwidth}
+      \begin{equation*}
+         x = \textcolor{blue}{fmincon}(fun,x0,A,b)
+      \end{equation*}
+   \end{columns}
+\end{frame}
+
+{%
+   \setbeamertemplate{footline}{}
+   \begin{frame}[standout]
+	   Exercises
+   \end{frame}
+}
+\begin{frame}
+   \begin{itemize}
+      \item[$\blacktriangleright$] \textbf{Exercise 1}: The task is to determine the
+         optimal dimensions of a cylindrical pressure vessel with a specified volume of
+         $V = 100 m^3$. The following simplifying assumptions are made:
+         \begin{itemize}
+            \item Both ends (heads) are flat and closed.
+            \item All vessel walls have constant thickness, $t$, and density, $\rho$.
+            \item Manufacturing costs are equal for both heads and the lateral wall.
+            \item Wall thickness, $t$, is independent of vessel pressure.
+            \item There is no manufacturing waste.
+         \end{itemize}
+         The problem requires:
+         \begin{itemize}
+            \item Identification of possible objective function(s) to optimize
+            \item Development of an analytical solution
+            \item Proposal of an alternative numerical solution
+            \item Determination of the optimal $L/D$ ratio (height to diameter ratio of the cylinder)
+         \end{itemize}
+
+      % \item[$\blacktriangleright$]
+      % \item[$\blacktriangleright$]
+      % \item[$\blacktriangleright$]
+      % \item[$\blacktriangleright$]
+   \end{itemize}
+\end{frame}
+
+\begin{frame}
+   \begin{itemize}
+      \item[$\blacktriangleright$] \textbf{Exercise 2}: By removing the simplifying
+         assumptions expressed in Exercise 1, we arrive at a more complex objective
+         function that takes into account the following considerations:
+         \begin{itemize}
+            \item The end caps are ellipsoidal, thus having a larger surface area
+               compared to the flat surface assumption
+            \item The end caps are more expensive to manufacture than the lateral surface
+            \item The sheet metal thickness is a function of the vessel diameter.
+         \end{itemize}
+         In this case, the objective function to be optimized is:
+         \begin{equation*}
+            f_{obj} = 0.0432V + 0.5 \frac{V}{D} + 0.3041D^2 + 0.0263D^3
+         \end{equation*}
+         Determine the optimal diameter $D$ and the height $L$  knowing that:
+         $V=\frac{\pi D^2}{4}\left(L+\frac{D}{2}\right)$.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}
+   \begin{itemize}
+      \item[$\blacktriangleright$] \textbf{Exercise 3}: In radiation, the spectral power
+         emitted by a black body can be expressed using the following relation:
+         \begin{equation*}
+            E_b \left( \lambda , T \right) = \frac{C_1}{\lambda ^5
+            exp\left(\frac{C_2}{\lambda T}\right)^{-1}}
+         \end{equation*}
+         Where:
+         \begin{itemize}
+            \item[ ] $C_1 = 3.742 \times 10^8 \: W \cdot \mu m^4 / m^2$
+            \item[ ] $C_2 = 1.439 \times 10^4 \: \mu m \cdot K$
+         \end{itemize}
+
+         Determine the peak power emission point of a black body at a temperature of $800
+         \: K$ by plotting the behavior of $E_b$ versus electromagnetic radiation
+         wavelength on a log-log graph. Compare the wavelength value found through
+         numerical procedure with that obtained from Wien's Law:
+
+         \begin{equation*}
+            \lambda_{max}T = C_{3} \quad C_3 = 2897.8 \: \mu m \cdot K
+         \end{equation*}
+   \end{itemize}
+\end{frame}
+
+\begin{frame}
+   \scriptsize{
+      \begin{itemize}
+         \item[$\blacktriangleright$] \textbf{Exercise 4}: In a shock tube, autoignition
+            delay times of a fuel are measured at a temperature of $1000 \: K$ under varying
+            pressure conditions as reported in the following table:
+            \begin{table}[]
+               \begin{tabular}{c  c}
+                  P [atm] & tau [ms]\\ \hline
+                  3  & 0.75 \\
+                  10 & 0.20 \\
+                  20 & 0.10 \\
+                  30 & 0.55 \\
+                  40 & 0.04 \\
+                  60 & 0.03 \\ \hline
+               \end{tabular}
+            \end{table}
+            A model is to be formulated to estimate the autoignition delay time as a
+            function of pressure, using the data point at $10 \: atm$ as a reference value,
+            according to the formula:
+            \begin{equation*}
+               \tau = \tau_0 \left(\frac{P}{P_0}\right)^\beta \quad  \tau_0 = \tau (10\,
+               atm) \quad P_0 = 10 \, atm
+            \end{equation*}
+            Compute the parameter $\beta$ using the method of the sum of the squared errors,
+            in order to solve the problem:
+            \begin{itemize}
+               \item The definition of a model function that takes pressure and $\beta$ as
+                  inputs and returns the value of $\tau$.
+               \item The definition of an objective function that computes the sum of
+                  squared residuals $f(x) = \sum_{i} \left(\tau_i -
+                  \tau_{mod_{i}}\right)^2$, taking $\beta$ as input.
+            \end{itemize}
+      \end{itemize}
+   }
+\end{frame}
+
+{
+    \setbeamertemplate{footline}{}
+    \begin{frame}[standout]
+        Thank you for your attention!
+    \end{frame}
+}
+\end{document}
