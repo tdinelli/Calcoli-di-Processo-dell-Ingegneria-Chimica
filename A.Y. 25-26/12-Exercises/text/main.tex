@@ -1,0 +1,139 @@
+\documentclass[oneside]{article}
+
+% ---------------------------------------------
+% PACKAGES
+% ---------------------------------------------
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage{tgcursor}
+\usepackage{hyperref}
+
+% ---------------------------------------------
+% Different colors
+\usepackage{xcolor}
+\usepackage{color}
+
+% ---------------------------------------------
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+
+% ---------------------------------------------
+% Images
+\usepackage{graphicx}
+
+% ---------------------------------------------
+% Margins
+\usepackage[a4paper, top=2cm, left=2.5cm, right=2.5cm, bottom=2cm]{geometry}
+
+% ---------------------------------------------
+% Fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Calcoli di Processo dell'Ingegneria Chimica}
+\lhead{Practical Session 07}
+\rfoot{Page \thepage}
+\lfoot{Academic Year 2025-2026}
+
+\usepackage{amsthm}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+% ---------------------------------------------
+% Title
+% ---------------------------------------------
+\title{Practical Session 12}
+\author{Timoteo Dinelli\footnote{timoteo.dinelli@polimi.it}, Marco Mehl\footnote{marco.mehl@polimi.it}}
+\date{16\textsuperscript{th} of December 2025}
+
+% ---------------------------------------------
+% Begin of the document
+% ---------------------------------------------
+\begin{document}
+\maketitle
+
+\section*{Exercise 1}
+Inside 4 perfectly mixed reactors, the following irreversible first-order reaction occurs: $A \rightarrow B$ with kinetic constant $k$.
+
+\noindent The rate at which A is transformed into B is expressed as $R = k \, V \, C_{A} \left[\frac{mol}{h}\right]$ with $V[L]$ and $C_{A}\left[\frac{mol}{L}\right]$
+
+\noindent The reactors have different volumes and, since they operate at different temperatures, they have different reaction rates. Determine the concentration of A and B in each reactor under steady-state conditions.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    Reactor & V [L] & k [$h^{-1}$] \\
+    \hline
+    1       & 25    & 0.05         \\
+    2       & 75    & 0.1          \\
+    3       & 100   & 0.5          \\
+    4       & 25    & 0.1          \\
+    \hline
+\end{tabular}
+\end{table}
+
+\noindent Recall that the material balance is expressed as: Accumulation = $F_{in} - F_{out} \pm R$ with $F\left[\frac{mol}{h}\right]$ $Q_{in} = 10\frac{L}{h}$, \quad $C_{A,in} = 1\frac{mol}{L}$, \quad $C_{B,in} = 0\frac{mol}{L}$
+
+\begin{center}
+\begin{tikzpicture}[reactor/.style={circle, draw, minimum size=1cm},>=Stealth]
+    % Reactors
+    \node[reactor] (R1) at (0,0) {1};
+    \node[reactor] (R2) at (3,0) {2};
+    \node[reactor] (R3) at (6,0) {3};
+    \node[reactor] (R4) at (9,0) {4};
+
+    % Main flow path
+    \draw[->] (-1.5,0) -- (R1);
+    \draw[->] (R1) -- (R2);
+    \draw[->] (R2) -- (R3);
+    \draw[->] (R3) -- (R4);
+    \draw[->] (R4) -- (10.5,0);
+
+    % Qin and Qout labels
+    \node[above] at (-2,0) {$Q_{in}=10 \frac{L}{h}$};
+    \node[above] at (10,0) {$Q_{out}$};
+
+    % Q13 recycle loop
+    \draw[->] (R1) -- (0,2) -- (6,2) -- (R3);
+    \node at (3,2.3) {$Q_{13}=5 \frac{L}{h}$};
+
+    % Q43 recycle loop
+    \draw[->] (R4) -- (9,-2) -- (6,-2) -- (R3);
+    \node at (7.5,-2.3) {$Q_{43}=3 \frac{L}{h}$};
+\end{tikzpicture}
+\end{center}
+
+\section*{Exercise 2}
+A wall is composed of a series of insulating layers of different thickness and thermal conductivity $\mathbf{k}$. If the temperature at the interface between each layer is denoted by $\mathbf{T_{j}},\:j\:=\:0, 1, ... , 4$ located at position $\mathbf{z_{j}}$, the heat flux $\mathbf{q}$ through each layer can be approximated by the following equation
+
+\begin{equation*}
+    q = k_{j} \: \frac{T_{j}-T_{j-1}}{z_{j} - z_{j-1}}
+\end{equation*}
+
+\noindent Given $\mathbf{T_{0}}=0\: ^{\circ}C$, $\mathbf{T_{4}}=100\: ^{\circ}C$, $\mathbf{k_{1,2,3,4}}\:=[3,1.5,5,2]\:\frac{W}{mK}$ and $\mathbf{z_{0,1,2,3,4}}\:=\:[0,0.1,0.2,0.4,0.45]\:m$. Solve the following system of linear equations for the \textbf{4} unknowns $\mathbf{T_{1}}$, $\mathbf{T_{2}}$, $\mathbf{T_{3}}$ and $\mathbf{q}$, and plot the Temperature values at the corresponding points of \textbf{z}.
+
+\begin{equation*}
+\begin{cases}
+    q = k_{1}\frac{T_{1}-T_{0}}{z_{1}-z_{0}} \\
+    q = k_{2}\frac{T_{2}-T_{1}}{z_{2}-z_{1}} \\
+    q = k_{3}\frac{T_{3}-T_{2}}{z_{3}-z_{2}} \\
+    q = k_{4}\frac{T_{4}-T_{3}}{z_{4}-z_{3}}
+\end{cases}
+\end{equation*}
+
+\section*{Exercise 3}
+Numerically determine the temperature extremes at the lunar surface between day and night by applying an energy balance (the sum of incoming thermal fluxes equals the sum of outgoing fluxes). Given the low thermal conductivity of the lunar soil (approximately $k = 0.005 \frac{W}{mK}$), at a depth of $d = 30$ cm the temperature remains constant at a value of $T0 = 253$ K. Consider 3 contributions: the incoming solar thermal flux, which varies between $1200 \frac{W}{m^2}$ and $0 \frac{W}{m^2}$; the outgoing radiative flux, which can be approximated as:
+
+\begin{equation}
+    0.89 \cdot 5.67e^{-8} \cdot T^4 \quad (T \text{ in } K)
+\end{equation}
+
+\noindent and an outgoing conduction contribution equal to:
+
+\begin{equation}
+    (T - T0) \cdot \frac{k}{d}
+\end{equation}
+\end{document}
