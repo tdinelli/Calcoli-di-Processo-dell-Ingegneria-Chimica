@@ -30,19 +30,14 @@ statements, functions, plotting and other basic functionalities, and [Practical 
 
 - [Practical Session 6](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/06-Integrals): Numerical Integration ($\sim$ 2 hours).
 
-- [Practical Session 7](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/07-Exercises): Final Exam Simulation($\sim$ 2 hours).
+- [Practical Session 7](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/07-Exercises): Final Exam Simulation ($\sim$ 2 hours).
 
-<!-- - [Practical Session 8](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2008): -->
-<!-- Ordinary Differential Equations Part 1 ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 9](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2009): -->
-<!-- Ordinary Differential Equations Part 2 ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 10](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2010): -->
-<!-- Final exam simulation ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 11](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2011): -->
-<!-- Final exam simulation ($\sim$ 2 hours). -->
-<!---->
-<!-- - [Practical Session 12](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2024-25/Practical%20Session%2012): -->
-<!-- Mono dimensional optimization ($\sim$ 2 hours). -->
+- [Practical Session 8](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/08-ODE-Part-1): Ordinary Differential Equations Part 1 ($\sim$ 2 hours).
+
+- [Practical Session 9](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/09-ODE-Part-2): Ordinary Differential Equations Part 2 ($\sim$ 2 hours).
+
+- [Practical Session 10](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/10-Exercises): Final Exam Simulation ($\sim$ 2 hours).
+
+- [Practical Session 11](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/11-Optimization): Optimization ($\sim$ 2 hours).
+
+- [Practical Session 12](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/12-Exercises): Final Exam Simulation ($\sim$ 2 hours).
