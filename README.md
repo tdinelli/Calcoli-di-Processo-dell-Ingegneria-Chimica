@@ -41,3 +41,5 @@ statements, functions, plotting and other basic functionalities, and [Practical 
 - [Practical Session 11](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/11-Optimization): Optimization ($\sim$ 2 hours).
 
 - [Practical Session 12](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/12-Exercises): Final Exam Simulation ($\sim$ 2 hours).
+
+- [Practical Session 13](https://github.com/tdinelli/Calcoli-di-Processo-dell-Ingegneria-Chimica/tree/main/A.Y.%2025-26/13-Exercises): Final Exam Simulation ($\sim$ 2 hours).
